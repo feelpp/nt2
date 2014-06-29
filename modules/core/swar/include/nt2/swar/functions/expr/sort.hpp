@@ -202,7 +202,7 @@ namespace nt2 { namespace ext
       size_t nbslice =  numel(res)/h;
 //    if (dim == 1)
 //    {
-//      value_type* beg = res.raw();
+//      value_type* beg = res.data();
 //      value_type* fin = beg+h;
 //      for(size_t i=0; i < nbslice; ++i)
 //      {
@@ -215,7 +215,7 @@ namespace nt2 { namespace ext
         size_t stride = linesstride(res, dim);
         size_t decal =  stride*(size(res, dim)-1);
         size_t p = 0;
-        value_type* beg = res.raw();
+        value_type* beg = res.data();
         for(size_t i=0; i < nbslice; ++i)
         {
           sub_t pos = as_subscript(res.extent(), p);
@@ -245,8 +245,8 @@ namespace nt2 { namespace ext
       size_t stride = linesstride(res, dim);
       size_t decal = stride*(size(res, dim)-1);
       size_t p = 0;
-      value_type* beg = res.raw();
-      i_type* bep = idx.raw();
+      value_type* beg = res.data();
+      i_type* bep = idx.data();
       for(size_t i=0; i < nbslice; ++i)
       {
         sub_t pos = as_subscript(res.extent(), p);
@@ -275,8 +275,8 @@ namespace nt2 { namespace ext
       size_t stride = linesstride(res, dim);
       size_t decal = stride*(size(res, dim)-1);
       size_t p = 0;
-      value_type* beg = res.raw();
-      i_type* bep = idx.raw();
+      value_type* beg = res.data();
+      i_type* bep = idx.data();
       for(size_t i=0; i < nbslice; ++i)
       {
         sub_t pos = as_subscript(res.extent(), p);

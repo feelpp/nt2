@@ -69,15 +69,15 @@ namespace nt2 { namespace details
     {
       BOOST_ASSERT_MSG(issquare(aa_),
                        "matrix to balance must be square");
-      nt2::details::gebal(&job_, &n_, aa_.raw(), &lda_,
-                          &ilo_, &ihi_, scale_.raw(),
+      nt2::details::gebal(&job_, &n_, aa_.data(), &lda_,
+                          &ilo_, &ihi_, scale_.data(),
                           &info_);
       t_ = nt2::eye(n_, n_, meta::as_<type_t>());
       nt2_la_int ldt = t_.leading_size();
       char side =  'R';
       nt2::details::gebak(&job_, &side, &n_,
-                          &ilo_, &ihi_, scale_.raw(),
-                          &n_, t_.raw(), &ldt, &info_);
+                          &ilo_, &ihi_, scale_.data(),
+                          &n_, t_.data(), &ldt, &info_);
     }
 
     balance_result& operator=(balance_result const& src)
@@ -167,8 +167,8 @@ namespace nt2 { namespace details
         nt2_la_int ldt = invt_.leading_size();
         char side =  'L';
         nt2::details::gebak(&job_, &side, &n_,
-                              &ilo_, &ihi_, scale_.raw(),
-                            &n_, invt_.raw(), &ldt, &info_);
+                              &ilo_, &ihi_, scale_.data(),
+                            &n_, invt_.data(), &ldt, &info_);
       }
       return invt_;
     }

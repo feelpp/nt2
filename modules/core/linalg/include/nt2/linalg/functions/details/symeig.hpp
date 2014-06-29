@@ -81,7 +81,7 @@ namespace nt2 { namespace details
       NT2_WARNING(nt2::issymetric(a_)||(uplo == 'U'), "in symeig input is not symetric: only the lower matrix part will be used");
 
       nt2::details::hsev(&jobz_, &uplo_, &n_,
-                         aa_.raw(), &lda_, w_.raw(),
+                         aa_.data(), &lda_, w_.data(),
                          &info_, wrk_);
     }
 

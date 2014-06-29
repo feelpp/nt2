@@ -102,7 +102,7 @@ namespace nt2 { namespace ext
   /// INTERNAL ONLY
   /// Construct a terminal from a scalar:
   ///  * Resize table to [1 1]
-  ///  * Copy the scalar to the table memory (*raw() is the easiest way)
+  ///  * Copy the scalar to the table memory (*data() is the easiest way)
   NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::construct_, tag::cpu_
                             , (A0)(A1)
                             , ((node_ < A0,nt2::tag::terminal_
@@ -119,7 +119,7 @@ namespace nt2 { namespace ext
     result_type operator()(A0& a0, A1 const& a1) const
     {
       boost::proto::value(a0).resize(of_size_<1,1>());
-      *(a0.raw()) = a1;
+      *(a0.data()) = a1;
     }
   };
 
@@ -148,7 +148,7 @@ namespace nt2 { namespace ext
       );
 
       boost::proto::value(a0).resize(a1);
-      nt2::memory::copy( a2, a3, a0.raw() );
+      nt2::memory::copy( a2, a3, a0.data() );
     }
   };
 } }

@@ -42,7 +42,7 @@ namespace nt2 { namespace details
     {
       BOOST_ASSERT_MSG(issquare(values_), "matrix must be square");
       nt2::details::potrf ( &uplo_, &height_
-                          , values_.raw(), &leading_, &info_
+                          , values_.data(), &leading_, &info_
                           );
     }
 
@@ -126,12 +126,12 @@ namespace nt2 { namespace details
     {
       char norm = '1';
       base_t anorm = nt2::details::lange( &norm,  &height_,  &height_
-                                        , values_.raw(), &leading_
+                                        , values_.data(), &leading_
                                         );
 
       base_t res;
       nt2::details::pocon ( &uplo_, &height_
-                          , values_.raw(), &leading_
+                          , values_.data(), &leading_
                           , &anorm, &res, &info_
                           );
 
@@ -154,8 +154,8 @@ namespace nt2 { namespace details
       nt2_la_int ldb  = b.leading_size();
       nt2_la_int info;
       nt2::details::potrs ( &uplo_, &height_, &nrhs
-                          , values_.raw(), &leading_
-                          , b.raw(), &ldb
+                          , values_.data(), &leading_
+                          , b.data(), &ldb
                           , &info
                           );
       return info;

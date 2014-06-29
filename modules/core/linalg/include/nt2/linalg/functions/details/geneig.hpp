@@ -72,9 +72,9 @@ namespace nt2 { namespace details
       BOOST_ASSERT_MSG(nt2::issquare(b_), "inputs  must be squares matrix");
       BOOST_ASSERT_MSG(n_ = height(b_), "inputs  must be of same size");
       nt2::details::gges(&jobvsl_, &jobvsr_, &sort_, &nt2::details::selectall, &n_,
-                         aa_.raw(), &lda_, bb_.raw(), &ldb_,
-                         &sdim_, alpha_.raw(), beta_.raw(),
-                         vsl_.raw(), &ldvsl_, vsr_.raw(), &ldvsr_, &info_, wrk_);
+                         aa_.data(), &lda_, bb_.data(), &ldb_,
+                         &sdim_, alpha_.data(), beta_.data(),
+                         vsl_.data(), &ldvsl_, vsr_.data(), &ldvsr_, &info_, wrk_);
     }
 
     geneig_result& operator=(geneig_result const& src)
@@ -264,9 +264,9 @@ namespace nt2 { namespace details
       BOOST_ASSERT_MSG(nt2::issquare(b_), "inputs  must be squares matrix");
       BOOST_ASSERT_MSG(n_ = height(b_), "inputs  must be of same size");
       nt2::details::gges(&jobvsl_, &jobvsr_, &sort_, &nt2::details::selectall2, &n_,
-                         aa_.raw(), &lda_,  bb_.raw(), &ldb_,
-                         &sdim_, alphar_.raw(), alphai_.raw(), beta_.raw(),
-                         vsl_.raw(), &ldvsl_, vsr_.raw(), &ldvsr_, &info_, wrk_);
+                         aa_.data(), &lda_,  bb_.data(), &ldb_,
+                         &sdim_, alphar_.data(), alphai_.data(), beta_.data(),
+                         vsl_.data(), &ldvsl_, vsr_.data(), &ldvsr_, &info_, wrk_);
     }
 
     geneig_result& operator=(geneig_result const& src)

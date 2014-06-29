@@ -105,7 +105,7 @@ namespace nt2 { namespace ext
 
         a2.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(dgeqp3) (&m, &n, a0.raw(), &ld, a1.raw(), a2.raw(), a3.main()
+        NT2_F77NAME(dgeqp3) (&m, &n, a0.data(), &ld, a1.data(), a2.data(), a3.main()
                             , &wn, &that
                             );
         return that;
@@ -162,7 +162,7 @@ namespace nt2 { namespace ext
 
         a2.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(sgeqp3) (&m, &n, a0.raw(), &ld, a1.raw(), a2.raw(), a3.main()
+        NT2_F77NAME(sgeqp3) (&m, &n, a0.data(), &ld, a1.data(), a2.data(), a3.main()
                             , &wn, &that
                             );
         return that;
@@ -222,8 +222,8 @@ namespace nt2 { namespace ext
         nt2::container::table<double> rwork(nt2::of_size(2*n,1));
         a2.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(zgeqp3) (&m, &n, a0.raw(), &ld, a1.raw(), a2.raw(), a3.main()
-                            , &wn, rwork.raw(), &that
+        NT2_F77NAME(zgeqp3) (&m, &n, a0.data(), &ld, a1.data(), a2.data(), a3.main()
+                            , &wn, rwork.data(), &that
                             );
         return that;
      }
@@ -280,8 +280,8 @@ namespace nt2 { namespace ext
         nt2::container::table<float> rwork(nt2::of_size(2*n,1));
         a2.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(cgeqp3) (&m, &n, a0.raw(), &ld, a1.raw(), a2.raw(), a3.main()
-                            , &wn, rwork.raw(), &that
+        NT2_F77NAME(cgeqp3) (&m, &n, a0.data(), &ld, a1.data(), a2.data(), a3.main()
+                            , &wn, rwork.data(), &that
                             );
         return that;
      }

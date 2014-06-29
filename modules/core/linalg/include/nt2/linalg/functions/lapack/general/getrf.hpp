@@ -60,7 +60,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(dgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(dgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
 
         return that;
      }
@@ -83,7 +83,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(sgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(sgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
 
         return that;
      }
@@ -105,7 +105,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(cgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(cgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
         return that;
      }
 
@@ -127,7 +127,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(zgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(zgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
         return that;
      }
 

@@ -79,7 +79,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_dgeqrf (m, n, a0.raw(), m, a1.raw(), a2.main()
+        magma_dgeqrf (m, n, a0.data(), m, a1.data(), a2.main()
                             , wn, &that
                             );
         return that;
@@ -136,7 +136,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_sgeqrf(m, n, a0.raw(), m, a1.raw(), a2.main()
+        magma_sgeqrf(m, n, a0.data(), m, a1.data(), a2.main()
                             , wn, &that
                             );
 
@@ -198,7 +198,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_cgeqrf(m, n, (cuFloatComplex*)a0.raw(), ld, (cuFloatComplex*)a1.raw()
+        magma_cgeqrf(m, n, (cuFloatComplex*)a0.data(), ld, (cuFloatComplex*)a1.data()
                     , (cuFloatComplex*)a2.main(), wn, &that
                             );
         return that;
@@ -255,7 +255,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_zgeqrf(m, n, (cuDoubleComplex*)a0.raw(), ld, (cuDoubleComplex*)a1.raw()
+        magma_zgeqrf(m, n, (cuDoubleComplex*)a0.data(), ld, (cuDoubleComplex*)a1.data()
                     , (cuDoubleComplex*)a2.main(), wn, &that
                             );
         return that;

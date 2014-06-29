@@ -91,8 +91,8 @@ namespace nt2 {
         vs_.resize(of_size(ldvs_, ldvs_));
         ldvs_ = vs_.leading_size();
         nt2::details::geesx(&jobvs_, &sort_, &nt2::details::selectall , &sense_, &n_,
-                            aa_.raw(), &lda_, &sdim_, w_.raw(),
-                            vs_.raw(), &ldvs_,
+                            aa_.data(), &lda_, &sdim_, w_.data(),
+                            vs_.data(), &ldvs_,
                             &rconde_, &rcondv_,
                             &info_, wrk_);
       }
@@ -185,8 +185,8 @@ namespace nt2 {
         vs_.resize(of_size(ldvs_, ldvs_));
         ldvs_ = vs_.leading_size();
         nt2::details::geesx(&jobvs_, &sort_, &nt2::details::selectall2 , &sense_, &n_,
-                            aa_.raw(), &lda_, &sdim_, wr_.raw(), wi_.raw(),
-                            vs_.raw(), &ldvs_,
+                            aa_.data(), &lda_, &sdim_, wr_.data(), wi_.data(),
+                            vs_.data(), &ldvs_,
                             &rconde_, &rcondv_,
                             &info_, wrk_);
       }

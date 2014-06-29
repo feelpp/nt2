@@ -97,7 +97,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(dgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(dgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -155,7 +155,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(sgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(sgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -214,7 +214,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(cgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(cgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -271,7 +271,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(zgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(zgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;

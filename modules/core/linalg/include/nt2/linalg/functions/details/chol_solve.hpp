@@ -53,7 +53,7 @@ namespace nt2 { namespace details
       const nt2_la_int k = width(bx);
       const nt2_la_int lda = a_.leading_size();
       const nt2_la_int ldx = b_.leading_size();
-      nt2::details::posv(&uplo, &m, &k, a_.raw(), &lda, b_.raw(), &ldx, &info_);
+      nt2::details::posv(&uplo, &m, &k, a_.data(), &lda, b_.data(), &ldx, &info_);
     }
     ~chol_solve_result(){}
     nt2_la_int status()    const { return info_; }

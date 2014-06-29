@@ -37,11 +37,11 @@ namespace nt2 { namespace ext
       if(l > 1)
       {
         std::size_t sz = std::min(of_size_max::size(),l);
-        return result_type(a0.raw(), a0.raw()+sz);
+        return result_type(a0.data(), a0.data()+sz);
       }
       else
       {
-        return result_type(*a0.raw(), *a0.raw());
+        return result_type(*a0.data(), *a0.data());
       }
     }
   };

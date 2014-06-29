@@ -64,7 +64,7 @@ namespace nt2 {namespace details
       BOOST_ASSERT_MSG( (n_ >= p_),"In lse calls the number of columns of a must be greater or equal to the number of rows of b");
       BOOST_ASSERT_MSG( (n_ <= m_+p_),"In lse calls n <= m+p");
       BOOST_ASSERT_MSG( (size_t(p_) == nt2::numel(d_)),"In lse calls the number of rows of b must match the number of elements of d");
-      nt2::details::gglse(&m_, &n_, &p_, a_.raw(), &lda, b_.raw(), &ldb, c_.raw(), d_.raw(), x_.raw(), &info_);
+      nt2::details::gglse(&m_, &n_, &p_, a_.data(), &lda, b_.data(), &ldb, c_.data(), d_.data(), x_.data(), &info_);
     }
     ~lsq_lse_solve_result(){}
     nt2_la_int status()    const { return info_; }
