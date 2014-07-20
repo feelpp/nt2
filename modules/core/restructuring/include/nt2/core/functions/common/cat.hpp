@@ -16,7 +16,7 @@
 #include <nt2/include/functions/numel.hpp>
 #include <nt2/include/functions/along.hpp>
 #include <nt2/include/functions/colon.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 
 namespace nt2 { namespace ext
 {
