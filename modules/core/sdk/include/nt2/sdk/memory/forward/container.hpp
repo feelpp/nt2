@@ -10,6 +10,7 @@
 #define NT2_SDK_MEMORY_FORWARD_CONTAINER_HPP_INCLUDED
 
 #include <nt2/core/settings/specific_data.hpp>
+#include <boost/dispatch/functor/forward.hpp>
 
 //==============================================================================
 // Forward declaration

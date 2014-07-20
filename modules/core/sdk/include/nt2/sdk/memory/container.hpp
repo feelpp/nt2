@@ -1,6 +1,7 @@
 //==============================================================================
 //         Copyright 2003 - 2011   LASMEA UMR 6602 CNRS/Univ. Clermont II
-//         Copyright 2009 - 2011   LRI    UMR 8623 CNRS/Univ Paris Sud XI
+//         Copyright 2009 - 2014   LRI    UMR 8623 CNRS/Univ Paris Sud XI
+//         Copyright 2012 - 2014   NumScale SAS
 //
 //          Distributed under the Boost Software License, Version 1.0.
 //                 See accompanying file LICENSE.txt or copy at
@@ -9,32 +10,31 @@
 #ifndef NT2_SDK_MEMORY_CONTAINER_HPP_INCLUDED
 #define NT2_SDK_MEMORY_CONTAINER_HPP_INCLUDED
 
-#include <nt2/core/settings/size.hpp>
-#include <nt2/core/settings/index.hpp>
 #include <nt2/core/settings/option.hpp>
-#include <nt2/core/settings/interleaving.hpp>
+#include <nt2/core/settings/size.hpp>
+#include <nt2/core/settings/stride.hpp>
 #include <nt2/core/settings/storage_order.hpp>
-#include <nt2/core/settings/specific_data.hpp>
-#include <nt2/core/settings/storage_scheme.hpp>
-#include <nt2/core/utility/of_size.hpp>
-#include <nt2/include/functions/scalar/numel.hpp>
-#include <nt2/include/functions/scalar/ndims.hpp>
+
+#include <nt2/sdk/memory/details/base_size.hpp>
+
+// #include <nt2/core/settings/index.hpp>
+// #include <nt2/core/settings/interleaving.hpp>
+// #include <nt2/core/settings/storage_order.hpp>
+// #include <nt2/core/settings/specific_data.hpp>
+// #include <nt2/core/settings/storage_scheme.hpp>
+// #include <nt2/core/utility/of_size.hpp>
+// #include <nt2/include/functions/scalar/numel.hpp>
+// #include <nt2/include/functions/scalar/ndims.hpp>
 #include <nt2/sdk/memory/adapted/container.hpp>
-#include <nt2/sdk/memory/composite_buffer.hpp>
-#include <nt2/sdk/meta/container_traits.hpp>
-#include <boost/fusion/include/is_sequence.hpp>
-#include <boost/mpl/at.hpp>
+// #include <nt2/sdk/memory/composite_buffer.hpp>
+// #include <boost/fusion/include/is_sequence.hpp>
+// #include <boost/mpl/at.hpp>
 #include <boost/assert.hpp>
 #include <algorithm>
 
-#ifdef NT2_LOG_COPIES
-#include <iostream>
-#endif
-
-namespace nt2 { namespace tag
-{
-  struct table_;
-} }
+// #ifdef NT2_LOG_COPIES
+// #include <iostream>
+// #endif
 
 namespace nt2 { namespace memory
 {
@@ -47,20 +47,54 @@ namespace nt2 { namespace memory
     runtime and compile-time and a @c Kind describing which kind of
     high-level behavior the container will have.
 
-    @tparam Kind      Describe the behavior of the container
-    @tparam Type      Value type to store in the table
-    @tparam Setting   Options list describing the options of the container
+    @tparam Kind Describe the behavior of the container
+    @tparam Type Value type to store in the table
+    @tparam S Options list describing the options of the container
   **/
   template<typename Kind, typename Type, typename Settings>
-  struct container : public container_base<Type>
+  struct  container
+        : private details
+                ::base_size < typename meta::option < Settings
+                                                    , tag::of_size_
+                                                    , Kind
+                                                    >::type
+                            , typename meta::option < Settings
+                                                    , tag::stride_
+                                                    , Kind
+                                                    >::type
+                            , typename meta::option < Settings
+                                                    , tag::storage_order_
+                                                    , Kind
+                                                    >::type
+                            >
   {
     public:
 
-    /// INTERNAL ONLY Precomputed semantic type
-    typedef Kind                                          kind_type;
+    /// @brief Container kind
+    typedef Kind                                  kind_type;
 
-    /// INTERNAL ONLY Precomputed settings type
-    typedef Settings                                      settings_type;
+    /// @brief Container settings
+    typedef Settings                              settings_type;
+
+    /// INTERNAL ONLY
+    typedef details::base_size< typename meta::option < Settings
+                                                      , tag::of_size_
+                                                      , Kind
+                                                      >::type
+                              , typename meta::option < Settings
+                                                      , tag::stride_
+                                                      , Kind
+                                                      >::type
+                            , typename meta::option < Settings
+                                                    , tag::storage_order_
+                                                    , Kind
+                                                    >::type
+                              >                                     base_size_t;
+
+    using base_size_t::extent;
+    using base_size_t::physical_extent;
+
+#if 0
 
     /// INTERNAL ONLY storage_scheme option
     typedef typename meta::option < Settings
@@ -177,6 +211,7 @@ namespace nt2 { namespace memory
             bool_ <   extent_type::static_status
                   ||  boost::is_same<duration_t,automatic_>::value
                   >                                         has_static_size;
+
 
     /*!
       @brief Default constructor
@@ -319,13 +354,6 @@ namespace nt2 { namespace memory
     }
 
     /*!
-      @brief Return the container dimensions set
-      @return A reference to a constant Fusion RandomAccessSequence containing
-              the size of the container over each of its dimensions.
-    **/
-    BOOST_FORCEINLINE extent_type const& extent() const { return sizes_;  }
-
-    /*!
       @brief Return the container number of element
       @return The number of logical element stored in the buffer.
     **/
@@ -437,12 +465,13 @@ namespace nt2 { namespace memory
 
     private:
     buffer_type                 data_;
-    extent_type                 sizes_;
 
+#endif
     template<typename Kind2, typename T2, typename S2>
     friend struct container;
   };
 
+#if 0
   /*!
     @brief Container generalized swap
 
@@ -467,6 +496,7 @@ namespace nt2 { namespace memory
   template<typename Kind, typename T, typename S>
   BOOST_FORCEINLINE
   void swap(container<Kind, T, S>& x, T& y) { x.swap(y); }
+#endif
 
 } }
 
