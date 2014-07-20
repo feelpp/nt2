@@ -21,6 +21,7 @@ SET( SOURCES
      storage_duration.cpp
      storage_scheme.cpp
      storage_size.cpp
+     stride.cpp
    )
 
 include(CheckCXXCompilerFlag)
