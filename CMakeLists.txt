@@ -189,7 +189,7 @@ endforeach()
 # Post-config phase
 ################################################################################
 nt2_postconfigure_run()
-include(nt2.directive)
+#include(nt2.directive)
 
 ################################################################################
 # external projects: demo and sandbox
@@ -225,7 +225,7 @@ if(CMAKE_GENERATOR STREQUAL Ninja)
 endif()
 
 foreach(project demo sandbox)
-  ExternalProject_Add( ${project} SOURCE_DIR ${CMAKE_SOURCE_DIR}/${project} BINARY_DIR ${CMAKE_BINARY_DIR}/${project}
+  ExternalProject_Add( ${project} SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${project} BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/${project}
                        CMAKE_CACHE_ARGS ${CMAKE_OPTIONS} ${BUILD} INSTALL_COMMAND ""
                        STEP_TARGETS configure
                      )
