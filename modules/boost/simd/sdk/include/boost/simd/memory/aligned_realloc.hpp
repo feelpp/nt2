@@ -27,6 +27,8 @@
 
 #if !defined(__APPLE__)
 #include <malloc.h>
+#else
+#include <malloc/malloc.h>
 #endif
 
 #ifndef BOOST_SIMD_REALLOC_SHRINK_THRESHOLD
@@ -172,10 +174,9 @@ namespace boost { namespace simd
     }
     return fresh_ptr;
 
-    #elif (     defined( BOOST_SIMD_CONFIG_SUPPORT_POSIX_MEMALIGN )            \
-            ||  (defined( _GNU_SOURCE ) && !defined( __ANDROID__ ))            \
-          )                                                                    \
-        && !defined(BOOST_SIMD_CUSTOM_REALLOC)                                 \
+    #elif (     defined( BOOST_SIMD_CONFIG_SUPPORT_POSIX_MEMALIGN )                                \
+            ||  (defined( _GNU_SOURCE ) && defined(__linux) && !defined( __ANDROID__ ))            \
+          )                                                                                        \
         && !defined(BOOST_SIMD_MEMORY_NO_BUILTINS)
 
     // Resizing to 0 free the pointer data and return
@@ -185,9 +186,11 @@ namespace boost { namespace simd
       return 0;
     }
 
-    #if defined(__ANDROID__) && !defined(BOOST_SIMD_MEMORY_NO_BUILTINS)
+    #if defined(__ANDROID__)
     // https://groups.google.com/forum/?fromgroups=#!topic/android-ndk/VCEUpMfSh_o
     std::size_t const oldSize( ::dlmalloc_usable_size( ptr ) );
+    #elif defined(__APPLE__)
+    std::size_t const oldSize( ::malloc_size( ptr ) );
     #else
     std::size_t const oldSize( ::malloc_usable_size( ptr ) );
     #endif
