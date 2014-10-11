@@ -10,7 +10,6 @@
 nt2_module_use_modules(test.unit core.base)
 
 ADD_SUBDIRECTORY(tie)
-ADD_SUBDIRECTORY(functions)
 ADD_SUBDIRECTORY(factorization)
 ADD_SUBDIRECTORY(scalar)
 ADD_SUBDIRECTORY(general)

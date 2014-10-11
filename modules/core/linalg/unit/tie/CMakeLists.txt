@@ -9,15 +9,14 @@
 
 SET( SOURCES
      balance.cpp
+     geneig.cpp
      nseig.cpp
      qr.cpp
-     lsq_lse_solve.cpp
+     symeig.cpp
      planerot.cpp
      qrdelete.cpp
      qrinsert.cpp
      rref.cpp
-     schur.cpp
-     symeig.cpp
    )
 
 nt2_module_add_tests(core.linalg.tie.unit ${SOURCES})

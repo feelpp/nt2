@@ -29,7 +29,7 @@ namespace nt2
   {
     typedef typename boost::remove_reference<In>::type::extent_type           extent_type;
     typedef typename Out::value_type                                          value_type;
-    typedef typename details::target_type_from_site<Site,value_type>::type    target_type;
+    typedef typename details::target_type_from_site<Site, value_type>::type   target_type;
 
     worker(Out & out, In & in, Neutral const & neutral, Bop const & bop)
           :out_(out),in_(in),neutral_(neutral),bop_(bop)

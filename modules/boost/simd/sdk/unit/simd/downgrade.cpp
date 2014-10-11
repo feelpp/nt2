@@ -11,6 +11,7 @@
 #include <boost/simd/sdk/simd/pack.hpp>
 #include <boost/simd/sdk/simd/logical.hpp>
 #include <boost/simd/sdk/simd/native.hpp>
+#include <boost/simd/sdk/simd/meta/vector_of.hpp>
 #include <boost/dispatch/meta/downgrade.hpp>
 #include <boost/simd/sdk/meta/is_downgradable.hpp>
 #include <boost/fusion/adapted/std_pair.hpp>
@@ -75,7 +76,6 @@ NT2_TEST_CASE_TPL(downgrade_pack, BOOST_SIMD_SIMD_TYPES)
   using boost::dispatch::meta::downgrade;
   using boost::mpl::_;
 
-  typedef BOOST_SIMD_DEFAULT_EXTENSION      ext_t;
   typedef pack<T>                           pack_t;
   typedef typename downgrade<T>::type       base_t;
 
@@ -93,7 +93,6 @@ NT2_TEST_CASE_TPL(downgrade_logical_pack, BOOST_SIMD_SIMD_TYPES)
   using boost::dispatch::meta::downgrade;
   using boost::mpl::_;
 
-  typedef BOOST_SIMD_DEFAULT_EXTENSION      ext_t;
   typedef pack< logical<T> >                pack_t;
   typedef typename downgrade<T>::type       base_t;
 
@@ -117,15 +116,17 @@ struct downgrade_at
 
 NT2_TEST_CASE(downgrade_fusion)
 {
-  using boost::simd::native;
+  using boost::simd::meta::vector_of;
   using boost::dispatch::meta::downgrade;
   using boost::mpl::_;
 
   typedef std::pair<nt2::int64_t, double> T;
 
-  typedef native<T, BOOST_SIMD_DEFAULT_EXTENSION> vT;
-  typedef native<nt2::int64_t, BOOST_SIMD_DEFAULT_EXTENSION> vT0;
-  typedef native<double, BOOST_SIMD_DEFAULT_EXTENSION> vT1;
+  static const std::size_t N = BOOST_SIMD_BYTES/4;
+
+  typedef vector_of<T, N>::type vT;
+  typedef vector_of<nt2::int64_t, N>::type vT0;
+  typedef vector_of<double, N>::type vT1;
 
   vT va0;
   //NT2_TEST_EXPR_TYPE( va0,  upgrade<_>, int ); // for debug purposes

@@ -11,21 +11,32 @@
 #define NT2_SDK_SHARED_MEMORY_DETAILS_TARGET_TYPE_FROM_SITE_HPP_INCLUDED
 
 #include <boost/simd/sdk/simd/native.hpp>
+#include <boost/simd/sdk/simd/meta/is_vectorizable.hpp>
 
 namespace nt2
 {
   namespace details
   {
-   template<class Site, class value_type>
-   struct target_type_from_site
+
+   template<class Site, class Value, bool Condition = boost::simd::meta::is_vectorizable<Value, BOOST_SIMD_DEFAULT_EXTENSION>::value>
+   struct target_type_from_site;
+
+   template<class Site, class Value>
+   struct target_type_from_site<Site, Value, true>
    {
-     typedef boost::simd::native<value_type,BOOST_SIMD_DEFAULT_EXTENSION> type;
+    typedef boost::simd::native<Value, BOOST_SIMD_DEFAULT_EXTENSION> type;
    };
 
-   template<class value_type>
-   struct target_type_from_site<tag::cpu_,value_type>
+   template<class Site, class Value>
+   struct target_type_from_site<Site, Value, false>
    {
-     typedef value_type type;
+    typedef Value type;
+   };
+
+   template<class Value>
+   struct target_type_from_site<tag::cpu_, Value, true>
+   {
+     typedef Value type;
    };
 
   }

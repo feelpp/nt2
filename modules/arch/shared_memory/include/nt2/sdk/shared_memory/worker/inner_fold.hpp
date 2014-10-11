@@ -13,6 +13,7 @@
 #include <nt2/sdk/shared_memory/worker.hpp>
 #include <nt2/sdk/shared_memory/spawner.hpp>
 #include <nt2/sdk/shared_memory/details/target_type_from_site.hpp>
+#include <nt2/include/functor.hpp>
 
 #include <nt2/sdk/config/cache.hpp>
 
@@ -23,7 +24,6 @@ namespace nt2
   {
     struct inner_fold_step_;
     struct fold_;
-    struct cpu_;
   }
 
   // Inner Fold Step worker
@@ -55,7 +55,7 @@ namespace nt2
   {
     typedef typename boost::remove_reference<In>::type::extent_type           extent_type;
     typedef typename Out::value_type                                          value_type;
-    typedef typename details::target_type_from_site<Site,value_type>::type    target_type;
+    typedef typename details::target_type_from_site<Site, value_type>::type   target_type;
 
     worker(Out& out, In& in, Neutral const& n, Bop const& bop, Uop const& uop)
     : out_(out), in_(in), neutral_(n), bop_(bop), uop_(uop)
