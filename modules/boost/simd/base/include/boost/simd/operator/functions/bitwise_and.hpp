@@ -8,10 +8,8 @@
 //==============================================================================
 #ifndef BOOST_SIMD_OPERATOR_FUNCTIONS_BITWISE_AND_HPP_INCLUDED
 #define BOOST_SIMD_OPERATOR_FUNCTIONS_BITWISE_AND_HPP_INCLUDED
-#include <boost/simd/include/functor.hpp>
-#include <boost/dispatch/include/functor.hpp>
-#include <boost/proto/tags.hpp>
 
+#include <boost/simd/include/functor.hpp>
 
 namespace boost { namespace simd
 {
@@ -29,7 +27,20 @@ namespace boost { namespace simd
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<bitwise_and_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_bitwise_and_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::bitwise_and_, Site> dispatching_bitwise_and_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::bitwise_and_, Site>();
+   }
+   template<class... Args>
+   struct impl_bitwise_and_;
   }
   /*!
     return the bitwise and of the two parameters
@@ -68,20 +79,6 @@ namespace boost { namespace simd
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::bitwise_and_      , bitwise_and     , 2 )
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::bitwise_and_      , b_and           , 2 )
 } }
-
-namespace boost { namespace dispatch { namespace meta
-{
-  template<>
-  struct hierarchy_of<boost::proto::tag::bitwise_and>
-  {
-    typedef boost::simd::tag::bitwise_and_ type;
-  };
-  template<>
-  struct proto_tag<boost::simd::tag::bitwise_and_>
-  {
-    typedef boost::proto::tag::bitwise_and type;
-  };
-} } }
 
 #include <boost/simd/operator/specific/common.hpp>
 

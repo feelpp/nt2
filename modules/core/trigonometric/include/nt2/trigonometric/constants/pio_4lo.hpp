@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_PIO_4LO_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_PIO_4LO_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0xb2bbbd2eUL
                                 , 0x3c81a62633145c07ULL
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Pio_4lo, Site> dispatching_Pio_4lo(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Pio_4lo, Site>();
+   }
+   template<class... Args>
+   struct impl_Pio_4lo;
   }
   /*!
     This constant is such that, for pairs of types (Tup, T)

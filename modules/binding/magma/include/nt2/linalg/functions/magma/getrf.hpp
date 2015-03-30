@@ -27,7 +27,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  integer_<A1>, S1 >))
@@ -43,13 +43,13 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
-        magma_dgetrf(m, n, a0.raw(), ld, a1.raw(), &that);
+        magma_dgetrf(m, n, a0.data(), ld, a1.data(), &that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  integer_<A1>, S1 >))
@@ -65,14 +65,14 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
-        magma_sgetrf(m, n, a0.raw(), ld, a1.raw(), &that);
+        magma_sgetrf(m, n, a0.data(), ld, a1.data(), &that);
 
         return that;
      }
   };
 
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> > , S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -88,13 +88,13 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_cgetrf(m, n, (cuFloatComplex*)a0.raw(), ld, a1.raw(), &that);
+        magma_cgetrf(m, n, (cuFloatComplex*)a0.data(), ld, a1.data(), &that);
         return that;
      }
 
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_< nt2::tag::table_, complex_< double_<A0> >, S0 > ))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -110,7 +110,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        magma_zgetrf(m, n, (cuDoubleComplex*)a0.raw(), ld, a1.raw(), &that);
+        magma_zgetrf(m, n, (cuDoubleComplex*)a0.data(), ld, a1.data(), &that);
         return that;
      }
 

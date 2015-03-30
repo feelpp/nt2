@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_INVLOG10_2_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_INVLOG10_2_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x40549a78UL
                                 , 0x400a934f0979a372ULL
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Invlog10_2, Site> dispatching_Invlog10_2(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Invlog10_2, Site>();
+    }
+    template<class... Args>
+    struct impl_Invlog10_2;
   }
  /*!
     Generates constant  1/log10(2).

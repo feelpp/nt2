@@ -27,6 +27,9 @@
 #include <boost/preprocessor/iteration/iterate.hpp>
 #include <boost/preprocessor/selection/min.hpp>
 
+#include <boost/utility/declval.hpp>
+#include <boost/config.hpp>
+
 namespace boost { namespace simd { namespace ext
 {
   /* Adapt Data with Expr whenever it is a target */
@@ -68,69 +71,42 @@ namespace boost { namespace simd { namespace ext
   //============================================================================
   // Run an expression without state nor data
   //============================================================================
-  #define M0(z,n,t)                                                                                \
-  typename dispatch::meta::as_ref<                                                                 \
-    typename dispatch::meta::result_of<                                                            \
-      typename dispatch::meta::dispatch_call<                                                      \
-        tag::run_(typename boost::proto::result_of::child_c<Expr&, n>::type)                       \
-      >::type                                                                                      \
-      ( typename boost::proto::result_of::child_c<Expr&, n>::type )                                \
-    >::type                                                                                        \
-  >::type                                                                                          \
-  /**/
-
-  #define M1(z,n,t)                                                                                \
-  boost::dispatch::id(                                                                             \
-    typename dispatch::meta::dispatch_call<                                                        \
-      tag::run_(typename boost::proto::result_of::child_c<Expr&, n>::type)                         \
-    >::type()                                                                                      \
-    ( boost::proto::child_c<n>(expr) )                                                             \
-  )                                                                                                \
+  #define M0(z,n,t)                                                                                                    \
+  t( dispatching_run_( ext::adl_helper(), boost::dispatch::default_site_t<T>()                                         \
+                     , boost::dispatch::meta::                                                                         \
+                       hierarchy_of_t<typename boost::proto::result_of::child_c<Expr&, n>::type>()                     \
+                     )                                                                                                 \
+                     ( boost::proto::child_c<n>(expr) )                                                                \
+   )                                                                                                                   \
   /**/
 
   //============================================================================
   // Run an expression with a state and a data
   //============================================================================
-  #define M0d(z,n,t)                                                                               \
-  typename dispatch::meta::as_ref<                                                                 \
-    typename dispatch::meta::result_of<                                                            \
-      typename dispatch::meta::dispatch_call<                                                      \
-        tag::run_( typename boost::proto::result_of::child_c<Expr&, n>::type                       \
-                 , State const&                                                                    \
-                 , typename adapt_data< typename boost::proto::result_of::                         \
-                                        child_c<Expr&, n>::value_type                              \
-                                      , Data                                                       \
-                                      >::type                                                      \
-                 )                                                                                 \
-      >::type                                                                                      \
-      ( typename boost::proto::result_of::child_c<Expr&, n>::type                                  \
-      , State const&                                                                               \
-      , typename adapt_data< typename boost::proto::result_of::                                    \
-                             child_c<Expr&, n>::value_type                                         \
-                           , Data                                                                  \
-                           >::type                                                                 \
-      )                                                                                            \
-    >::type                                                                                        \
-  >::type                                                                                          \
+  #define M0d(z,n,t)                                                                                                   \
+  t( dispatching_run_( ext::adl_helper(), boost::dispatch::default_site_t<T>()                                         \
+                     , boost::dispatch::meta::                                                                         \
+                       hierarchy_of_t<typename boost::proto::result_of::child_c<Expr&, n>::type>()                     \
+                     , boost::dispatch::meta::                                                                         \
+                       hierarchy_of_t<State const&>()                                                                  \
+                     , boost::dispatch::meta::                                                                         \
+                       hierarchy_of_t<typename adapt_data< typename boost::proto::result_of::                          \
+                                                           child_c<Expr&, n>::value_type                               \
+                                                         , Data                                                        \
+                                                         >::type>()                                                    \
+                     )                                                                                                 \
+                     ( boost::proto::child_c<n>(expr)                                                                  \
+                     , state                                                                                           \
+                     , adapt_data< typename boost::proto::result_of::                                                  \
+                                   child_c<Expr&, n>::value_type                                                       \
+                                 , Data                                                                                \
+                                 >::call(data)                                                                         \
+                     )                                                                                                 \
+    )                                                                                                                  \
   /**/
 
-  #define M1d(z,n,t)                                                                               \
-  boost::dispatch::id(                                                                             \
-    typename dispatch::meta::dispatch_call<                                                        \
-      tag::run_( typename boost::proto::result_of::child_c<Expr&, n>::type                         \
-               , State const&                                                                      \
-               , typename adapt_data< typename boost::proto::result_of::                           \
-                                      child_c<Expr&, n>::value_type                                \
-                                    , Data                                                         \
-                                    >::type                                                        \
-              )                                                                                    \
-    >::type()                                                                                      \
-    ( boost::proto::child_c<n>(expr)                                                               \
-    , state                                                                                        \
-    , adapt_data<typename boost::proto::result_of::child_c<Expr&, n>::value_type, Data>::call(data)\
-    )                                                                                              \
-  )                                                                                                \
-  /**/
+  #define MHIERARCHY(e) boost::dispatch::meta::hierarchy_of_t<decltype(e)>()
+  #define MIDENTITY(e) e
 
   #define BOOST_PP_ITERATION_PARAMS_1 (3, ( 1, BOOST_PP_MIN( BOOST_DISPATCH_MAX_ARITY              \
                                                            , BOOST_PROTO_MAX_ARITY                 \
@@ -142,47 +118,57 @@ namespace boost { namespace simd { namespace ext
 
   #undef M0
   #undef M1
-  #undef M0d
-  #undef M1d
+  #undef MHIERARCHY
+  #undef MIDENTITY
 
   //============================================================================
   // Run an expression with a state and data - Terminal cases
   // When run on a terminal, we directly jump into the terminal functor
   //============================================================================
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( run_, tag::cpu_
                                     , (A0)(T)(D)
                                     , ((node_<A0, unspecified_<T>, mpl::long_<0>, D>))
                                     )
   {
-    typedef typename dispatch::meta::result_of<
-      typename dispatch::meta::dispatch_call<T(A0&)>::type
-      (A0&)
-    >::type result_type;
+    BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE operator()(A0& a0) const
+    BOOST_AUTO_DECLTYPE_BODY
+    (
+      T::dispatch( boost::dispatch::default_site_t<T>()
+                 , boost::dispatch::meta::hierarchy_of_t<A0&>()
+                 )
+                 ( a0 )
+    )
 
-    BOOST_FORCEINLINE result_type
-    operator()(A0& a0) const
-    {
-      return typename dispatch::meta::dispatch_call<T(A0&)>::type()(a0);
-    }
+    #ifdef BOOST_MSVC
+    typedef decltype( boost::declval<impl_run_ const&>()(boost::declval<A0&>()) ) result_type;
+    #else
+    typedef decltype( (((impl_run_ const*)0)->*&impl_run_::operator())(*(A0*)0) ) result_type;
+    #endif
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( run_, tag::cpu_
                                     , (A0)(T)(D)(State)(Data)
                                     , ((node_<A0, unspecified_<T>, mpl::long_<0>, D>))
                                       (unspecified_<State>)
                                       (unspecified_<Data>)
                                     )
   {
-    typedef typename dispatch::meta::result_of<
-      typename dispatch::meta::dispatch_call<T(A0&, State const&, Data const&)>::type
-      (A0&, State const&, Data const&)
-    >::type result_type;
+    BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE operator()(A0& a0, State const& state, Data const& data) const
+    BOOST_AUTO_DECLTYPE_BODY
+    (
+      T::dispatch( boost::dispatch::default_site_t<T>()
+                 , boost::dispatch::meta::hierarchy_of_t<A0&>()
+                 , boost::dispatch::meta::hierarchy_of_t<State const&>()
+                 , boost::dispatch::meta::hierarchy_of_t<Data const&>()
+                 )
+                 ( a0, state, data )
+    )
 
-    BOOST_FORCEINLINE result_type
-    operator()(A0& a0, State const& state, Data const& data) const
-    {
-      return typename dispatch::meta::dispatch_call<T(A0&, State const&, Data const&)>::type()(a0, state, data);
-    }
+    #ifdef BOOST_MSVC
+    typedef decltype( boost::declval<impl_run_ const&>()(boost::declval<A0&>(), boost::declval<State const&>(), boost::declval<Data const&>()) ) result_type;
+    #else
+    typedef decltype( (((impl_run_ const*)0)->*&impl_run_::operator())(*(A0*)0, *(State const*)0, *(Data const*)0) ) result_type;
+    #endif
   };
 } } }
 
@@ -191,46 +177,48 @@ namespace boost { namespace simd { namespace ext
 
 #define n BOOST_PP_ITERATION()
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::run_, tag::formal_
+  BOOST_DISPATCH_IMPLEMENT          ( run_, tag::formal_
                                     , (Expr)(T)(D)
                                     , ((node_<Expr, unspecified_<T>, boost::mpl::long_<n>, D>))
                                     )
   {
-    typedef typename dispatch::meta::result_of<
-      typename dispatch::meta::dispatch_call<
-        T( BOOST_PP_ENUM(n, M0, ~) )
-      >::type
-      ( BOOST_PP_ENUM(n, M0, ~) )
-    >::type result_type;
-    BOOST_FORCEINLINE result_type operator()(Expr& expr) const
-    {
-      return typename dispatch::meta::dispatch_call<
-        T( BOOST_PP_ENUM(n, M0, ~) )
-      >::type()
-      ( BOOST_PP_ENUM(n, M1, ~) );
-    }
+    BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE operator()(Expr& expr) const
+    BOOST_AUTO_DECLTYPE_BODY
+    (
+      T::dispatch( boost::dispatch::default_site_t<T>()
+                 , BOOST_PP_ENUM(n, M0, MHIERARCHY)
+                 )
+                 ( BOOST_PP_ENUM(n, M0, MIDENTITY) )
+    )
+
+    #ifdef BOOST_MSVC
+    typedef decltype( boost::declval<impl_run_ const&>()(boost::declval<Expr&>()) ) result_type;
+    #else
+    typedef decltype( (((impl_run_ const*)0)->*&impl_run_::operator())(*(Expr*)0) ) result_type;
+    #endif
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( run_, tag::cpu_
                                     , (Expr)(T)(D)(State)(Data)
                                     , ((node_<Expr, unspecified_<T>, boost::mpl::long_<n>, D>))
                                       (unspecified_<State>)
                                       (unspecified_<Data>)
                                     )
   {
-    typedef typename dispatch::meta::result_of<
-      typename dispatch::meta::dispatch_call<
-        T( BOOST_PP_ENUM(n, M0d, ~) )
-      >::type
-      ( BOOST_PP_ENUM(n, M0d, ~) )
-    >::type result_type;
-    BOOST_FORCEINLINE result_type operator()(Expr& expr, State const& state, Data const& data) const
-    {
-      return typename dispatch::meta::dispatch_call<
-        T( BOOST_PP_ENUM(n, M0d, ~) )
-      >::type()
-      ( BOOST_PP_ENUM(n, M1d, ~) );
-    }
+    BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE operator()(Expr& expr, State const& state, Data const& data) const
+    BOOST_AUTO_DECLTYPE_BODY
+    (
+      T::dispatch( boost::dispatch::default_site_t<T>()
+                 , BOOST_PP_ENUM(n, M0d, MHIERARCHY)
+                 )
+                 ( BOOST_PP_ENUM(n, M0d, MIDENTITY) )
+    )
+
+    #ifdef BOOST_MSVC
+    typedef decltype( boost::declval<impl_run_ const&>()(boost::declval<Expr&>(), boost::declval<State const&>(), boost::declval<Data const&>()) ) result_type;
+    #else
+    typedef decltype( (((impl_run_ const*)0)->*&impl_run_::operator())(*(Expr*)0, *(State const*)0, *(Data const*)0) ) result_type;
+    #endif
   };
 
 #undef n

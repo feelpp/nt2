@@ -32,7 +32,7 @@ namespace nt2 { namespace ext
 //---------------------------------------------Real-double-just w------------------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> > , S1 >)) //w
@@ -73,7 +73,7 @@ namespace nt2 { namespace ext
   };
 
    /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> > , S1 >)) //w
@@ -114,7 +114,7 @@ namespace nt2 { namespace ext
     }
   };
   /// INTERNAL ONLY - workspace ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> > , S1 >)) //w
@@ -140,9 +140,9 @@ namespace nt2 { namespace ext
       nt2_la_int wint = wk.integers_need();
       NT2_F77NAME(sgeesx) ( &jobu, &sort
                           , nt2::details::selectall2, &sense
-                          , &n, a.raw()
+                          , &n, a.data()
                           , &lda, &sdim_
-                          , wr.raw(),  wi.raw()
+                          , wr.data(),  wi.data()
                           , 0, &ldu
                           , 0, 0
                           , wk.main(), &wn
@@ -154,7 +154,7 @@ namespace nt2 { namespace ext
     }
   };
   /// INTERNAL ONLY - workspace ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> > , S1 >)) //w
@@ -180,9 +180,9 @@ namespace nt2 { namespace ext
        nt2_la_int wint = wk.integers_need();
        NT2_F77NAME(dgeesx) ( &jobu, &sort
                            , nt2::details::selectall2, &sense
-                           , &n, a.raw()
+                           , &n, a.data()
                            , &lda, &sdim_
-                           , wr.raw(), wi.raw()
+                           , wr.data(), wi.data()
                            , 0, &ldu
                            , 0, 0
                            , wk.main(), &wn
@@ -197,7 +197,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> > , S1 >)) //w
@@ -236,7 +236,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> > , S1 >)) //w
@@ -260,9 +260,9 @@ namespace nt2 { namespace ext
       w.resize(of_size(n, 1));
       NT2_F77NAME(zgeesx) ( &jobu, &sort
                           , nt2::details::selectall, &sense
-                          , &n, a.raw()
+                          , &n, a.data()
                           , &lda, &sdim_
-                          , w.raw(), 0
+                          , w.data(), 0
                           , &ldu, 0
                           , 0, wk.main()
                           , &wn, wk.reals()
@@ -276,7 +276,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> > , S1 >)) //w
@@ -316,7 +316,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geesxw_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geesxw_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> > , S1 >)) //w
@@ -339,9 +339,9 @@ namespace nt2 { namespace ext
       nt2_la_int wn =  nt2::sqr(n+1);
       NT2_F77NAME(cgeesx) ( &jobu, &sort
                           , nt2::details::selectall, &sense
-                          , &n, a.raw()
+                          , &n, a.data()
                           , &lda, &sdim_
-                          , w.raw(), 0
+                          , w.data(), 0
                           , &ldu, 0
                           , 0, wk.main()
                           , &wn, wk.reals()

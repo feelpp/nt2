@@ -10,14 +10,14 @@
 #define NT2_LINALG_FUNCTIONS_FACTORIZATIONS_RREF_HPP_INCLUDED
 
 #include <nt2/linalg/functions/rref.hpp>
-#include <nt2/options.hpp>
+#include <nt2/linalg/options.hpp>
 #include <nt2/core/container/table/table.hpp>
 #include <nt2/include/functions/ismatrix.hpp>
 #include <nt2/linalg/functions/details/rref.hpp>
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::factorization::rref_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_G( nt2::tag::factorization::rref_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))
                               (scalar_< floating_<A1> >)
@@ -38,7 +38,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::factorization::rref_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_G( nt2::tag::factorization::rref_, tag::cpu_
                             , (A0)
                             , ((ast_<A0, nt2::container::domain>))
                             )
@@ -58,7 +58,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::factorization::rref_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_G( nt2::tag::factorization::rref_, tag::cpu_
                             , (A0)(A1)(IP)
                             , ((ast_<A0, nt2::container::domain>))
                               (scalar_< floating_<A1> >)
@@ -78,7 +78,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::factorization::rref_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_G( nt2::tag::factorization::rref_, tag::cpu_
                             , (A0)(IP)
                             , ((ast_<A0, nt2::container::domain>))
                               (unspecified_< IP >)

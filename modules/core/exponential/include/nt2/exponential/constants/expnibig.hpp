@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_EXPNIBIG_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_EXPNIBIG_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x4b800000         // 2^24
                                 , 0x4380000000000000ll  // 2^57
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Expnibig, Site> dispatching_Expnibig(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Expnibig, Site>();
+    }
+    template<class... Args>
+    struct impl_Expnibig;
   }
   /*!
     Generates a constant used in expni.

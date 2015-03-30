@@ -12,6 +12,7 @@
 #include <nt2/core/functions/construct.hpp>
 #include <nt2/include/functions/scalar/numel.hpp>
 #include <boost/simd/memory/iterator_category.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <boost/dispatch/meta/fusion.hpp>
 
 namespace nt2 { namespace ext
@@ -21,7 +22,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // Construct a terminal from a size and a Iterator pair
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::construct_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( construct_, tag::cpu_
                             , (A0)(A1)(A2)(A3)
                             , (scalar_< unspecified_<A0> >)
                               (fusion_sequence_<A1>)
@@ -41,6 +42,7 @@ namespace nt2 { namespace ext
       ( nt2::numel(a1) == 1
       , "Source range is larger than destination container."
       );
+      boost::ignore_unused(a1);
 
       a0 = *a2;
     }
@@ -49,7 +51,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // Assign a container from a pair of iterators
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::construct_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( construct_, tag::cpu_
                             , (A0)(A1)(A2)(A3)
                             , (unspecified_<A0>)
                               (fusion_sequence_<A1>)
@@ -71,6 +73,8 @@ namespace nt2 { namespace ext
       ( nt2::numel(a1) >= range_size
       , "Source range is larger than destination container."
       );
+      boost::ignore_unused(a1);
+      boost::ignore_unused(range_size);
 
       a0.clear();
       a0.insert(a0.begin(), a2, a3);

@@ -26,6 +26,12 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_< cosecant_<T> > parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_HEADER( dispatching( ext::adl_helper(), *(cosecant_*)0, static_cast<Args&&>(args)... ) )
+      {
+        return dispatching( ext::adl_helper(), cosecant_(), static_cast<Args&&>(args)... );
+      }
     };
   }
   /*!

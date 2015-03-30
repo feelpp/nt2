@@ -30,7 +30,20 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::unspecified_<linear_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_linear_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::linear_, Site> dispatching_linear_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::linear_, Site>();
+   }
+   template<class... Args>
+   struct impl_linear_;
   }
   /*!
     one dimensional linear interpolation

@@ -31,7 +31,7 @@
 #include <nt2/sdk/unit/module.hpp>
 
 #include <nt2/constant/constant.hpp>
-#include <boost/dispatch/meta/ignore_unused.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 
 NT2_TEST_CASE_TPL ( next_real__1_0,  NT2_REAL_TYPES)
@@ -39,10 +39,7 @@ NT2_TEST_CASE_TPL ( next_real__1_0,  NT2_REAL_TYPES)
 
   using nt2::next;
   using nt2::tag::next_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<next_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
   // return type conformity test
@@ -64,10 +61,7 @@ NT2_TEST_CASE_TPL ( next_unsigned_int__1_0,  NT2_UNSIGNED_TYPES)
 
   using nt2::next;
   using nt2::tag::next_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<next_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
   // return type conformity test
@@ -85,10 +79,7 @@ NT2_TEST_CASE_TPL ( next_signed_int__1_0,  NT2_INTEGRAL_SIGNED_TYPES)
 
   using nt2::next;
   using nt2::tag::next_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<next_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
   // return type conformity test
@@ -98,6 +89,5 @@ NT2_TEST_CASE_TPL ( next_signed_int__1_0,  NT2_INTEGRAL_SIGNED_TYPES)
   // specific values tests
   NT2_TEST_EQUAL(next(nt2::Mone<T>()), nt2::Zero<r_t>());
   NT2_TEST_EQUAL(next(nt2::One<T>()), nt2::Two<r_t>());
-  NT2_TEST_EQUAL(next(nt2::Valmax<T>()), nt2::Valmin<r_t>());
   NT2_TEST_EQUAL(next(nt2::Zero<T>()), nt2::One<r_t>());
 } // end of test for signed_int_

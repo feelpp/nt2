@@ -29,6 +29,7 @@ namespace nt2 { namespace tag
   struct table_;
   struct colon_;
   struct unity_colon_;
+  struct terminal_;
 } }
 
 namespace nt2 { namespace details
@@ -190,7 +191,7 @@ namespace nt2 { namespace ext
         , boost::proto::list3<
               nt2::container::expression<
                   boost::proto::basic_expr<
-                      boost::proto::tag::terminal
+                      nt2::tag::terminal_
                     , boost::proto::term<
                           nt2::of_size_<1l, N, 1l, 1l>
                       >
@@ -200,7 +201,7 @@ namespace nt2 { namespace ext
               >
             , nt2::container::expression<
                   boost::proto::basic_expr<
-                      boost::proto::tag::terminal
+                      nt2::tag::terminal_
                     , boost::proto::term<
                           nt2::meta::constant_<nt2::tag::unity_colon_, T>
                       >
@@ -210,7 +211,7 @@ namespace nt2 { namespace ext
               >
             , nt2::container::expression<
                   boost::proto::basic_expr<
-                      boost::proto::tag::terminal
+                      nt2::tag::terminal_
                     , boost::proto::term<
                           boost::dispatch::meta::as_<T>
                       >

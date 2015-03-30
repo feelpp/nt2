@@ -28,11 +28,25 @@ namespace nt2
      @par Models:
         Hierarchy
    **/
-    struct  blkdiag_ : ext::elementwise_<blkdiag_>
+    struct  blkdiag_ : ext::unspecified_<blkdiag_>
     {
       /// @brief Parent hierarchy
-      typedef ext::elementwise_<blkdiag_> parent;
+      typedef ext::unspecified_<blkdiag_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_blkdiag_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::blkdiag_, Site> dispatching_blkdiag_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::blkdiag_, Site>();
+   }
+   template<class... Args>
+   struct impl_blkdiag_;
   }
   /*!
     Builds a block diagonal matrix
@@ -94,8 +108,18 @@ namespace nt2 { namespace ext
   /// INTERNAL ONLY
   template<class Domain, int N, class Expr>
   struct  value_type<nt2::tag::blkdiag_,Domain,N,Expr>
-        : meta::value_as<Expr,0>
-  {};
+  {
+    typedef typename  boost::proto::result_of
+                    ::child_c<Expr&,0>::value_type::value_type  type;
+    typedef typename  boost::proto::result_of
+                    ::child_c<Expr&,1>::value_type::value_type  other_type;
+
+    BOOST_MPL_ASSERT_MSG
+    ( (boost::is_same<type,other_type>::value)
+    , NT2_INCOMPATIBLE_TYPE_IN_BLKDIAG_EXPRESSION
+    , (type,other_type)
+    );
+  };
 } }
 
 #endif

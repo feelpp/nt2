@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 ,0x41400000, 0x4028000000000000ll
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Twelve, Site> dispatching_Twelve(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Twelve, Site>();
+   }
+   template<class... Args>
+   struct impl_Twelve;
+  }
   /*!
     Generates value 12
 

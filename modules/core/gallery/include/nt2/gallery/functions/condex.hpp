@@ -8,7 +8,7 @@
 //==============================================================================
 #ifndef NT2_GALLERY_FUNCTIONS_CONDEX_HPP_INCLUDED
 #define NT2_GALLERY_FUNCTIONS_CONDEX_HPP_INCLUDED
-#include <nt2/options.hpp>
+#include <nt2/linalg/options.hpp>
 #include <nt2/include/functor.hpp>
 #include <nt2/sdk/meta/size_as.hpp>
 #include <nt2/sdk/meta/value_as.hpp>
@@ -70,7 +70,20 @@ namespace nt2 { namespace tag
     struct condex_ : ext::unspecified_<condex_>
     {
       typedef ext::unspecified_<condex_>  parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_condex_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::condex_, Site> dispatching_condex_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::condex_, Site>();
+    }
+    template<class... Args>
+    struct impl_condex_;
   }
 
   NT2_FUNCTION_IMPLEMENTATION(tag::condex_, condex, 1)

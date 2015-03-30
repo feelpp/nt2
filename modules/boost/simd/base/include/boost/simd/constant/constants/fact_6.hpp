@@ -36,6 +36,16 @@ namespace boost { namespace simd
                                 , 720,0x44340000,0x4086800000000000ll
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Fact_6, Site> dispatching_Fact_6(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Fact_6, Site>();
+   }
+   template<class... Args>
+   struct impl_Fact_6;
+  }
   /*!
     Generates 6! that is 720
 

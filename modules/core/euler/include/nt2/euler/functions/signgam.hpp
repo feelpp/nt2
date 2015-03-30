@@ -25,7 +25,20 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<signgam_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_signgam_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::signgam_, Site> dispatching_signgam_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::signgam_, Site>();
+   }
+   template<class... Args>
+   struct impl_signgam_;
   }
   /*!
     sign of gamma function

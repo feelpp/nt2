@@ -48,7 +48,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gbsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gbsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >)) // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -71,7 +71,7 @@ namespace nt2 { namespace ext
 
       a1.resize(nt2::of_size(n,1));
 
-      NT2_F77NAME(dgbsv)(&n,&kl,&ku,&nhrs,a0.raw(),&ld,a1.raw(),a2.raw(),&ld,&that);
+      NT2_F77NAME(dgbsv)(&n,&kl,&ku,&nhrs,a0.data(),&ld,a1.data(),a2.data(),&ld,&that);
 
       return that;
      }
@@ -80,7 +80,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gbsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gbsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >)) // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -103,14 +103,14 @@ namespace nt2 { namespace ext
 
       a1.resize(nt2::of_size(n,1));
 
-      NT2_F77NAME(sgbsv)(&n,&kl,&ku,&nhrs,a0.raw(),&ld,a1.raw(),a2.raw(),&ld,&that);
+      NT2_F77NAME(sgbsv)(&n,&kl,&ku,&nhrs,a0.data(),&ld,a1.data(),a2.data(),&ld,&that);
 
       return that;
      }
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gbsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gbsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >)) // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -133,14 +133,14 @@ namespace nt2 { namespace ext
 
       a1.resize(nt2::of_size(n,1));
 
-      NT2_F77NAME(cgbsv)(&n,&kl,&ku,&nhrs,a0.raw(),&ld,a1.raw(),a2.raw(),&ld,&that);
+      NT2_F77NAME(cgbsv)(&n,&kl,&ku,&nhrs,a0.data(),&ld,a1.data(),a2.data(),&ld,&that);
 
       return that;
      }
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gbsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gbsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >)) // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -163,7 +163,7 @@ namespace nt2 { namespace ext
 
       a1.resize(nt2::of_size(n,1));
 
-      NT2_F77NAME(zgbsv)(&n,&kl,&ku,&nhrs,a0.raw(),&ld,a1.raw(),a2.raw(),&ld,&that);
+      NT2_F77NAME(zgbsv)(&n,&kl,&ku,&nhrs,a0.data(),&ld,a1.data(),a2.data(),&ld,&that);
 
       return that;
      }

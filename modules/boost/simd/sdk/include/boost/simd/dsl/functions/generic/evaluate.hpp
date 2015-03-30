@@ -18,17 +18,17 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::evaluate_
+  BOOST_DISPATCH_IMPLEMENT          ( evaluate_
                                     , tag::formal_
                                     , (A0)(D)
                                     , ((ast_<A0, D>))
                                     )
   {
-    typedef typename dispatch::meta::call<tag::run_(A0&)>::type result_type;
+    typedef typename boost::dispatch::meta::call<boost::simd::tag::run_(A0&)>::type result_type;
 
     BOOST_FORCEINLINE result_type operator()(A0& a0) const
     {
-      return run(a0);
+      return boost::simd::run(a0);
     }
   };
 } } }

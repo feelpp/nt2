@@ -28,6 +28,16 @@ namespace boost { namespace simd
    **/
     BOOST_SIMD_CONSTANT_REGISTER(Twenty,double,20, 0x41a00000,0x4034000000000000ll)
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Twenty, Site> dispatching_Twenty(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Twenty, Site>();
+   }
+   template<class... Args>
+   struct impl_Twenty;
+  }
   /*!
     Generates value 20
 

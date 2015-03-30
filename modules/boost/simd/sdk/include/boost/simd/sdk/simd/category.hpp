@@ -36,6 +36,15 @@ namespace boost { namespace dispatch { namespace meta
     typedef fundamental_<T> parent;
   };
 
+  //============================================================================
+  // hierarchies for tags
+  //============================================================================
+  template<class T>
+  struct abstract_ : unspecified_<T>
+  {
+    typedef unspecified_<T> parent;
+  };
+
   template<class T>
   struct elementwise_ : unspecified_<T>
   {
@@ -60,6 +69,7 @@ namespace boost { namespace simd { namespace ext
 {
   using boost::dispatch::meta::simd_;
   using boost::dispatch::meta::logical_;
+  using boost::dispatch::meta::abstract_;
   using boost::dispatch::meta::elementwise_;
   using boost::dispatch::meta::reduction_;
   using boost::dispatch::meta::cumulative_;

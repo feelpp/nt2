@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_LOG_2_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_LOG_2_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3f317218UL
                                 , 0x3fe62e42fefa39efULL
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Log_2, Site> dispatching_Log_2(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Log_2, Site>();
+    }
+    template<class... Args>
+    struct impl_Log_2;
   }
  /*!
     Generates constant Log_2. (\f$\log(2)\f$)

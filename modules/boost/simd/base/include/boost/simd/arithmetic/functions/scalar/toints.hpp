@@ -20,26 +20,20 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)
                                     , (scalar_< int_<A0> >)
                                     )
   {
     typedef A0 result_type;
 
-    BOOST_FORCEINLINE
-    #ifdef BOOST_PROTO_STRICT_RESULT_OF
-    result_type
-    #else
-    A0 const&
-    #endif
-    operator()(A0 const& a0) const
+    BOOST_FORCEINLINE result_type operator()(A0 const& a0) const
     {
       return a0;
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)
                                     , (scalar_< uint_<A0> >)
                                     )
@@ -52,7 +46,7 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)
                                     , (scalar_< floating_<A0> >)
                                     )

@@ -20,11 +20,33 @@ namespace nt2
 {
   namespace tag
   {
-    using boost::simd::tag::terminal_;
-    using boost::simd::tag::dereference_;
+    /*! \brief Same as \classref{boost::simd::tag::terminal_} **/
+    struct terminal_ : ext::elementwise_<terminal_>
+    {
+      typedef void is_nt2;
+
+      typedef ext::elementwise_<terminal_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_terminal_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
+    };
   }
 
-  using boost::simd::terminal;
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::terminal_, Site> dispatching_terminal_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::terminal_, Site>();
+    }
+    template<class... Args>
+    struct impl_terminal_;
+  }
+
+  /*! \brief Same as \funcref{boost::simd::terminal} **/
+  template<class A0, class... Args>
+  BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE terminal(A0&& a0, Args&&... args)
+  BOOST_AUTO_DECLTYPE_BODY( dispatching_terminal_( ext::adl_helper(), boost::dispatch::default_site_t<A0>(), boost::dispatch::meta::hierarchy_of_t<A0&&>(), boost::dispatch::meta::hierarchy_of_t<Args&&>()... )(static_cast<A0&&>(a0), static_cast<Args&&>(args)...) )
 }
 
 namespace nt2 { namespace ext
@@ -33,7 +55,7 @@ namespace nt2 { namespace ext
   // Terminal size is stored as a reference to the terminal value size
   //============================================================================
   template<class Domain, class Expr>
-  struct size_of<boost::simd::tag::terminal_,Domain,0,Expr>
+  struct size_of<nt2::tag::terminal_,Domain,0,Expr>
   {
     typedef typename boost::proto::result_of::value<Expr&>::type  term_t;
     typedef typename meta::call<tag::extent_(term_t)>::type       result_type;

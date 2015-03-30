@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_SQRT_2PI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_SQRT_2PI_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 2, 0x40206c99
                                 , 0x40040d931ff62704ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Sqrt_2pi, Site> dispatching_Sqrt_2pi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Sqrt_2pi, Site>();
+   }
+   template<class... Args>
+   struct impl_Sqrt_2pi;
   }
   /*!
     Constant \f$\sqrt{2\pi}\f$.

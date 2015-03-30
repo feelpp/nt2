@@ -10,11 +10,12 @@
 #define BOOST_SIMD_ARITHMETIC_FUNCTIONS_SCALAR_TOFLOAT_HPP_INCLUDED
 
 #include <boost/simd/arithmetic/functions/tofloat.hpp>
+#include <boost/dispatch/meta/as_floating.hpp>
 #include <boost/dispatch/attributes.hpp>
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::tofloat_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( tofloat_, tag::cpu_
                                     , (A0)
                                     , (scalar_< arithmetic_<A0> >)
                                     )
@@ -27,20 +28,14 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::tofloat_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( tofloat_, tag::cpu_
                                     , (A0)
                                     , (scalar_< floating_<A0> >)
                                     )
   {
     typedef A0 result_type;
 
-    BOOST_FORCEINLINE
-    #ifdef BOOST_PROTO_STRICT_RESULT_OF
-    result_type
-    #else
-    A0 const&
-    #endif
-    operator()(A0 const& a0) const
+    BOOST_FORCEINLINE result_type operator()(A0 const& a0) const
     {
       return a0;
     }

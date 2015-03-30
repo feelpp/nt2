@@ -28,7 +28,7 @@
 namespace nt2 { namespace ext
 {
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gesv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  integer_<A1>, S1 >))
@@ -46,13 +46,13 @@ namespace nt2 { namespace ext
         nt2_la_int  ldb = a2.leading_size();
 
         a1.resize(nt2::of_size(n,1));
-        magma_dgesv(n,nhrs,a0.raw(),lda,a1.raw(),a2.raw(),ldb,&that);
+        magma_dgesv(n,nhrs,a0.data(),lda,a1.data(),a2.data(),ldb,&that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gesv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  integer_<A1>, S1 >))
@@ -71,14 +71,14 @@ namespace nt2 { namespace ext
 
         a1.resize(nt2::of_size(n,1));
 
-        magma_sgesv(n,nhrs,a0.raw(),lda,a1.raw(),a2.raw(),ldb,&that);
+        magma_sgesv(n,nhrs,a0.data(),lda,a1.data(),a2.data(),ldb,&that);
 
         return that;
      }
   };
 
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gesv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // IPIV
@@ -97,14 +97,14 @@ namespace nt2 { namespace ext
 
         a1.resize(nt2::of_size(n,1));
 
-        magma_zgesv(n,nhrs,(cuDoubleComplex*)a0.raw(),lda,a1.raw()
-                   ,(cuDoubleComplex*)a2.raw(),ldb,&that);
+        magma_zgesv(n,nhrs,(cuDoubleComplex*)a0.data(),lda,a1.data()
+                   ,(cuDoubleComplex*)a2.data(),ldb,&that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gesv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // IPIV
@@ -123,8 +123,8 @@ namespace nt2 { namespace ext
 
         a1.resize(nt2::of_size(n,1));
 
-        magma_cgesv(n,nhrs,(cuFloatComplex*)a0.raw(),lda,a1.raw()
-                   ,(cuDoubleComplex*)a2.raw(),ldb,&that);
+        magma_cgesv(n,nhrs,(cuFloatComplex*)a0.data(),lda,a1.data()
+                   ,(cuDoubleComplex*)a2.data(),ldb,&that);
 
         return that;
      }

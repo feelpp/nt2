@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_MEDIUM_PI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_MEDIUM_PI_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 201, 0x43490fdb       //2^6/pi
                                 , 0x412921fb54442d18ll  //2^{18}/pi
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Medium_pi, Site> dispatching_Medium_pi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Medium_pi, Site>();
+   }
+   template<class... Args>
+   struct impl_Medium_pi;
   }
   /*!
     Constant used in trigonometric reductions

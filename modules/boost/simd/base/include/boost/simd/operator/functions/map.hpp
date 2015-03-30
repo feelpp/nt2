@@ -24,10 +24,27 @@ namespace boost { namespace simd
    **/
   namespace tag
   {
-    struct map_ : dispatch::tag::formal_
+    struct map_;
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::map_, Site> dispatching_map_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::map_, Site>();
+    }
+    template<class... Args>
+    struct impl_map_;
+  }
+  namespace tag
+  {
+    struct map_ : ext::abstract_<map_>
     {
       /// @brief Parent hierarchy
-      typedef dispatch::tag::formal_ parent;
+      typedef ext::abstract_<map_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_map_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
   }
 } }

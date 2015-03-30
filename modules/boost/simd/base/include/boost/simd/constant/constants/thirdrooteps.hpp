@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0x3BA14518, 0x3ED965FEA53D6E42ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Thirdrooteps, Site> dispatching_Thirdrooteps(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Thirdrooteps, Site>();
+   }
+   template<class... Args>
+   struct impl_Thirdrooteps;
+  }
   /*!
     Generates the cubic root of Eps
 

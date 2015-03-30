@@ -16,13 +16,12 @@
 #include <nt2/include/functions/zeros.hpp>
 #include <nt2/include/functions/multiplies.hpp>
 #include <nt2/include/functions/ndims.hpp>
-#include <nt2/include/functions/value.hpp>
 #include <nt2/include/constants/one.hpp>
 #include <nt2/include/constants/zero.hpp>
 #include <nt2/core/container/dsl/size.hpp>
 #include <nt2/core/container/dsl/alias.hpp>
 #include <nt2/core/container/dsl/as_terminal.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 #include <nt2/sdk/memory/forward/container.hpp>
 #include <nt2/sdk/memory/category.hpp>
 #include <boost/proto/traits.hpp>
@@ -108,7 +107,7 @@ namespace nt2 { namespace ext
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))
                               ((ast_<A1, nt2::container::domain>))
@@ -120,7 +119,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)
                             , ((ast_<A0, nt2::container::domain>))
                               ((ast_<A1, nt2::container::domain>))
@@ -134,7 +133,7 @@ namespace nt2 { namespace ext
   };
 
   // Recognize scalar/matrix, matrix/scalar and scalar/scalar
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(T1)(N1)
                             , (scalar_< unspecified_<A0> >)
                               ((expr_< generic_< unspecified_<A1> >, T1, N1 >))
@@ -147,7 +146,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(T0)(N0)(A1)
                             , ((expr_< generic_< unspecified_<A0> >, T0, N0 >))
                               (scalar_< unspecified_<A1> >)
@@ -160,7 +159,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_< unspecified_<A0> >)
                               (scalar_< unspecified_<A1> >)
@@ -174,7 +173,7 @@ namespace nt2 { namespace ext
   };
 
   // Recognize transpose
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((node_< A0, nt2::tag::transpose_, boost::mpl::long_<1> , nt2::container::domain>))
                               ((ast_< A1, nt2::container::domain>))
@@ -189,7 +188,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((ast_< A0, nt2::container::domain>))
                               ((node_< A1, nt2::tag::transpose_, boost::mpl::long_<1> , nt2::container::domain>))
@@ -204,7 +203,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((node_< A0, nt2::tag::transpose_, boost::mpl::long_<1> , nt2::container::domain>))
                               ((node_< A1, nt2::tag::transpose_, boost::mpl::long_<1> , nt2::container::domain>))
@@ -220,7 +219,7 @@ namespace nt2 { namespace ext
   };
 
   // Recognize ctranspose
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((node_< A0, nt2::tag::ctranspose_, boost::mpl::long_<1> , nt2::container::domain>))
                               ((ast_< A1, nt2::container::domain>))
@@ -235,7 +234,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((ast_< A0, nt2::container::domain>))
                               ((node_< A1, nt2::tag::ctranspose_, boost::mpl::long_<1> , nt2::container::domain>))
@@ -250,7 +249,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::mtimes_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( mtimes_, tag::cpu_
                             , (A0)(A1)(A2)(A3)(A4)(A5)
                             , ((node_< A0, nt2::tag::ctranspose_, boost::mpl::long_<1> , nt2::container::domain>))
                               ((node_< A1, nt2::tag::ctranspose_, boost::mpl::long_<1> , nt2::container::domain>))
@@ -264,10 +263,12 @@ namespace nt2 { namespace ext
       mtimes(boost::proto::child_c<0>(a0), boost::proto::child_c<0>(a1), a2, a3, tag::blas_ctranspose_(), tag::blas_ctranspose_())
     )
   };
+} }
 
-
+namespace boost { namespace simd { namespace ext
+{
   // Recognize alpha
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::multiplies_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( multiplies_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_< unspecified_<A0> >)
                               ((node_< A1, nt2::tag::mtimes_, boost::mpl::long_<6> , nt2::container::domain>))
@@ -278,7 +279,7 @@ namespace nt2 { namespace ext
     )
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::multiplies_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( multiplies_, tag::cpu_
                             , (A0)(A1)
                             , ((node_< A0, nt2::tag::mtimes_, boost::mpl::long_<6> , nt2::container::domain>))
                               (scalar_< unspecified_<A1> >)
@@ -288,9 +289,12 @@ namespace nt2 { namespace ext
       mtimes(boost::proto::child_c<0>(a0), boost::proto::child_c<1>(a0), boost::proto::child_c<2>(a0), a1 * boost::proto::value(boost::proto::child_c<3>(a0)), boost::proto::child_c<4>(a0), boost::proto::child_c<5>(a0))
     )
   };
+} } }
 
+namespace nt2 { namespace ext
+{
   // run_assign
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_assign_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_assign_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))
                               ((node_< A1, nt2::tag::mtimes_, boost::mpl::long_<6> , nt2::container::domain>))
@@ -352,10 +356,10 @@ namespace nt2 { namespace ext
       gemm( &transA, &transB
           , &m, &n, &k
           , &alpha
-          , child0.raw(), &lda
-          , child1.raw(), &ldb
+          , child0.data(), &lda
+          , child1.data(), &ldb
           , &beta
-          , result_view.raw(), &ldc
+          , result_view.data(), &ldc
           );
 
       if(swap)

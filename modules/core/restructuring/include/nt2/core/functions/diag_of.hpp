@@ -33,13 +33,37 @@ namespace nt2
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<diag_of_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_diag_of_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
 
     struct offset_diag_of_ : ext::elementwise_<offset_diag_of_>
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<offset_diag_of_>  parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_offset_diag_of_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::diag_of_, Site> dispatching_diag_of_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::diag_of_, Site>();
+    }
+    template<class... Args>
+    struct impl_diag_of_;
+
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::offset_diag_of_, Site> dispatching_offset_diag_of_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::offset_diag_of_, Site>();
+    }
+    template<class... Args>
+    struct impl_offset_diag_of_;
   }
 
   /*!

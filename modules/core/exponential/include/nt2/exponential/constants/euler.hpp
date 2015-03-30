@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_EULER_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_EULER_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3f13c468
                                 , 0x3fe2788cfc6fb619ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Euler, Site> dispatching_Euler(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Euler, Site>();
+   }
+   template<class... Args>
+   struct impl_Euler;
   }
   /*!
     GeneratesEuler constant.

@@ -24,7 +24,7 @@ namespace nt2 { namespace ext
 //---------------------------------------------Real-double------------------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //w
@@ -51,7 +51,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)(WK)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //w
@@ -70,7 +70,7 @@ namespace nt2 { namespace ext
         nt2_la_int  lda = a.leading_size();
 
         nt2_la_int  wn = wk.main_size();
-        NT2_F77NAME(dsyev) (&jobz, &uplo, &n, a.raw(), &lda, w.raw(), wk.main(), &wn, &info);
+        NT2_F77NAME(dsyev) (&jobz, &uplo, &n, a.data(), &lda, w.data(), wk.main(), &wn, &info);
 
         return info;
      }
@@ -78,7 +78,7 @@ namespace nt2 { namespace ext
 
 //---------------------------------------------Real-single------------------------------------------------//
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //w
@@ -107,7 +107,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)(WK)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //w
@@ -126,7 +126,7 @@ namespace nt2 { namespace ext
         nt2_la_int  lda = a.leading_size();
 
         nt2_la_int  wn = wk.main_size();
-        NT2_F77NAME(ssyev) (&jobz, &uplo, &n, a.raw(), &lda, w.raw(), wk.main(), &wn, &info);
+        NT2_F77NAME(ssyev) (&jobz, &uplo, &n, a.data(), &lda, w.data(), wk.main(), &wn, &info);
 
         return info;
      }
@@ -136,7 +136,7 @@ namespace nt2 { namespace ext
 //---------------------------------------------Complex-single------------------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >))//a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))           //w
@@ -165,7 +165,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)(WK)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >))//a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))           //w
@@ -185,7 +185,7 @@ namespace nt2 { namespace ext
         nt2_la_int  lda = a.leading_size();
 
         nt2_la_int  wn = wk.main_size();
-        NT2_F77NAME(cheev) (&jobz, &uplo, &n, a.raw(), &lda, w.raw(), wk.main(), &wn, wk.reals()
+        NT2_F77NAME(cheev) (&jobz, &uplo, &n, a.data(), &lda, w.data(), wk.main(), &wn, wk.reals()
                            , &info);
 
         return info;
@@ -196,7 +196,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >))//a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))           //w
@@ -226,7 +226,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::hsev_wu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( hsev_wu_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(C0)(WK)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >))//a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))           //w
@@ -246,7 +246,7 @@ namespace nt2 { namespace ext
         nt2_la_int  lda = a.leading_size();
 
         nt2_la_int  wn = wk.main_size();
-        NT2_F77NAME(zheev) (&jobz, &uplo, &n, a.raw(), &lda, w.raw(), wk.main(), &wn, wk.reals()
+        NT2_F77NAME(zheev) (&jobz, &uplo, &n, a.data(), &lda, w.data(), wk.main(), &wn, wk.reals()
                            , &info);
 
         return info;

@@ -21,7 +21,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -39,13 +39,13 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(dgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(dgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -62,13 +62,13 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(sgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(sgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> > , S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -84,13 +84,13 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(cgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(cgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
         return that;
      }
 
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_< double_<A0> >, S0 > ))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -106,7 +106,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(zgetrf)(&m, &n, a0.raw(), &ld, a1.raw(), &that);
+        NT2_F77NAME(zgetrf)(&m, &n, a0.data(), &ld, a1.data(), &that);
         return that;
      }
 

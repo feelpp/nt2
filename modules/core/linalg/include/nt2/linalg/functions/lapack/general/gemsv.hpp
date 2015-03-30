@@ -44,7 +44,7 @@ extern "C"
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gemsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gemsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >)) // A
                               ((container_< nt2::tag::table_, double_<A1>, S1 >)) // B
@@ -68,15 +68,15 @@ namespace nt2 { namespace ext
         nt2::memory::container<tag::table_, nt2_la_int, nt2::_2D> ipiv(nt2::of_size(n,1));
         w.resize_main(n*nhrs);
 
-        NT2_F77NAME(dsgesv)( &n, &nhrs, a0.raw(), &lda, ipiv.raw() , a1.raw()
-                           , &ldb, a2.raw(), &ldb , w.main(), swork.raw()
+        NT2_F77NAME(dsgesv)( &n, &nhrs, a0.data(), &lda, ipiv.data() , a1.data()
+                           , &ldb, a2.data(), &ldb , w.main(), swork.data()
                            , &iter, &info
                            );
         return iter;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gemsv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gemsv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >)) // A
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >)) // B
@@ -103,9 +103,9 @@ namespace nt2 { namespace ext
         nt2::memory::container<tag::table_, nt2_la_int, nt2::_2D> ipiv(nt2::of_size(n,1));
         w.resize_main(n*nhrs);
 
-        NT2_F77NAME(zcgesv)( &n, &nhrs, a0.raw(), &lda, ipiv.raw() , a1.raw()
-                           , &ldb, a2.raw(), &ldb , w.main(), swork.raw()
-                           , rwork.raw(), &iter, &info
+        NT2_F77NAME(zcgesv)( &n, &nhrs, a0.data(), &lda, ipiv.data() , a1.data()
+                           , &ldb, a2.data(), &ldb , w.main(), swork.data()
+                           , rwork.data(), &iter, &info
                            );
         return iter;
      }

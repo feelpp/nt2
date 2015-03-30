@@ -75,7 +75,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// Computes the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // piv
@@ -118,7 +118,7 @@ namespace nt2 { namespace ext
      }
   };
   /// Workspace is ready -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // piv
@@ -151,21 +151,21 @@ namespace nt2 { namespace ext
 
         NT2_F77NAME(dsysvx)( &fact       , &uplo
                            , &n          , &nhrs
-                           , a0.raw()    , &n
-                           , af.raw()    , &n
-                           , a1.raw()    , a2.raw()
-                           , &ldb        , a3.raw()
+                           , a0.data()    , &n
+                           , af.data()    , &n
+                           , a1.data()    , a2.data()
+                           , &ldb        , a3.data()
                            , &ldb        , &a4
-                           , ferr.raw()  , berr.raw()
+                           , ferr.data()  , berr.data()
                            , a5.main()   , &wn
-                           , iwork.raw() , &that
+                           , iwork.data() , &that
                            );
 
         return that;
      }
   };
   /// Computes the workspace -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // piv
@@ -209,7 +209,7 @@ namespace nt2 { namespace ext
   };
 
   /// Workspace is ready -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // piv
@@ -242,14 +242,14 @@ namespace nt2 { namespace ext
 
         NT2_F77NAME(ssysvx)( &fact       , &uplo
                            , &n          , &nhrs
-                           , a0.raw()    , &n
-                           , af.raw()    , &n
-                           , a1.raw()    , a2.raw()
-                           , &ldb        , a3.raw()
+                           , a0.data()    , &n
+                           , af.data()    , &n
+                           , a1.data()    , a2.data()
+                           , &ldb        , a3.data()
                            , &ldb        , &a4
-                           , ferr.raw()  , berr.raw()
+                           , ferr.data()  , berr.data()
                            , a5.main()   , &wn
-                           , iwork.raw() , &that
+                           , iwork.data() , &that
                            );
 
         return that;
@@ -259,7 +259,7 @@ namespace nt2 { namespace ext
 //--------------------------------------------Complex-----------------------------------------//
 
   /// Computes the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))            // piv
@@ -302,7 +302,7 @@ namespace nt2 { namespace ext
      }
   };
   /// Workspace is ready -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))   // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))            // piv
@@ -336,21 +336,21 @@ namespace nt2 { namespace ext
 
         NT2_F77NAME(zsysvx)( &fact       , &uplo
                            , &n          , &nhrs
-                           , a0.raw()    , &n
-                           , af.raw()    , &n
-                           , a1.raw()    , a2.raw()
-                           , &ldb        , a3.raw()
+                           , a0.data()    , &n
+                           , af.data()    , &n
+                           , a1.data()    , a2.data()
+                           , &ldb        , a3.data()
                            , &ldb        , &a4
-                           , ferr.raw()  , berr.raw()
+                           , ferr.data()  , berr.data()
                            , a5.main()   , &wn
-                           , rwork.raw() , &that
+                           , rwork.data() , &that
                            );
 
         return that;
      }
   };
   /// Computes the workspace -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))            // piv
@@ -395,7 +395,7 @@ namespace nt2 { namespace ext
   };
 
   /// Workspace is ready -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysvx_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysvx_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))            // piv
@@ -429,14 +429,14 @@ namespace nt2 { namespace ext
 
         NT2_F77NAME(csysvx)( &fact       , &uplo
                            , &n          , &nhrs
-                           , a0.raw()    , &n
-                           , af.raw()    , &n
-                           , a1.raw()    , a2.raw()
-                           , &ldb        , a3.raw()
+                           , a0.data()    , &n
+                           , af.data()    , &n
+                           , a1.data()    , a2.data()
+                           , &ldb        , a3.data()
                            , &ldb        , &a4
-                           , ferr.raw()  , berr.raw()
+                           , ferr.data()  , berr.data()
                            , a5.main()   , &wn
-                           , rwork.raw() , &that
+                           , rwork.data() , &that
                            );
 
         return that;

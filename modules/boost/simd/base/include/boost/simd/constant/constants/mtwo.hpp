@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0xc0000000UL, 0xc000000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Mtwo, Site> dispatching_Mtwo(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Mtwo, Site>();
+   }
+   template<class... Args>
+   struct impl_Mtwo;
+  }
   /*!
     Generates value = -2
 

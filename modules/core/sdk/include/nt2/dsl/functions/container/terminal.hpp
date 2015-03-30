@@ -13,8 +13,8 @@
 #include <nt2/include/functions/load.hpp>
 #include <nt2/include/functions/store.hpp>
 #include <nt2/include/functions/splat.hpp>
-#include <boost/simd/include/functions/simd/maximum.hpp>
 #include <nt2/sdk/memory/category.hpp>
+#include <nt2/sdk/memory/is_safe.hpp>
 #include <nt2/sdk/simd/category.hpp>
 #include <nt2/sdk/meta/cardinal_of.hpp>
 #include <nt2/sdk/meta/scalar_of.hpp>
@@ -22,23 +22,10 @@
 
 namespace nt2 { namespace ext
 {
-  // move to details namespace?
-  template<class T, class A0>
-  std::size_t maxpos(A0 const& a0)
-  {
-    return a0 + meta::cardinal_of<T>::value - 1;
-  }
-
-  template<class T, class A0, class X>
-  std::size_t maxpos(boost::simd::native<A0, X> const& a0)
-  {
-    return boost::simd::maximum(a0);
-  }
-
   //============================================================================
   // table terminal with a position in scalar read mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(K0)(S0)(State)(Data)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T0
@@ -63,7 +50,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // table terminal with a position in scalar write mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(S0)(K0)(State)(Data)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T0
@@ -87,7 +74,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // table terminal with a position in SIMD read mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(S0)(K0)(State)(Data)(X)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T0
@@ -104,18 +91,18 @@ namespace nt2 { namespace ext
     result_type operator()(A0 const& a0, State const& state, Data const&) const
     {
       BOOST_ASSERT_MSG
-      ( boost::proto::value(a0).is_safe(maxpos<result_type>(state))
+      ( nt2::memory::is_safe<result_type>(boost::proto::value(a0),state)
       , "Out of range SIMD read"
       );
 
-      return boost::simd::load<result_type>(a0.raw(), state);
+      return boost::simd::load<result_type>(a0.data(), state);
     }
   };
 
   //============================================================================
   // table terminal with a position in SIMD write mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(S0)(K0)(State)(Data)(X)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T0
@@ -132,11 +119,11 @@ namespace nt2 { namespace ext
     result_type operator()(A0& a0, State const& state, Data const& data) const
     {
       BOOST_ASSERT_MSG
-      ( boost::proto::value(a0).is_safe(maxpos<result_type>(state))
+      ( nt2::memory::is_safe<result_type>(boost::proto::value(a0),state)
       , "Out of range SIMD read"
       );
 
-      boost::simd::store(data, a0.raw(), state);
+      boost::simd::store(data, a0.data(), state);
       return data;
     }
   };
@@ -144,7 +131,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // scalar terminal, return value in read mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(State)(Data)
                             , ((expr_< scalar_< unspecified_<A0> >
                                      , T0
@@ -167,7 +154,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // scalar terminal, assign value in write mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(State)(Data)
                             , ((expr_< scalar_< unspecified_<A0> >
                                      , T0
@@ -190,7 +177,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // scalar terminal return value after a cast in SIMD read mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(State)(Data)(X)
                             , ((expr_< scalar_< unspecified_<A0> >
                                      , T0
@@ -213,7 +200,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // scalar terminal, error in SIMD write mode
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::terminal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( terminal_, tag::cpu_
                             , (A0)(T0)(State)(Data)(X)
                             , ((expr_< scalar_< unspecified_<A0> >
                                      , T0

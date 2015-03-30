@@ -47,6 +47,16 @@ namespace boost { namespace dispatch { namespace details
   {
     typedef T type;
   };
+
+  template<class T>
+  struct  hierarchy_of< T
+                      , T const
+                      , typename
+                        meta::enable_if_type< typename T::hierarchy_tag >::type
+                      >
+  {
+    typedef T type;
+  };
 } } }
 
 #endif

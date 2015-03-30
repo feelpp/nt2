@@ -53,7 +53,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -84,7 +84,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -105,7 +105,7 @@ namespace nt2 { namespace ext
         nt2_la_int  wn = w.main_size();
 
 
-        NT2_F77NAME(dsysv) ( &uplo, &n, &nhrs, a0.raw(), &ld, a1.raw(), a2.raw()
+        NT2_F77NAME(dsysv) ( &uplo, &n, &nhrs, a0.data(), &ld, a1.data(), a2.data()
                            , &ldb, w.main(), &wn, &that
                             );
         return that;
@@ -113,7 +113,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -144,7 +144,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -164,7 +164,7 @@ namespace nt2 { namespace ext
         char uplo = 'L';
         nt2_la_int  wn = w.main_size();
 
-        NT2_F77NAME(ssysv) ( &uplo, &n, &nhrs, a0.raw(), &ld, a1.raw(), a2.raw()
+        NT2_F77NAME(ssysv) ( &uplo, &n, &nhrs, a0.data(), &ld, a1.data(), a2.data()
                            , &ldb, w.main(), &wn, &that
                             );
         return that;
@@ -174,7 +174,7 @@ namespace nt2 { namespace ext
 //--------------------------------------------Complex-----------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -205,7 +205,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -225,7 +225,7 @@ namespace nt2 { namespace ext
         char uplo = 'L';
         nt2_la_int  wn = a3.main_size();
 
-        NT2_F77NAME(zsysv) ( &uplo, &n, &nhrs, a0.raw(), &ld, a1.raw(), a2.raw()
+        NT2_F77NAME(zsysv) ( &uplo, &n, &nhrs, a0.data(), &ld, a1.data(), a2.data()
                            , &ldb, a3.main(), &wn, &that
                             );
         return that;
@@ -233,7 +233,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -264,7 +264,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sysv_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( sysv_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))  // A
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >)) // PIV
@@ -284,7 +284,7 @@ namespace nt2 { namespace ext
         char uplo = 'L';
         nt2_la_int  wn = a3.main_size();
 
-        NT2_F77NAME(csysv) ( &uplo, &n, &nhrs, a0.raw(), &ld, a1.raw(), a2.raw()
+        NT2_F77NAME(csysv) ( &uplo, &n, &nhrs, a0.data(), &ld, a1.data(), a2.data()
                            , &ldb, a3.main(), &wn, &that
                             );
         return that;

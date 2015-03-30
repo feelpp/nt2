@@ -8,10 +8,8 @@
 //==============================================================================
 #ifndef BOOST_SIMD_OPERATOR_FUNCTIONS_UNARY_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_OPERATOR_FUNCTIONS_UNARY_MINUS_HPP_INCLUDED
-#include <boost/simd/include/functor.hpp>
-#include <boost/dispatch/include/functor.hpp>
-#include <boost/proto/tags.hpp>
 
+#include <boost/simd/include/functor.hpp>
 
 namespace boost { namespace simd
 {
@@ -29,7 +27,20 @@ namespace boost { namespace simd
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<unary_minus_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_unary_minus_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::unary_minus_, Site> dispatching_unary_minus_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::unary_minus_, Site>();
+   }
+   template<class... Args>
+   struct impl_unary_minus_;
   }
   /*!
     return the elementwise unary minus of the parameter
@@ -60,20 +71,6 @@ namespace boost { namespace simd
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::unary_minus_, unary_minus , 1 )
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::unary_minus_, neg         , 1 )
 } }
-
-namespace boost { namespace dispatch { namespace meta
-{
-  template<>
-  struct hierarchy_of<boost::proto::tag::negate>
-  {
-    typedef boost::simd::tag::unary_minus_ type;
-  };
-  template<>
-  struct proto_tag<boost::simd::tag::unary_minus_>
-  {
-    typedef boost::proto::tag::negate type;
-  };
-} } }
 
 #include <boost/simd/operator/specific/common.hpp>
 

@@ -26,14 +26,14 @@ if(GIT_EXECUTABLE AND NOT EXISTS GIT_EXECUTABLE)
   unset(GIT_EXECUTABLE CACHE)
 endif()
 find_package(Git QUIET)
-if(GIT_EXECUTABLE)
+if(GIT_EXECUTABLE AND IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
   execute_process(COMMAND ${GIT_EXECUTABLE} describe --tags
                   WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
                   OUTPUT_VARIABLE NT2_VERSION_STRING
                   OUTPUT_STRIP_TRAILING_WHITESPACE
                  )
 endif()
-if(NOT NT2_VERSION_STRING)
+if(NOT DEFINED NT2_VERSION_STRING)
   if((NOT GIT_EXECUTABLE OR NOT EXISTS GIT_EXECUTABLE) AND IS_DIRECTORY ${PROJECT_SOURCE_DIR}/.git)
     message(FATAL_ERROR "Git not found, verify your GIT_EXECUTABLE variable or specify NT2_VERSION_STRING manually" )
   elseif(NOT EXISTS ${PROJECT_SOURCE_DIR}/tagname)
@@ -210,6 +210,7 @@ endif()
 # we want to build those external projects with the same configuration
 set(CMAKE_OPTIONS)
 foreach(var NT2_SIMD_FLAGS NT2_MODULES_BLACKLIST
+            BOOST_ROOT
             CMAKE_C_COMPILER CMAKE_CXX_COMPILER
             CMAKE_C_FLAGS CMAKE_CXX_FLAGS CMAKE_TOOLCHAIN_FILE
             CMAKE_FIND_ROOT_PATH CMAKE_FIND_ROOT_PATH_MODE_PROGRAM
@@ -230,8 +231,8 @@ if(CMAKE_GENERATOR STREQUAL Ninja)
   set(BUILD BUILD_COMMAND ninja -j2)
 endif()
 
-foreach(project demo sandbox)
-  ExternalProject_Add( ${project} SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/${project} BINARY_DIR ${CMAKE_CURRENT_BINARY_DIR}/${project}
+foreach(project demo)
+  ExternalProject_Add( ${project} SOURCE_DIR ${CMAKE_SOURCE_DIR}/${project} BINARY_DIR ${CMAKE_BINARY_DIR}/${project}
                        CMAKE_CACHE_ARGS ${CMAKE_OPTIONS} ${BUILD} INSTALL_COMMAND ""
                        STEP_TARGETS configure
                      )

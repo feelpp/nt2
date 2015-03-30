@@ -21,10 +21,26 @@ if(CMAKE_CXX_FLAGS MATCHES "/EHsc")
   endforeach()
 endif()
 
-
 # MSVC12 needs /FS if building in debug in parallel
 if(MSVC AND (MSVC_VERSION EQUAL 1800 OR MSVC_VERSION GREATER 1800))
   set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /FS")
+endif()
+
+# Enable sanitizers for tests
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  # Apple Clang seems to only support the undefined-trap/trap-on-error combo
+  if(APPLE)
+    set(NT2_FLAGS_TEST "${NT2_FLAGS_TEST} -DUSE_UBSAN -fsanitize=undefined-trap -fno-sanitize=float-cast-overflow,float-divide-by-zero,shift -fsanitize-undefined-trap-on-error")
+  else()
+    set(SANITIZE_FLAGS "-fsanitize=address,undefined-trap -fno-sanitize=float-cast-overflow,float-divide-by-zero,shift -fno-sanitize-recover")
+    set(NT2_FLAGS_TEST "${NT2_FLAGS_TEST} -DUSE_UBSAN ${SANITIZE_FLAGS}")
+    set(NT2_FLAGS_TEST_LINK "${NT2_FLAGS_TEST_LINK} ${SANITIZE_FLAGS}")
+  endif()
+elseif(CMAKE_COMPILER_IS_GNUXX)
+  # Causes weird dependency on softfloat runtime on PowerPC
+  if(NOT CMAKE_SYSTEM_PROCESSOR MATCHES "powerpc|ppc")
+    set(NT2_FLAGS_TEST "${NT2_FLAGS_TEST} -DUSE_UBSAN -ftrapv")
+  endif()
 endif()
 
 set(NT2_FLAGS_TEST "${NT2_FLAGS_TEST} -DBOOST_ENABLE_ASSERT_HANDLER -DNT2_ENABLE_WARNING_HANDLER")
@@ -43,13 +59,6 @@ if(MSVC)
   set(NT2_FLAGS_BENCH "/DNDEBUG /MD /D_SECURE_SCL=0 /GL /Oxt /wd4530")
 
 elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  # C++11 required
-  if(MINGW)
-    # somehow without that MinGW stops declaring Microsoft-specific CRT functions
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++0x")
-  else()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-  endif()
   # Strict aliasing disabled due to GCC bug #50800
   # -D_GLIBCXX_DEBUG=1 not used because of incompatibilities with libraries
   if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUXX)
@@ -62,8 +71,6 @@ elseif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUXX OR CMAKE_CXX_COMPILER_
   set(NT2_FLAGS_BENCH "-DNDEBUG -O3 -fomit-frame-pointer -fno-exceptions")
 
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "Intel")
-  # C++11 required
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
   if(UNIX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fp-model precise")
     set(NT2_FLAGS_TEST "${NT2_FLAGS_TEST} -O2")
@@ -84,12 +91,12 @@ set(CMAKE_CXX_FLAGS_NT2TEST ${NT2_FLAGS_TEST})
 set(CMAKE_CXX_FLAGS_NT2TESTDEBUG ${NT2_FLAGS_TESTDEBUG})
 set(CMAKE_CXX_FLAGS_NT2BENCH ${NT2_FLAGS_BENCH})
 set(CMAKE_CXX_FLAGS_NT2DEBUGEMPTY)
-set(CMAKE_EXE_LINKER_FLAGS_NT2TEST ${CMAKE_EXE_LINKER_FLAGS_RELEASE})
-set(CMAKE_EXE_LINKER_FLAGS_NT2TESTDEBUG ${CMAKE_EXE_LINKER_FLAGS_DEBUG})
+set(CMAKE_EXE_LINKER_FLAGS_NT2TEST "${NT2_FLAGS_TEST_LINK} ${CMAKE_EXE_LINKER_FLAGS_RELEASE}")
+set(CMAKE_EXE_LINKER_FLAGS_NT2TESTDEBUG "${NT2_FLAGS_TEST_LINK} ${CMAKE_EXE_LINKER_FLAGS_DEBUG}")
 set(CMAKE_EXE_LINKER_FLAGS_NT2BENCH ${CMAKE_EXE_LINKER_FLAGS_RELEASE})
 set(CMAKE_EXE_LINKER_FLAGS_NT2DEBUGEMPTY)
-set(CMAKE_SHARED_LINKER_FLAGS_NT2TEST ${CMAKE_SHARED_LINKER_FLAGS_RELEASE})
-set(CMAKE_SHARED_LINKER_FLAGS_NT2TESTDEBUG ${CMAKE_SHARED_LINKER_FLAGS_DEBUG})
+set(CMAKE_SHARED_LINKER_FLAGS_NT2TEST "${NT2_FLAGS_TEST_LINK} ${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
+set(CMAKE_SHARED_LINKER_FLAGS_NT2TESTDEBUG "${NT2_FLAGS_TEST_LINK} ${CMAKE_SHARED_LINKER_FLAGS_DEBUG}")
 set(CMAKE_SHARED_LINKER_FLAGS_NT2BENCH ${CMAKE_SHARED_LINKER_FLAGS_RELEASE})
 set(CMAKE_SHARED_LINKER_FLAGS_NT2DEBUGEMPTY)
 if(MSVC)

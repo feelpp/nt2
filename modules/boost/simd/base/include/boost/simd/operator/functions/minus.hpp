@@ -8,10 +8,8 @@
 //==============================================================================
 #ifndef BOOST_SIMD_OPERATOR_FUNCTIONS_MINUS_HPP_INCLUDED
 #define BOOST_SIMD_OPERATOR_FUNCTIONS_MINUS_HPP_INCLUDED
-#include <boost/simd/include/functor.hpp>
-#include <boost/dispatch/include/functor.hpp>
-#include <boost/proto/tags.hpp>
 
+#include <boost/simd/include/functor.hpp>
 
 namespace boost { namespace simd
 {
@@ -29,7 +27,20 @@ namespace boost { namespace simd
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<minus_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_minus_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::minus_, Site> dispatching_minus_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::minus_, Site>();
+   }
+   template<class... Args>
+   struct impl_minus_;
   }
   /*!
     return the elementwise difference of the two parameters
@@ -62,20 +73,6 @@ namespace boost { namespace simd
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::minus_             , minus            , 2 )
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::minus_             , sub              , 2 )
 } }
-
-namespace boost { namespace dispatch { namespace meta
-{
-  template<>
-  struct hierarchy_of<boost::proto::tag::minus>
-  {
-    typedef boost::simd::tag::minus_ type;
-  };
-  template<>
-  struct proto_tag<boost::simd::tag::minus_>
-  {
-    typedef boost::proto::tag::minus type;
-  };
-} } }
 
 #include <boost/simd/operator/specific/common.hpp>
 

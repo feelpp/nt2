@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_PIX2_3_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_PIX2_3_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -29,6 +29,16 @@ namespace nt2
                                 , 1, 0x31885a30
                                 , 0x3bc3198a2e037073ll//3b498a2e03707345ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Pix2_3, Site> dispatching_Pix2_3(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Pix2_3, Site>();
+   }
+   template<class... Args>
+   struct impl_Pix2_3;
   }
   /*!
     Constant used in modular computation involving \f$\pi\f$

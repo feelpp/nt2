@@ -17,10 +17,14 @@
 #include <nt2/include/functions/scalar/expm1.hpp>
 #include <nt2/include/functions/scalar/is_greater.hpp>
 #include <nt2/include/functions/scalar/is_less.hpp>
+#ifndef BOOST_SIMD_NO_INVALIDS
+#include <nt2/include/functions/scalar/is_nan.hpp>
+#include <nt2/include/constants/nan.hpp>
+#endif
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::expm1_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( expm1_, tag::cpu_
                             , (A0)
                             , (scalar_<floating_<A0> >)
                             )
@@ -28,6 +32,10 @@ namespace nt2 { namespace ext
      typedef A0 result_type;
      NT2_FUNCTOR_CALL(1)
      {
+#ifndef BOOST_SIMD_NO_INVALIDS
+       if(is_nan(a0)) return Nan<A0>();
+#endif
+
        if(lt(a0, Logeps<A0>())) return Mone<A0>();
        if(gt(a0, Maxlog<A0>())) return  Inf<A0>();
        return details::expm1_kernel<A0>::expm1(a0);

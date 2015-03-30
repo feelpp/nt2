@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0x4B000000, 0x4330000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Twotonmb, Site> dispatching_Twotonmb(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Twotonmb, Site>();
+   }
+   template<class... Args>
+   struct impl_Twotonmb;
+  }
   /*!
     Generates two to the number of mantissa bits.
 

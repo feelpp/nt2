@@ -24,10 +24,23 @@ namespace nt2
     /*!
       @brief Tag for isvector functor
     **/
-    struct isvector_ : boost::dispatch::tag::formal_
+    struct isvector_ : ext::abstract_<isvector_>
     {
-      typedef boost::dispatch::tag::formal_ parent;
+      typedef ext::abstract_<isvector_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_isvector_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::isvector_, Site> dispatching_isvector_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::isvector_, Site>();
+    }
+    template<class... Args>
+    struct impl_isvector_;
   }
 
   /*!

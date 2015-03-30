@@ -28,7 +28,20 @@ namespace nt2
     {
       /// @brief Parent hierarchy
       typedef ext::unspecified_<levenberg_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_levenberg_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::levenberg_, Site> dispatching_levenberg_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::levenberg_, Site>();
+   }
+   template<class... Args>
+   struct impl_levenberg_;
   }
   /*!
    * Apply levenberg algorithm to find local minimum of a function

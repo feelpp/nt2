@@ -19,7 +19,20 @@ namespace nt2 { namespace tag
     struct logm_ :   ext::unspecified_<logm_>
     {
       typedef ext::unspecified_<logm_>  parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_logm_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::logm_, Site> dispatching_logm_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::logm_, Site>();
+    }
+    template<class... Args>
+    struct impl_logm_;
   }
   /**
    * @brief compute natural principal logarithm of a matricial expression

@@ -28,7 +28,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::posv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( posv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))
@@ -43,15 +43,14 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int  nhrs = nt2::width(a1);
-        char uplo = 'L';
 
-        magma_dposv( uplo, n, nhrs, a0.raw(), ld, a1.raw(), ldb, &that);
+        magma_dposv( MagmaLower, n, nhrs, a0.data(), ld, a1.data(), ldb, &that);
 
         return that;
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::posv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( posv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >))
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))
@@ -66,17 +65,15 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int  nhrs = nt2::width(a1);
-        char uplo = 'L';
 
-
-        magma_sposv( uplo, n, nhrs, a0.raw(), ld, a1.raw(), ldb , &that );
+        magma_sposv( MagmaLower, n, nhrs, a0.data(), ld, a1.data(), ldb , &that );
 
         return that;
      }
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::posv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( posv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))   // A
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >))   // B
@@ -91,16 +88,15 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int  nhrs = nt2::width(a1);
-        char uplo = 'L';
 
-        magma_zposv( uplo, n, nhrs, (cuDoubleComplex*)a0.raw(), ld, (cuDoubleComplex*)a1.raw(), ldb , &that );
+        magma_zposv( MagmaLower, n, nhrs, (cuDoubleComplex*)a0.data(), ld, (cuDoubleComplex*)a1.data(), ldb , &that );
 
         return that;
      }
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::posv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( posv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(site)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))   // A
                               ((container_< nt2::tag::table_, complex_<single_<A1> >, S1 >))   // B
@@ -115,9 +111,8 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int  nhrs = nt2::width(a1);
-        char uplo = 'L';
 
-        magma_cposv( uplo, n, nhrs, (cuFloatComplex*)a0.raw(), ld, (cuFloatComplex*) a1.raw(), ldb, &that);
+        magma_cposv( MagmaLower, n, nhrs, (cuFloatComplex*)a0.data(), ld, (cuFloatComplex*) a1.data(), ldb, &that);
 
         return that;
      }

@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_ONEO_90_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_ONEO_90_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 0, 0x3c360b61         //1/90
                                 , 0x3f86c16c16c16c17ll  //1/90
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Oneo_90, Site> dispatching_Oneo_90(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Oneo_90, Site>();
+   }
+   template<class... Args>
+   struct impl_Oneo_90;
   }
   /*!
     Constant 1/90

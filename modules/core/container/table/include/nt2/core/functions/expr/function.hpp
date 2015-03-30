@@ -39,7 +39,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::assign_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( assign_, tag::cpu_
                             , (A0)(N0)(I0)
                             , ((node_<A0, nt2::tag::function_, N0, nt2::container::domain>))
                               ((node_<I0, nt2::tag::empty_colon_, boost::mpl::long_<3>, nt2::container::domain>))
@@ -51,7 +51,7 @@ namespace nt2 { namespace ext
     {
       typedef typename A0::proto_child0::proto_child0 container_ref;
       typedef typename container_ref::base_t base_t;
-      typedef boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<base_t&>, 0l> basic_expr;
+      typedef boost::proto::basic_expr< nt2::tag::terminal_, boost::proto::term<base_t&>, 0l> basic_expr;
       typedef nt2::container::expression<basic_expr, base_t&> nt2_expr;
 
       nt2_expr c(basic_expr::make(static_cast<base_t&>(*boost::proto::value(boost::proto::child_c<0>(a0)).base())));
@@ -61,7 +61,7 @@ namespace nt2 { namespace ext
   };
 
   // handle erase for a(_, 1) = _(), lhs is a terminal because contiguous
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::assign_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( assign_, tag::cpu_
                             , (A0)(I0)
                             , ((node_<A0, nt2::tag::terminal_, boost::mpl::long_<0>, nt2::container::domain>))
                               ((node_<I0, nt2::tag::empty_colon_, boost::mpl::long_<3>, nt2::container::domain>))
@@ -87,19 +87,19 @@ namespace nt2 { namespace ext
       typedef typename container_ref::base_t base0_t;
       typedef typename meta::add_settings<base0_t, _4D>::type base_t;
 
-      typedef boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<base_t&>, 0l> basic_expr;
+      typedef boost::proto::basic_expr< nt2::tag::terminal_, boost::proto::term<base_t&>, 0l> basic_expr;
       typedef nt2::container::expression<basic_expr, base_t&> nt2_expr;
 
       // FIXME: this static_cast isn't really safe
       nt2_expr c(basic_expr::make(static_cast<base_t&>(*boost::proto::value(a0).base())));
-      std::size_t b = c.raw()-a0.raw();
+      std::size_t b = c.data()-a0.data();
       nt2::erase(c, nt2::aggregate(_(b+1u, b+numel(a0))));
       return a0;
     }
   };
 
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::function_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( function_, tag::cpu_
                             , (A0)(I0)
                             , ((ast_<A0, nt2::container::domain>))(colon_<I0>)
                             )
@@ -213,7 +213,7 @@ namespace nt2 { namespace ext
 #define M4(z,n,t) function_find<A0, I##n>::call(a0, i##n)
 
 #define M0(z,n,t)                                                                                  \
-NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::function_, tag::cpu_                                         \
+BOOST_DISPATCH_IMPLEMENT  ( function_, tag::cpu_                                         \
                           , (A0)BOOST_PP_REPEAT(n,M1,~)                                            \
                           , ((ast_<A0, nt2::container::domain>))BOOST_PP_REPEAT(n,M2,~)            \
                           )                                                                        \

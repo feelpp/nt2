@@ -19,14 +19,14 @@ namespace nt2
   NT2_FUNCTION_IMPLEMENTATION(nt2::tag::max_, max, 3)
 }
 
-namespace nt2 { namespace ext
+namespace boost { namespace simd { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::max_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( max_, tag::cpu_
                             , (A0)
                             , (unspecified_<A0>)
                             )
   {
-    typedef typename meta::call< nt2::tag::maximum_(A0 const&)>::type result_type;
+    typedef typename boost::dispatch::meta::call< nt2::tag::maximum_(A0 const&)>::type result_type;
 
     BOOST_FORCEINLINE result_type
     operator()(A0 const& a0) const
@@ -35,14 +35,14 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::max_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( max_, tag::cpu_
                             , (A0)(A1)(A2)
                             , (unspecified_<A0>)
                               (unspecified_<A1>)
                               (scalar_< integer_<A2> >)
                             )
   {
-    typedef typename meta::call< nt2::tag::maximum_(A0 const&, A2 const&)>::type result_type;
+    typedef typename boost::dispatch::meta::call< nt2::tag::maximum_(A0 const&, A2 const&)>::type result_type;
 
     BOOST_FORCEINLINE result_type
     operator()(A0 const& a0, A1 const& a1, A2 const& a2) const
@@ -56,6 +56,6 @@ namespace nt2 { namespace ext
       return nt2::maximum(a0,a2);
     }
   };
-} }
+} } }
 
 #endif

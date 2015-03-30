@@ -30,7 +30,7 @@
 #include <nt2/linalg/options.hpp>
 #include <nt2/linalg/details/utility/lapack_verify.hpp>
 #include <nt2/core/container/dsl/as_terminal.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 #include <boost/assert.hpp>
 #include <boost/mpl/bool.hpp>
 #include <boost/mpl/if.hpp>
@@ -42,7 +42,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //SCHUR Scalar
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::schur_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( schur_, tag::cpu_
                             , (A0)
                             , (scalar_<unspecified_<A0> >)
                             )
@@ -55,7 +55,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::schur_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( schur_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_<unspecified_<A0> >)
                               (unspecified_<A1>)
@@ -94,7 +94,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //SCHUR
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::schur_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( schur_, tag::cpu_
                             , (A0)(N0)(A1)(N1)
                             , ((node_<A0, nt2::tag::schur_
                                     , N0, nt2::container::domain

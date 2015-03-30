@@ -31,7 +31,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gemsv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gemsv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //A
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //B
@@ -47,7 +47,6 @@ namespace nt2 { namespace ext
         nt2_la_int  nhrs = nt2::width(a1);
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int iter,info;
-        char trans = 'N';
 
         nt2::container::table<double> copyb(nt2::of_size(ldb,nhrs));
         copyb = a1;
@@ -60,24 +59,24 @@ namespace nt2 { namespace ext
 
 
 
-        details::magma_buffer<double>     dA(n,n   ,a0.raw());
-        details::magma_buffer<double>     dB(n,nhrs, copyb.raw());
+        details::magma_buffer<double>     dA(n,n   ,a0.data());
+        details::magma_buffer<double>     dB(n,nhrs, copyb.data());
         details::magma_buffer<double>     dX(n,nhrs);
 
-        magma_dsgesv_gpu( trans             , n          , nhrs
-                        , dA.raw()          , lda        , ipiv.raw()
-                        , dipiv.raw()       , dB.raw()   , ldb
-                        , dX.raw()          , ldb        , dwork.raw()
-                        , swork.raw()       , &iter      , &info
+        magma_dsgesv_gpu( MagmaNoTrans       , n          , nhrs
+                        , dA.data()          , lda        , ipiv.data()
+                        , dipiv.data()       , dB.data()   , ldb
+                        , dX.data()          , ldb        , dwork.data()
+                        , swork.data()       , &iter      , &info
                         );
 
-        dX.raw( a2.raw() );
+        dX.raw( a2.data() );
         return iter;
      }
   };
 
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gemsv_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( gemsv_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(S1)(A2)(S2)(site)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >)) // A
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >)) // B
@@ -95,7 +94,6 @@ namespace nt2 { namespace ext
         nt2_la_int  nhrs = nt2::width(a1);
         nt2_la_int  ldb = a1.leading_size();
         nt2_la_int iter,info;
-        char trans = 'N';
 
         nt2::container::table<nt2_la_int> ipiv(nt2::of_size(n,1));
         A1 copyb(a1);
@@ -104,18 +102,18 @@ namespace nt2 { namespace ext
         details::magma_buffer<dComplex>                  dwork(n*nhrs,1);
         details::magma_buffer<nt2_la_int>                dipiv(n,1);
 
-        details::magma_buffer<dComplex>     dA(n,n   ,a0.raw());
-        details::magma_buffer<dComplex>     dB(n,nhrs, copyb.raw());
+        details::magma_buffer<dComplex>     dA(n,n   ,a0.data());
+        details::magma_buffer<dComplex>     dB(n,nhrs, copyb.data());
         details::magma_buffer<dComplex>     dX(n,nhrs);
 
-        magma_zcgesv_gpu( trans                        , n          , nhrs
-                        , (cuDoubleComplex*)dA.raw()   , lda        , ipiv.raw()
-                        , dipiv.raw(), (cuDoubleComplex*)dB.raw()   , ldb
-                        , (cuDoubleComplex*)dX.raw()   , ldb        , (cuDoubleComplex*)dwork.raw()
-                        , (cuFloatComplex*)swork.raw(), &iter      , &info
+        magma_zcgesv_gpu( MagmaNoTrans                  , n          , nhrs
+                        , (cuDoubleComplex*)dA.data()   , lda        , ipiv.data()
+                        , dipiv.data(), (cuDoubleComplex*)dB.data()   , ldb
+                        , (cuDoubleComplex*)dX.data()   , ldb        , (cuDoubleComplex*)dwork.data()
+                        , (cuFloatComplex*)swork.data(), &iter      , &info
                         );
 
-        dX.raw( a2.raw() );
+        dX.raw( a2.data() );
         return iter;
      }
   };

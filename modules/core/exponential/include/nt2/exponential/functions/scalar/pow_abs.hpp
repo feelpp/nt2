@@ -29,6 +29,7 @@
 #include <nt2/include/functions/ldexp.hpp>
 #include <nt2/include/functions/pow2.hpp>
 #include <nt2/include/functions/sqr.hpp>
+#include <nt2/include/constants/minf.hpp>
 #include <nt2/sdk/meta/as_integer.hpp>
 #include <nt2/sdk/meta/as_real.hpp>
 
@@ -43,7 +44,7 @@
 namespace nt2 { namespace ext
 {
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pow_abs_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( pow_abs_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_< floating_<A0> >)
                               (scalar_< floating_<A1> >)
@@ -62,6 +63,7 @@ namespace nt2 { namespace ext
       if(x == Inf<A0>() && a1 == Minf<A0>()) return Zero<A0>();
       if(a1 == Inf<A0>()) return (x < One<A0>()) ? Zero<A0>() : Inf<A0>();
       if(a1 == Minf<A0>()) return (x >  One<A0>()) ? Zero<A0>() : Inf<A0>();
+      if(x == Inf<A0>()) return (a1 < Zero<A0>()) ? Zero<A0>() : ((a1 == Zero<A0>()) ? One<A0>() : Inf<A0>());
       #endif
       #ifndef BOOST_SIMD_NO_INVALIDS
       if(is_nan(a0) || is_nan(a1)) return Nan<A0>();

@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_LOG10_ELO_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_LOG10_ELO_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3a37b152UL  // 7.0073188e-04
                                 , 0x0ULL
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Log10_elo, Site> dispatching_Log10_elo(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Log10_elo, Site>();
+    }
+    template<class... Args>
+    struct impl_Log10_elo;
   }
  /*!
     Generates constant log10_elo.This constant is coupled with Log10_ehi and is

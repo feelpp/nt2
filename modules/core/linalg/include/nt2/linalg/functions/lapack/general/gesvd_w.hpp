@@ -21,7 +21,7 @@
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //s
@@ -54,7 +54,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //s
@@ -73,7 +73,7 @@ namespace nt2 { namespace ext
         nt2_la_int ldvt= 1;
         nt2_la_int wn = w.main_size();
         char job =  'N';
-        NT2_F77NAME(dgesvd) ( &job, &job, &m, &n, a0.raw(), &ld, s.raw(), 0, &ldu
+        NT2_F77NAME(dgesvd) ( &job, &job, &m, &n, a0.data(), &ld, s.data(), 0, &ldu
                             , 0, &ldvt, w.main()
                             , &wn, &info
                             );
@@ -83,7 +83,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //s
@@ -116,7 +116,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //s
@@ -136,7 +136,7 @@ namespace nt2 { namespace ext
         nt2_la_int  wn = w.main_size();
         char job =  'N';
 
-        NT2_F77NAME(sgesvd) ( &job, &job, &m, &n, a0.raw(), &ld, s.raw(), 0, &ldu
+        NT2_F77NAME(sgesvd) ( &job, &job, &m, &n, a0.data(), &ld, s.data(), 0, &ldu
                             , 0, &ldvt, w.main()
                             , &wn, &info
                             );
@@ -147,7 +147,7 @@ namespace nt2 { namespace ext
 //---------------------------------------------Complex------------------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))            //s
@@ -181,7 +181,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))            //s
@@ -201,7 +201,7 @@ namespace nt2 { namespace ext
         nt2_la_int  wn = w.main_size();
         char job =  'N';
 
-        NT2_F77NAME(cgesvd) ( &job, &job, &m, &n, a0.raw(), &ld, s.raw(), 0, &ldu
+        NT2_F77NAME(cgesvd) ( &job, &job, &m, &n, a0.data(), &ld, s.data(), 0, &ldu
                             , 0, &ldvt, w.main()
                             , &wn, w.reals(), &info
                             );
@@ -210,7 +210,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))            //s
@@ -243,7 +243,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(WK)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))            //s
@@ -263,7 +263,7 @@ namespace nt2 { namespace ext
         nt2_la_int wn = w.main_size();
         char job =  'N';
 
-        NT2_F77NAME(zgesvd) ( &job,&job,&m, &n, a0.raw(), &ld, s.raw(), 0, &ldu
+        NT2_F77NAME(zgesvd) ( &job,&job,&m, &n, a0.data(), &ld, s.data(), 0, &ldu
                             , 0, &ldvt, w.main()
                             , &wn, w.reals(), &info
                             );

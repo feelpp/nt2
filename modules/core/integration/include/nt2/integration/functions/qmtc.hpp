@@ -19,7 +19,20 @@ namespace nt2
     {
       /// @brief Parent hierarchy
       typedef ext::unspecified_<qmtc_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_qmtc_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::qmtc_, Site> dispatching_qmtc_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::qmtc_, Site>();
+    }
+    template<class... Args>
+    struct impl_qmtc_;
   }
 
   // specialization of abstol for qmtc method

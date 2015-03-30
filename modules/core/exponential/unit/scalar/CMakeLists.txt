@@ -14,6 +14,8 @@ SET( SOURCES
   expx2.cpp
   exp10.cpp
   exp2.cpp
+  exprecneg.cpp
+  exprecnegc.cpp
   log.cpp
   log1p.cpp
   log10.cpp
@@ -27,6 +29,7 @@ SET( SOURCES
   realpow.cpp
   reallog.cpp
   realsqrt.cpp
+  significants.cpp
   sqrt1pm1.cpp
 # List of scalar test files for toolbox exponential
    )

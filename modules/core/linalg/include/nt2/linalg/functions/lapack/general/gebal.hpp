@@ -24,7 +24,7 @@ namespace nt2 { namespace ext
 
 //---------------------------------------------Real-double------------------------------------------------//
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gebal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gebal_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(A3)(C0)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //scale
@@ -43,16 +43,16 @@ namespace nt2 { namespace ext
         BOOST_ASSERT_MSG(n == nt2_la_int(nt2::height(a)), "input must be square");
         nt2_la_int  lda = nt2::max(a.leading_size(), One<size_t>());
         NT2_F77NAME(dgebal) (&job, &n
-                            , a.raw(), &lda
+                            , a.data(), &lda
                             , &ilo, &ihi
-                            , scale.raw(), &info);
+                            , scale.data(), &info);
         return info;
      }
   };
 
 //---------------------------------------------Real-single------------------------------------------------//
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gebal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gebal_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(A3)(C0)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //scale
@@ -71,16 +71,16 @@ namespace nt2 { namespace ext
         BOOST_ASSERT_MSG(n == nt2_la_int(nt2::height(a)), "input must be square");
         nt2_la_int  lda = nt2::max(a.leading_size(), One<size_t>());
         NT2_F77NAME(sgebal) (&job, &n
-                            , a.raw(), &lda
+                            , a.data(), &lda
                             , &ilo, &ihi
-                            , scale.raw(), &info);
+                            , scale.data(), &info);
         return info;
      }
   };
 
 //---------------------------------------------Complex-single------------------------------------------------//
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gebal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gebal_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(A3)(C0)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> > , S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //scale
@@ -99,16 +99,16 @@ namespace nt2 { namespace ext
         BOOST_ASSERT_MSG(n == nt2_la_int(nt2::height(a)), "input must be square");
         nt2_la_int  lda = nt2::max(a.leading_size(), One<size_t>());
         NT2_F77NAME(cgebal) (&job, &n
-                            , a.raw(), &lda
+                            , a.data(), &lda
                             , &ilo, &ihi
-                            , scale.raw(), &info);
+                            , scale.data(), &info);
         return info;
      }
   };
 
 //---------------------------------------------Complex-double------------------------------------------------//
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gebal_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gebal_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(A3)(C0)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> > , S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //scale
@@ -127,9 +127,9 @@ namespace nt2 { namespace ext
         BOOST_ASSERT_MSG(n == nt2_la_int(nt2::height(a)), "input must be square");
         nt2_la_int  lda = nt2::max(a.leading_size(), One<size_t>());
         NT2_F77NAME(zgebal) (&job, &n
-                            , a.raw(), &lda
+                            , a.data(), &lda
                             , &ilo, &ihi
-                            , scale.raw(), &info);
+                            , scale.data(), &info);
         return info;
      }
   };

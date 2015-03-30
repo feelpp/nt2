@@ -20,7 +20,7 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::compare_less_
+  BOOST_DISPATCH_IMPLEMENT          ( compare_less_
                                     , boost::simd::tag::sse2_
                                     , (A0)(X)
                                     , ((simd_<arithmetic_<A0>,X>))
@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE result_type operator()(A0 const& a0, A0 const& a1) const
     {
       A0            const  r0 = reverse(a0)   ,  r1 = reverse(a1);
-      unsigned int  const mlt = hmsb(r0 < r1) , mgt = hmsb(r0 > r1);
+      std::size_t   const mlt = hmsb(r0 < r1) , mgt = hmsb(r0 > r1);
 
       return result_type( (mlt > mgt) && mlt );
     }

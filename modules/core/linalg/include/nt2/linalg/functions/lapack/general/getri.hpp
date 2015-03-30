@@ -49,7 +49,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Use existing workspace
-    NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+    BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -67,7 +67,7 @@ namespace nt2 { namespace ext
       nt2_la_int  wn = a2.main_size();
 
       // Perform computation
-      NT2_F77NAME(dgetri) ( &n, a0.raw(), &ld, a1.raw()
+      NT2_F77NAME(dgetri) ( &n, a0.data(), &ld, a1.data()
                           , a2.main(), &wn
                           , &that
                           );
@@ -76,7 +76,7 @@ namespace nt2 { namespace ext
     }
   };
   /// INTERNAL ONLY - Use existing workspace
-    NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+    BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -94,7 +94,7 @@ namespace nt2 { namespace ext
       nt2_la_int  wn = a2.main_size();
 
       // Perform computation
-      NT2_F77NAME(sgetri) ( &n, a0.raw(), &ld, a1.raw()
+      NT2_F77NAME(sgetri) ( &n, a0.data(), &ld, a1.data()
                           , a2.main(), &wn
                           , &that
                           );
@@ -104,7 +104,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Use existing workspace
-    NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+    BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -122,7 +122,7 @@ namespace nt2 { namespace ext
       nt2_la_int  wn = a2.main_size();
 
       // Perform computation
-      NT2_F77NAME(cgetri) ( &n, a0.raw(), &ld, a1.raw()
+      NT2_F77NAME(cgetri) ( &n, a0.data(), &ld, a1.data()
                           , a2.main(), &wn
                           , &that
                           );
@@ -132,7 +132,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Use existing workspace
-    NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+    BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -150,7 +150,7 @@ namespace nt2 { namespace ext
       nt2_la_int  wn = a2.main_size();
 
       // Perform computation
-      NT2_F77NAME(zgetri) ( &n, a0.raw(), &ld, a1.raw()
+      NT2_F77NAME(zgetri) ( &n, a0.data(), &ld, a1.data()
                           , a2.main(), &wn
                           , &that
                           );
@@ -160,7 +160,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - COmpute workspace then perform actions
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -177,8 +177,8 @@ namespace nt2 { namespace ext
       nt2_la_int  ld = a0.leading_size();
 
       // How much memory do I need ?
-      NT2_F77NAME(dgetri) ( &n, a0.raw(), &ld
-                          , a1.raw(), w.main(), details::query()
+      NT2_F77NAME(dgetri) ( &n, a0.data(), &ld
+                          , a1.data(), w.main(), details::query()
                           , &that
                           );
 
@@ -190,7 +190,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -207,8 +207,8 @@ namespace nt2 { namespace ext
       nt2_la_int  ld = a0.leading_size();
 
       // How much memory do I need ?
-      NT2_F77NAME(sgetri) ( &n, a0.raw(), &ld
-                          , a1.raw(), w.main(), details::query()
+      NT2_F77NAME(sgetri) ( &n, a0.data(), &ld
+                          , a1.data(), w.main(), details::query()
                           , &that
                           );
 
@@ -220,7 +220,7 @@ namespace nt2 { namespace ext
      }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -237,8 +237,8 @@ namespace nt2 { namespace ext
       nt2_la_int  ld = a0.leading_size();
 
       // How much memory do I need ?
-      NT2_F77NAME(zgetri) ( &n, a0.raw(), &ld
-                          , a1.raw(), w.main(), details::query()
+      NT2_F77NAME(zgetri) ( &n, a0.data(), &ld
+                          , a1.data(), w.main(), details::query()
                           , &that
                           );
 
@@ -251,7 +251,7 @@ namespace nt2 { namespace ext
   };
 
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::getri_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( getri_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -268,8 +268,8 @@ namespace nt2 { namespace ext
       nt2_la_int  ld = a0.leading_size();
 
       // How much memory do I need ?
-      NT2_F77NAME(cgetri) ( &n, a0.raw(), &ld
-                          , a1.raw(), w.main(), details::query()
+      NT2_F77NAME(cgetri) ( &n, a0.data(), &ld
+                          , a1.data(), w.main(), details::query()
                           , &that
                           );
 

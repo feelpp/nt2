@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_EXPX2C1_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_EXPX2C1_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x42000000
                                 , 0x4060000000000000ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Expx2c1, Site> dispatching_Expx2c1(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Expx2c1, Site>();
+   }
+   template<class... Args>
+   struct impl_Expx2c1;
   }
   /*!
     Generates a costant used in expx2.

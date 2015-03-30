@@ -25,7 +25,20 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<j1_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_j1_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::j1_, Site> dispatching_j1_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::j1_, Site>();
+   }
+   template<class... Args>
+   struct impl_j1_;
   }
   /*!
     Bessel function of the first kind of order 1.

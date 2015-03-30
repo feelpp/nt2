@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_FOUROPI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_FOUROPI_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 1, 0x3fa2f983
                                 , 0x3ff45f306dc9c883ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Fouropi, Site> dispatching_Fouropi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Fouropi, Site>();
+   }
+   template<class... Args>
+   struct impl_Fouropi;
   }
   /*!
     Constant \f$\frac4\pi\f$.

@@ -18,6 +18,9 @@ namespace nt2
     struct quadgk_ : ext::unspecified_<quadgk_>
     {
       typedef ext::unspecified_<quadgk_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_quadgk_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
     // definition  of abstol constant for quadgk method
     /// INTERNAL ONLY
@@ -31,6 +34,32 @@ namespace nt2
                                   , 0, 0x38d1b717             //1.0e-4
                                   , 0x3eb0c6f7a0b5ed8dll      //1.0e-6
       )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::quadgk_, Site> dispatching_quadgk_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::quadgk_, Site>();
+    }
+    template<class... Args>
+    struct impl_quadgk_;
+
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Quadgkabstol, Site> dispatching_Quadgkabstol(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Quadgkabstol, Site>();
+    }
+    template<class... Args>
+    struct impl_Quadgkabstol;
+
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Quadgkreltol, Site> dispatching_Quadgkreltol(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Quadgkreltol, Site>();
+    }
+    template<class... Args>
+    struct impl_Quadgkreltol;
   }
   /// INTERNAL ONLY
   BOOST_SIMD_CONSTANT_IMPLEMENTATION(tag::Quadgkabstol, Quadgkabstol);

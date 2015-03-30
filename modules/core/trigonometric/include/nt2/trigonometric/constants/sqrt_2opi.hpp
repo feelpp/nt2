@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_SQRT_2OPI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_SQRT_2OPI_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3f4c422a
                                 , 0x3fe9884533d43651ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Sqrt_2opi, Site> dispatching_Sqrt_2opi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Sqrt_2opi, Site>();
+   }
+   template<class... Args>
+   struct impl_Sqrt_2opi;
   }
   /*!
     Constant  \f$\frac{\sqrt2}{\pi}\f$.

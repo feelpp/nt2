@@ -16,14 +16,17 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::sqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( sqr_, tag::cpu_
                                     , (A0)
                                     , (generic_< arithmetic_<A0> >)
                                     )
   {
     typedef A0 result_type;
 
-    BOOST_FORCEINLINE BOOST_SIMD_FUNCTOR_CALL(1) { return a0*a0; }
+    BOOST_FORCEINLINE BOOST_SIMD_FUNCTOR_CALL(1)
+    {
+      return multiplies(a0, a0);
+    }
   };
 } } }
 

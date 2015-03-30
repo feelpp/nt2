@@ -965,7 +965,9 @@ namespace detail
 
     private:
         vector_t           * BOOST_DISPATCH_RESTRICT gp_pointers_   [ gp_registers_to_use                  ];
+    #ifdef BOOST_SIMD_HAS_EXTRA_GP_REGISTERS
         extra_vector_ptr_t                           extra_pointers_[ total_pointers - gp_registers_to_use ];
+    #endif
         boost::simd::details::extra_integer_register counter_;
 #endif // NT2_FFT_USE_INDEXED_BUTTERFLY_LOOP
     }; // inplace_separated_context_t
@@ -1529,7 +1531,7 @@ namespace detail
 
 
     template <typename T>
-    BOOST_DISPATCH_NOINLINE
+    BOOST_NOINLINE
     void BOOST_FASTCALL inplace_separated_context_t<T>::separate_a
     (
         vector_t           * BOOST_DISPATCH_RESTRICT const p_reals          , // N/2 ( + 1 ) scalars
@@ -1662,7 +1664,7 @@ namespace detail
     } // inplace_separated_context_t<T>::separate()
 
     template <typename T>
-    BOOST_DISPATCH_NOINLINE
+    BOOST_NOINLINE
     void BOOST_FASTCALL inplace_separated_context_t<T>::separate_b
     (
         vector_t                    * BOOST_DISPATCH_RESTRICT const p_reals          , // N/2 ( + 1 ) scalars
@@ -1763,7 +1765,7 @@ namespace detail
     ////////////////////////////////////////////////////////////////////////////
 
     template <class Decimation, class Context>
-    BOOST_DISPATCH_NOINLINE
+    BOOST_NOINLINE
     void BOOST_FASTCALL butterfly_loop
     (
         typename Context::parameter0_t                                 const param0,
@@ -1905,10 +1907,9 @@ namespace detail
     {
         //...zzz...still radix-2...:
 
-        typedef          Vector             vector_t;
+    /* "text book" version
         typedef typename Vector::value_type scalar_t;
 
-    /* "text book" version
         scalar_t r0( real_in[ 0 ] );
         scalar_t r1( real_in[ 1 ] );
         scalar_t r2( real_in[ 2 ] );
@@ -1982,6 +1983,7 @@ namespace detail
     unsigned int const idx3( 3 );
 
     #if !defined( BOOST_SIMD_DETECTED )
+        typedef typename Vector::value_type scalar_t;
 
         scalar_t const r2( real_in[ idx2 ] );
         scalar_t const r3( real_in[ idx3 ] );
@@ -2014,6 +2016,7 @@ namespace detail
         imag_out[ idx3 ] = i0mi1 - r3mr2;
 
     #else // BOOST_SIMD_DETECTED
+        typedef          Vector             vector_t;
 
         vector_t const odd_negate     ( *sign_flipper<vector_t, false, true , false, true>() );
         vector_t const negate_last_two( *sign_flipper<vector_t, false, false, true , true>() );
@@ -2064,9 +2067,6 @@ namespace detail
         Vector       & real_out, Vector       & imag_out
     )
     {
-        typedef          Vector             vector_t;
-        typedef typename Vector::value_type scalar_t;
-
         //...zzz...no separate bit reversing/scrambling pass experimenting...
         unsigned int const idx0( 0 );
         unsigned int const idx1( 1 );
@@ -2074,6 +2074,7 @@ namespace detail
         unsigned int const idx3( 3 );
 
     #if !defined( BOOST_SIMD_DETECTED )
+        typedef typename Vector::value_type scalar_t;
 
         scalar_t r0( real_in[ idx0 ] ); scalar_t i0( imag_in[ idx0 ] );
         scalar_t r1( real_in[ idx1 ] ); scalar_t i1( imag_in[ idx1 ] );
@@ -2105,6 +2106,7 @@ namespace detail
         real_out[ idx3 ] = r3; imag_out[ idx3 ] = i3;
 
     #else // BOOST_SIMD_DETECTED
+        typedef          Vector             vector_t;
 
         vector_t const real( real_in ); vector_t const imag( imag_in );
 
@@ -2211,16 +2213,16 @@ namespace detail
 
             // Decimation (lower DFT4 already calculated, the remaining two DFT2):
             {
-                scalar_t const r4_( r4 ); scalar_t const i4_( i4 );
-                scalar_t const r5_( r5 ); scalar_t const i5_( i5 );
-                r4 = r4_ + r5_          ; i4 = i4_ + i5_          ;
-                r5 = r4_ - r5_          ; i5 = i4_ - i5_          ;
+                scalar_t const r4__( r4 ); scalar_t const i4__( i4 );
+                scalar_t const r5__( r5 ); scalar_t const i5__( i5 );
+                r4 = r4__ + r5__          ; i4 = i4__ + i5__        ;
+                r5 = r4__ - r5__          ; i5 = i4__ - i5__        ;
             }
             {
-                scalar_t const r6_( r6 ); scalar_t const i6_( i6 );
-                scalar_t const r7_( r7 ); scalar_t const i7_( i7 );
-                r6 = r6_ + r7_          ; i6 = i6_ + i7_          ;
-                r7 = r6_ - r7_          ; i7 = i6_ - i7_          ;
+                scalar_t const r6__( r6 ); scalar_t const i6__( i6 );
+                scalar_t const r7__( r7 ); scalar_t const i7__( i7 );
+                r6 = r6__ + r7__          ; i6 = i6__ + i7__        ;
+                r7 = r6__ - r7__          ; i7 = i6__ - i7__        ;
             }
         }
 

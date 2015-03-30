@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_MAXLOG2_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_MAXLOG2_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x42fe0000UL
                                 , 0x408ff80000000000ULL
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Maxlog2, Site> dispatching_Maxlog2(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Maxlog2, Site>();
+    }
+    template<class... Args>
+    struct impl_Maxlog2;
   }
   /*!
     Generates constant Maxlog2 used in logarithm/exponential computations

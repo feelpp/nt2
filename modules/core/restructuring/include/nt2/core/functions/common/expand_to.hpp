@@ -20,7 +20,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_, tag::cpu_
                             , (A0)(State)(Data)(N)
                             , ((node_<A0, nt2::tag::expand_to_, N, nt2::container::domain>))
                               (generic_< integer_<State> >)
@@ -50,7 +50,7 @@ namespace nt2 { namespace ext
       }
 
       // return each value potentially repeated
-      return run(boost::proto::child_c<0>(a0), as_index(sz0, pos0), t);
+      return nt2::run(boost::proto::child_c<0>(a0), as_index(sz0, pos0), t);
     }
   };
 } }

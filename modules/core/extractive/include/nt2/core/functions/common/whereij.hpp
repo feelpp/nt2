@@ -18,7 +18,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_, tag::cpu_
                             , (A0)(State)(Data)(N)
                             , ((node_ < A0, nt2::tag::whereij_
                                       , N, nt2::container::domain
@@ -39,8 +39,8 @@ namespace nt2 { namespace ext
       s_t pos  = as_subscript(_2D(a0.extent()),enumerate<i_t>(p));
 
       return if_else( boost::proto::value(boost::proto::child_c<0>(a0))(pos[0],pos[1])
-                    , run(boost::proto::child_c<1>(a0), p, t)
-                    , run(boost::proto::child_c<2>(a0), p, t)
+                    , nt2::run(boost::proto::child_c<1>(a0), p, t)
+                    , nt2::run(boost::proto::child_c<2>(a0), p, t)
                     );
     }
   };

@@ -35,7 +35,23 @@ namespace nt2
     struct pplus_ : ext::elementwise_<pplus_>
     {
      typedef ext::elementwise_<pplus_> parent;
+
+     template<class... Args>
+     static BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+     BOOST_AUTO_DECLTYPE_BODY( dispatching_pplus_(ext::adl_helper(), args...) )
     };
+  }
+
+  namespace ext
+  {
+    template<class Site, class... H>
+    boost::dispatch::generic_dispatcher<tag::pplus_, Site> dispatching_pplus_(ext::adl_helper, boost::dispatch::meta::unknown_<Site>, boost::dispatch::meta::unknown_<H>...)
+    {
+      return boost::dispatch::generic_dispatcher<tag::pplus_, Site>();
+    }
+
+    template<class... Args>
+    struct impl_pplus_;
   }
 
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION_TPL(tag::pplus_, pplus, (A0&)(A1&), 2)
@@ -45,7 +61,7 @@ namespace nt2
 
   namespace ext
   {
-    NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pplus_, tag::cpu_, (A0)
+    BOOST_DISPATCH_IMPLEMENT  ( pplus_, tag::cpu_, (A0)
                               , (scalar_< unspecified_<A0> >)
                                 (scalar_< unspecified_<A0> >)
                               )
@@ -496,14 +512,14 @@ NT2_TEST_CASE( function )
   NT2_TEST_EXPR_TYPE( a0(a1)
                     , as_node<_>
                     , ( node2 < nt2::tag::function_
-                              , boost::proto::tag::terminal
+                              , nt2::tag::terminal_
                               , node4< nt2::tag::function_index_
                                      , node1 < nt2::tag::aggregate_
-                                             , boost::proto::tag::terminal
+                                             , nt2::tag::terminal_
                                              >
-                                     , boost::proto::tag::terminal
-                                     , boost::proto::tag::terminal
-                                     , boost::proto::tag::terminal
+                                     , nt2::tag::terminal_
+                                     , nt2::tag::terminal_
+                                     , nt2::tag::terminal_
                                      >
                               >
                       )
@@ -521,11 +537,11 @@ NT2_TEST_CASE( fma )
   NT2_TEST_EXPR_TYPE( a0 * a1 + a2 * a0
                     , as_node<_>
                     , ( node3< nt2::tag::fma_
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
-                             , node2< boost::proto::tag::multiplies
-                                    , boost::proto::tag::terminal
-                                    , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
+                             , node2< nt2::tag::multiplies_
+                                    , nt2::tag::terminal_
+                                    , nt2::tag::terminal_
                                     >
                              >
                       )
@@ -534,9 +550,9 @@ NT2_TEST_CASE( fma )
   NT2_TEST_EXPR_TYPE( a0 * a1 + a2
                     , as_node<_>
                     , ( node3< nt2::tag::fma_
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
                              >
                       )
                     );
@@ -544,9 +560,9 @@ NT2_TEST_CASE( fma )
   NT2_TEST_EXPR_TYPE( a0 + a1 * a2
                     , as_node<_>
                     , ( node3< nt2::tag::fma_
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
                              >
                       )
                     );
@@ -554,12 +570,12 @@ NT2_TEST_CASE( fma )
   NT2_TEST_EXPR_TYPE( a0 * a1 + (a2 * a0 + a1)
                     , as_node<_>
                     , ( node3< nt2::tag::fma_
-                             , boost::proto::tag::terminal
-                             , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
+                             , nt2::tag::terminal_
                              , node3< nt2::tag::fma_
-                                    , boost::proto::tag::terminal
-                                    , boost::proto::tag::terminal
-                                    , boost::proto::tag::terminal
+                                    , nt2::tag::terminal_
+                                    , nt2::tag::terminal_
+                                    , nt2::tag::terminal_
                                     >
                              >
                       )
@@ -568,13 +584,13 @@ NT2_TEST_CASE( fma )
   NT2_TEST_EXPR_TYPE( a0 + a1 * (a2 * a0 + a1)
                     , as_node<_>
                     , ( node3< nt2::tag::fma_
-                             , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
                              , node3< nt2::tag::fma_
-                                    , boost::proto::tag::terminal
-                                    , boost::proto::tag::terminal
-                                    , boost::proto::tag::terminal
+                                    , nt2::tag::terminal_
+                                    , nt2::tag::terminal_
+                                    , nt2::tag::terminal_
                                     >
-                             , boost::proto::tag::terminal
+                             , nt2::tag::terminal_
                              >
                       )
                     );

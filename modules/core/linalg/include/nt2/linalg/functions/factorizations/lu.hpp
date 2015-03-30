@@ -26,12 +26,12 @@
 #include <nt2/core/container/colon/colon.hpp>
 #include <nt2/core/container/table/table.hpp>
 #include <nt2/core/container/dsl/as_terminal.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 #include <nt2/sdk/meta/as_integer.hpp>
 #include <nt2/sdk/error/warning.hpp>
 #include <nt2/linalg/options.hpp>
 #include <boost/dispatch/attributes.hpp>
-#include <boost/dispatch/meta/ignore_unused.hpp>
+#include <boost/core/ignore_unused.hpp>
 #include <algorithm>
 
 ///Utilitary macro
@@ -39,7 +39,7 @@
 #define CHECK_LAPACK_LU_SUCCESS(info)                        \
   {                                                          \
     nt2_la_int info_ = info;                                 \
-    boost::dispatch::ignore_unused(info_);                   \
+    boost::ignore_unused(info_);                   \
     NT2_WARNING(info_ <= 0                                   \
                , "LU factorization has been completed, "     \
                 "but input matrix is exactly singular. "     \
@@ -54,7 +54,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //lu Scalar
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::lu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( lu_, tag::cpu_
                             , (A0)
                             , (scalar_<unspecified_<A0> >)
                             )
@@ -70,7 +70,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //lu Scalar
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::lu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( lu_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_<unspecified_<A0> >)
                               (unspecified_<A1>)
@@ -88,7 +88,7 @@ namespace nt2 { namespace ext
   //lu
   //============================================================================
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::lu_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( lu_, tag::cpu_
                             , (A0)(N0)(A1)(N1)
                             , ((node_ < A0, nt2::tag::lu_
                                       , N0, nt2::container::domain

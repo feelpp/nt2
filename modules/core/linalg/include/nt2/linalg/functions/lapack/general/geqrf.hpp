@@ -23,7 +23,7 @@
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, double_<A1>, S1 >))
@@ -51,7 +51,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, double_<A1>, S1 >))
@@ -70,7 +70,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(dgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(dgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -78,7 +78,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, single_<A1>, S1 >))
@@ -109,7 +109,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, single_<A1>, S1 >))
@@ -128,7 +128,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(sgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(sgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -138,7 +138,7 @@ namespace nt2 { namespace ext
 //---------------------------------------Complex-----------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<single_<A1> >, S1 >))
@@ -168,7 +168,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<single_<A1> >, S1 >))
@@ -187,7 +187,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(cgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(cgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -195,7 +195,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >))
@@ -225,7 +225,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::geqrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( geqrf_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >))
@@ -244,7 +244,7 @@ namespace nt2 { namespace ext
 
         a1.resize( nt2::of_size(std::min(n, m), 1) );
 
-        NT2_F77NAME(zgeqrf) (&m, &n, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(zgeqrf) (&m, &n, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;

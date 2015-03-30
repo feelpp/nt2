@@ -18,7 +18,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // randn evaluation
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_assign_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_assign_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))
                               ((node_ < A1,nt2::tag::randn_
@@ -36,7 +36,7 @@ namespace nt2 { namespace ext
       a0.resize( boost::proto::value(boost::proto::child_c<0>(a1)) );
 
       // Forward to current randnom_stream and fill the data
-      current_prng_.generator_->randn(a0.raw(),0,nt2::numel(a0));
+      current_prng_.generator_->randn(a0.data(),0,nt2::numel(a0));
 
       return a0;
     }

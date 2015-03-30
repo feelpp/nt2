@@ -40,7 +40,7 @@ namespace nt2 { namespace ext
   template<class T, class Enable>
   struct as_child_ref
   {
-    typedef boost::proto::basic_expr< boost::proto::tag::terminal, boost::proto::term<T&> > expr;
+    typedef boost::proto::basic_expr< nt2::tag::terminal_, boost::proto::term<T&> > expr;
     typedef nt2::container::expression<expr, T&> type;
     static type call(T& t)
     {
@@ -61,7 +61,7 @@ namespace nt2 { namespace ext
 #define M4(z,n,t) ext::as_child_ref<A##n>::call(a##n)
 
 #define M0(z,n,t)                                                              \
-NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::tie_, BOOST_PP_TUPLE_ELEM(2,0,t)         \
+BOOST_DISPATCH_IMPLEMENT  ( tie_, BOOST_PP_TUPLE_ELEM(2,0,t)         \
                           , BOOST_PP_REPEAT(n,M1,~)                            \
                           , BOOST_PP_REPEAT(n,BOOST_PP_TUPLE_ELEM(2,1,t),~)    \
                           )                                                    \

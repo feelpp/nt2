@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 8, 0x41000000UL , 0x4020000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Eight, Site> dispatching_Eight(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Eight, Site>();
+   }
+   template<class... Args>
+   struct impl_Eight;
+  }
   /*!
     Generates the value 8
 

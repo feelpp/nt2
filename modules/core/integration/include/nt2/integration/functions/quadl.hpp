@@ -19,6 +19,9 @@ namespace nt2
     {
       /// @brief Parent hierarchy
       typedef ext::unspecified_<quadl_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_quadl_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
     // definition  of abstol constant for integ method
   /// INTERNAL ONLY
@@ -27,6 +30,24 @@ namespace nt2
                                   , 0x3eb0c6f7a0b5ed8dll      //1.0e-6
       )
    }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::quadl_, Site> dispatching_quadl_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::quadl_, Site>();
+    }
+    template<class... Args>
+    struct impl_quadl_;
+
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Quadlabstol, Site> dispatching_Quadlabstol(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Quadlabstol, Site>();
+    }
+    template<class... Args>
+    struct impl_Quadlabstol;
+  }
 
   /// INTERNAL ONLY
   BOOST_SIMD_CONSTANT_IMPLEMENTATION(tag::Quadlabstol, Quadlabstol);

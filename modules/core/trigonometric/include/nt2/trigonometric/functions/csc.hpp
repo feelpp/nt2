@@ -25,7 +25,20 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<csc_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_csc_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::csc_, Site> dispatching_csc_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::csc_, Site>();
+   }
+   template<class... Args>
+   struct impl_csc_;
   }
   /*!
     cosecante of the input in radian.

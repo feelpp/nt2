@@ -9,11 +9,13 @@
 #ifndef BOOST_SIMD_SDK_FUNCTOR_PROXY_HPP_INCLUDED
 #define BOOST_SIMD_SDK_FUNCTOR_PROXY_HPP_INCLUDED
 
+#include <boost/simd/include/functor.hpp>
 #include <boost/dispatch/meta/any.hpp>
 #include <boost/dispatch/meta/proxy.hpp>
 #include <boost/dispatch/meta/unproxy.hpp>
 #include <boost/dispatch/functor/functor.hpp>
 #include <boost/dispatch/functor/meta/call.hpp>
+#include <boost/dispatch/functor/meta/make_functor.hpp>
 #include <boost/type_traits/remove_reference.hpp>
 
 #include <boost/dispatch/details/parameters.hpp>
@@ -29,12 +31,12 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( unspecified_<Func>, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_G        ( unspecified_<Func>, tag::cpu_
                                     , (Func)(A0)
                                     , (proxy_<A0>)
                                     )
   {
-    typedef typename dispatch::meta::unproxy<A0>::type              b0_t;
+    typedef typename dispatch::meta::unproxy<A0 const&>::type              b0_t;
     typedef typename dispatch::meta::call<Func(b0_t const&)>::type  result_type;
 
     BOOST_FORCEINLINE result_type operator()(A0 const& a0) const
@@ -50,7 +52,7 @@ namespace boost { namespace simd { namespace ext
   /**/
   #define M2(z,n,t)                                                           \
   typedef typename boost::dispatch::meta::                                    \
-          unproxy< typename boost::remove_reference<_A##n>::type >::type      \
+          unproxy< _A##n >::type                                              \
   b##n##_t;                                                                   \
   /**/
   #define M3(z,n,t) b##n##_t
@@ -59,10 +61,10 @@ namespace boost { namespace simd { namespace ext
   /**/
 
   #define M5(z,n,t)                                                           \
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION_IF( unspecified_<Func>, tag::cpu_         \
+  BOOST_DISPATCH_IMPLEMENT_G_IF       ( unspecified_<Func>, tag::cpu_         \
                                       , (Func)BOOST_PP_REPEAT(n,M0,~)         \
-                                      , ( meta::any                           \
-                                          < meta::is_proxy<boost::mpl::_>     \
+                                      , ( boost::dispatch::meta::any          \
+                                          < boost::dispatch::meta::is_proxy<boost::mpl::_> \
                                           , BOOST_PP_ENUM_PARAMS(n,A)         \
                                           >                                   \
                                         )                                     \
@@ -82,8 +84,8 @@ namespace boost { namespace simd { namespace ext
                                                                               \
     template<BOOST_PP_ENUM_PARAMS(n, class _A)>                               \
     BOOST_FORCEINLINE                                                         \
-    typename result<implement(BOOST_PP_ENUM_BINARY_PARAMS(n, _A, & BOOST_PP_INTERCEPT))>::type \
-    operator()(BOOST_PP_ENUM_BINARY_PARAMS(n, _A, & a)) const                 \
+    typename result<implement(BOOST_PP_ENUM_BINARY_PARAMS(n, _A, && BOOST_PP_INTERCEPT))>::type \
+    operator()(BOOST_PP_ENUM_BINARY_PARAMS(n, _A, && a)) const                \
     {                                                                         \
       typename dispatch::make_functor<Func, _A0>::type callee;                \
       return callee ( BOOST_PP_ENUM(n,M4,~) );                                \

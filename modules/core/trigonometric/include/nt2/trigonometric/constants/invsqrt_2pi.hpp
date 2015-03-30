@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_INVSQRT_2PI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_INVSQRT_2PI_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 0, 0x3ecc422a
                                 , 0x3fd9884533d43651ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Invsqrt_2pi, Site> dispatching_Invsqrt_2pi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Invsqrt_2pi, Site>();
+   }
+   template<class... Args>
+   struct impl_Invsqrt_2pi;
   }
   /*!
     Constant  \f$\frac1{\sqrt{2\pi}}\f$.

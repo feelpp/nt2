@@ -38,10 +38,7 @@ NT2_TEST_CASE_TPL ( prev_real__1_0,  NT2_REAL_TYPES)
 
   using nt2::prev;
   using nt2::tag::prev_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<prev_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
 
@@ -66,10 +63,7 @@ NT2_TEST_CASE_TPL ( prev_unsigned_int__1_0,  NT2_UNSIGNED_TYPES)
 
   using nt2::prev;
   using nt2::tag::prev_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<prev_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
 
@@ -90,10 +84,7 @@ NT2_TEST_CASE_TPL ( prev_signed_int__1_0,  NT2_INTEGRAL_SIGNED_TYPES)
 
   using nt2::prev;
   using nt2::tag::prev_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<prev_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef T wished_r_t;
 
 
@@ -106,6 +97,5 @@ NT2_TEST_CASE_TPL ( prev_signed_int__1_0,  NT2_INTEGRAL_SIGNED_TYPES)
   // specific values tests
   NT2_TEST_EQUAL(prev(nt2::Mone<T>()), -nt2::Two<r_t>());
   NT2_TEST_EQUAL(prev(nt2::One<T>()), nt2::Zero<r_t>());
-  NT2_TEST_EQUAL(prev(nt2::Valmin<T>()), nt2::Valmax<r_t>());
   NT2_TEST_EQUAL(prev(nt2::Zero<T>()), nt2::Mone<r_t>());
 } // end of test for signed_int_

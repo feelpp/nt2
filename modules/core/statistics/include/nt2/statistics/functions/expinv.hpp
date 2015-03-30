@@ -9,7 +9,6 @@
 #ifndef NT2_STATISTICS_FUNCTIONS_EXPINV_HPP_INCLUDED
 #define NT2_STATISTICS_FUNCTIONS_EXPINV_HPP_INCLUDED
 
-#include <nt2/options.hpp>
 #include <nt2/include/functor.hpp>
 #include <nt2/sdk/meta/size_as.hpp>
 #include <nt2/sdk/meta/value_as.hpp>
@@ -32,12 +31,35 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::tieable_<expinv_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_expinv_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
     struct expinv0_ : ext::elementwise_<expinv0_>
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<expinv0_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_expinv0_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::expinv_, Site> dispatching_expinv_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::expinv_, Site>();
+   }
+   template<class... Args>
+   struct impl_expinv_;
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::expinv0_, Site> dispatching_expinv0_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::expinv0_, Site>();
+   }
+   template<class... Args>
+   struct impl_expinv0_;
   }
   /*!
     exponential inverse cumulative distribution

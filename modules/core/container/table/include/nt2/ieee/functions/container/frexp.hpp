@@ -13,9 +13,9 @@
 #include <nt2/core/container/dsl.hpp>
 #include <boost/dispatch/meta/terminal_of.hpp>
 
-namespace nt2 { namespace ext
+namespace boost { namespace simd { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::frexp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( frexp_, tag::cpu_
                             , (A0)(A1)(A2)
                             , ((ast_<A0, nt2::container::domain>))
                               (unspecified_<A1>)
@@ -30,7 +30,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::frexp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( frexp_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))
                               (unspecified_<A1>)
@@ -45,6 +45,6 @@ namespace nt2 { namespace ext
       return r0;
     }
   };
-} }
+} } }
 
 #endif

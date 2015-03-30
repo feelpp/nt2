@@ -21,6 +21,16 @@ namespace nt2
                                 , 0x4040800000000000ll  // 30.
                                 )
   }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Fastgammalargelim, Site> dispatching_Fastgammalargelim(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Fastgammalargelim, Site>();
+    }
+    template<class... Args>
+    struct impl_Fastgammalargelim;
+  }
 
   BOOST_SIMD_CONSTANT_IMPLEMENTATION(tag::Fastgammalargelim, Fastgammalargelim);
 }

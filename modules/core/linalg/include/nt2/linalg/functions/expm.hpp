@@ -19,7 +19,20 @@ namespace nt2 { namespace tag
     struct expm_ :   ext::unspecified_<expm_>
     {
       typedef ext::unspecified_<expm_>  parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_expm_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::expm_, Site> dispatching_expm_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::expm_, Site>();
+    }
+    template<class... Args>
+    struct impl_expm_;
   }
   /**
    * @brief compute exponential of a matricial expression

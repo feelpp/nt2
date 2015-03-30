@@ -50,7 +50,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pocon_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( pocon_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               (scalar_< floating_<A1> >)            //  anorm
@@ -69,8 +69,8 @@ namespace nt2 { namespace ext
       nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(3*n,1));
       nt2::memory::container<tag::table_, nt2_la_int , nt2::_2D> iwork(nt2::of_size(n,1));
 
-      NT2_F77NAME(dpocon) ( &uplo, &n, a0.raw(), &ld, &a1, &rcond
-                          , work.raw(), iwork.raw(), &info
+      NT2_F77NAME(dpocon) ( &uplo, &n, a0.data(), &ld, &a1, &rcond
+                          , work.data(), iwork.data(), &info
                           );
 
       return rcond;
@@ -78,7 +78,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pocon_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( pocon_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               (scalar_< floating_<A1> >)            //  anorm
@@ -97,8 +97,8 @@ namespace nt2 { namespace ext
       nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(3*n,1));
       nt2::memory::container<tag::table_, nt2_la_int , nt2::_2D> iwork(nt2::of_size(n,1));
 
-      NT2_F77NAME(spocon) ( &uplo, &n, a0.raw(), &ld, &a1, &rcond
-                          , work.raw(), iwork.raw(), &info
+      NT2_F77NAME(spocon) ( &uplo, &n, a0.data(), &ld, &a1, &rcond
+                          , work.data(), iwork.data(), &info
                           );
 
       return rcond;
@@ -106,7 +106,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pocon_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( pocon_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               (scalar_< floating_<A1> >)            //  anorm
@@ -126,8 +126,8 @@ namespace nt2 { namespace ext
       nt2::memory::container<tag::table_, v_t, nt2::_2D> work(nt2::of_size(2*n,1));
       nt2::memory::container<tag::table_, result_type, nt2::_2D>  rwork(nt2::of_size(n,1));
 
-      NT2_F77NAME(zpocon) ( &uplo, &n, a0.raw(), &ld, &a1, &rcond
-                          , work.raw(), rwork.raw(), &info
+      NT2_F77NAME(zpocon) ( &uplo, &n, a0.data(), &ld, &a1, &rcond
+                          , work.data(), rwork.data(), &info
                           );
 
       return rcond;
@@ -135,7 +135,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::pocon_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( pocon_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               (scalar_< floating_<A1> >)            //  anorm
@@ -155,8 +155,8 @@ namespace nt2 { namespace ext
       nt2::memory::container<tag::table_, v_t, nt2::_2D> work(nt2::of_size(2*n,1));
       nt2::memory::container<tag::table_, result_type, nt2::_2D>  rwork(nt2::of_size(n,1));
 
-      NT2_F77NAME(cpocon) ( &uplo, &n, a0.raw(), &ld, &a1, &rcond
-                          , work.raw(), rwork.raw(), &info
+      NT2_F77NAME(cpocon) ( &uplo, &n, a0.data(), &ld, &a1, &rcond
+                          , work.data(), rwork.data(), &info
                           );
 
       return rcond;

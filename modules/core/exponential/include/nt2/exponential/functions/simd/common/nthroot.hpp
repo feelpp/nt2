@@ -41,7 +41,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::nthroot_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( nthroot_, tag::cpu_
                             , (A0)(A1)(X)
                             , ((simd_<floating_<A0>,X>))
                               ((simd_<integer_<A1>,X>))
@@ -51,7 +51,6 @@ namespace nt2 { namespace ext
     NT2_FUNCTOR_CALL(2)
     {
       typedef typename meta::as_logical<A0>::type  bA0;
-      typedef typename meta::as_logical<A1>::type  bA1;
       A0 x =  nt2::abs(a0);
       A0 aa1 = nt2::tofloat(a1);
       A0 y = nt2::pow(x,rec(aa1));

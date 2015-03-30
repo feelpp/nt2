@@ -30,7 +30,7 @@
 #include <nt2/sdk/unit/module.hpp>
 
 #include <nt2/constant/constant.hpp>
-#include <boost/dispatch/meta/ignore_unused.hpp>
+#include <boost/core/ignore_unused.hpp>
 
 
 NT2_TEST_CASE_TPL ( logical_not_integer__1_0,  NT2_INTEGRAL_TYPES)
@@ -38,10 +38,7 @@ NT2_TEST_CASE_TPL ( logical_not_integer__1_0,  NT2_INTEGRAL_TYPES)
 
   using nt2::logical_not;
   using nt2::tag::logical_not_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<logical_not_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef typename nt2::meta::as_logical<T>::type wished_r_t;
 
 
@@ -60,10 +57,7 @@ NT2_TEST_CASE_TPL ( logical_not_real__1_0,  NT2_REAL_TYPES)
 
   using nt2::logical_not;
   using nt2::tag::logical_not_;
-  typedef typename nt2::meta::as_integer<T>::type iT;
   typedef typename nt2::meta::call<logical_not_(T)>::type r_t;
-  typedef typename nt2::meta::scalar_of<r_t>::type ssr_t;
-  typedef typename nt2::meta::upgrade<T>::type u_t;
   typedef typename nt2::meta::as_logical<T>::type wished_r_t;
 
 

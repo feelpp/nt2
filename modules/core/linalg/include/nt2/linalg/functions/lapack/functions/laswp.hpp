@@ -43,7 +43,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::laswp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( laswp_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -59,12 +59,12 @@ namespace nt2 { namespace ext
       nt2_la_int k2 = a1.leading_size();
       nt2_la_int incx = 1;
 
-      NT2_F77NAME(dlaswp) ( &n, a0.raw(), &ld, &k1, &k2 , a1.raw(), &incx);
+      NT2_F77NAME(dlaswp) ( &n, a0.data(), &ld, &k1, &k2 , a1.data(), &incx);
     }
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::laswp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( laswp_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -81,12 +81,12 @@ namespace nt2 { namespace ext
       nt2_la_int incx = 1;
 
 
-      NT2_F77NAME(slaswp) ( &n, a0.raw(), &ld, &k1, &k2 , a1.raw(), &incx);
+      NT2_F77NAME(slaswp) ( &n, a0.data(), &ld, &k1, &k2 , a1.data(), &incx);
     }
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::laswp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( laswp_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -103,12 +103,12 @@ namespace nt2 { namespace ext
       nt2_la_int incx = 1;
 
 
-      NT2_F77NAME(zlaswp) ( &n, a0.raw(), &ld, &k1, &k2 , a1.raw(), &incx);
+      NT2_F77NAME(zlaswp) ( &n, a0.data(), &ld, &k1, &k2 , a1.data(), &incx);
     }
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::laswp_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( laswp_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, integer_<A1>, S1 >))
@@ -124,7 +124,7 @@ namespace nt2 { namespace ext
       nt2_la_int k2 = a1.leading_size();
       nt2_la_int incx = 1;
 
-      NT2_F77NAME(claswp) ( &n, a0.raw(), &ld, &k1, &k2 , a1.raw(), &incx);
+      NT2_F77NAME(claswp) ( &n, a0.data(), &ld, &k1, &k2 , a1.data(), &incx);
     }
   };
 } }

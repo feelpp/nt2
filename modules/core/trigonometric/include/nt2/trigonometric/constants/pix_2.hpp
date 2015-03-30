@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_PIX_2_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_PIX_2_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 6, 0x40c90fdb
                                 , 0x401921fb54442d18ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Pix_2, Site> dispatching_Pix_2(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Pix_2, Site>();
+   }
+   template<class... Args>
+   struct impl_Pix_2;
   }
   /*!
     Constant  \f$2\pi\f$.

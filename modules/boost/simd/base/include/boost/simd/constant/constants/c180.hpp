@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                  , 0x43340000, 0x4066800000000000ll
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::C180, Site> dispatching_C180(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::C180, Site>();
+   }
+   template<class... Args>
+   struct impl_C180;
+  }
   /*!
     Generates the value 180 in the chosen type
 

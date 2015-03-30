@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_POWLOWLIM_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_POWLOWLIM_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0xc5160000UL //-2400
                                 , 0xc0d0c7c000000000ULL //-17183
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Powlowlim, Site> dispatching_Powlowlim(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Powlowlim, Site>();
+    }
+    template<class... Args>
+    struct impl_Powlowlim;
   }
  /*!
     Generates constant powlowlim

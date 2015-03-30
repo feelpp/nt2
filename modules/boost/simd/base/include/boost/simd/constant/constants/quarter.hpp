@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0x3E800000, 0x3FD0000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Quarter, Site> dispatching_Quarter(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Quarter, Site>();
+   }
+   template<class... Args>
+   struct impl_Quarter;
+  }
   /*!
     Generate value 1/4
 

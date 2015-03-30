@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_60_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_60_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 60, 0x42700000UL
                                 , 0x404e000000000000ULL
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::_60, Site> dispatching__60(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::_60, Site>();
+   }
+   template<class... Args>
+   struct impl__60;
   }
   /*!
     Constant 60.

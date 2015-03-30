@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0xc0c00000UL, 0xc018000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Msix, Site> dispatching_Msix(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Msix, Site>();
+   }
+   template<class... Args>
+   struct impl_Msix;
+  }
   /*!
     Generates value -6
 

@@ -24,12 +24,13 @@
 #include <nt2/linalg/details/utility/f77_wrapper.hpp>
 
 #include <magma.h>
+#include <cctype>
 
 
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(site)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -43,7 +44,10 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        magma_dpotrf(a1,n,a0.raw(),lda,&that);
+        char c = std::toupper(a1);
+        magma_uplo_t uplo = c == 'L' ? MagmaLower : c == 'U' ? MagmaUpper : (magma_uplo_t)0;
+
+        magma_dpotrf(uplo,n,a0.data(),lda,&that);
 
         return that;
      }
@@ -51,7 +55,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(site)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -65,7 +69,10 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        magma_spotrf(a1,n,a0.raw(),lda,&that);
+        char c = std::toupper(a1);
+        magma_uplo_t uplo = c == 'L' ? MagmaLower : c == 'U' ? MagmaUpper : (magma_uplo_t)0;
+
+        magma_spotrf(uplo,n,a0.data(),lda,&that);
 
         return that;
      }
@@ -73,7 +80,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(site)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -87,7 +94,10 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        magma_zpotrf(a1,n,(cuDoubleComplex*)a0.raw(),lda,&that);
+        char c = std::toupper(a1);
+        magma_uplo_t uplo = c == 'L' ? MagmaLower : c == 'U' ? MagmaUpper : (magma_uplo_t)0;
+
+        magma_zpotrf(uplo,n,(cuDoubleComplex*)a0.data(),lda,&that);
 
         return that;
      }
@@ -95,7 +105,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY -
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, nt2::tag::magma_<site>
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, nt2::tag::magma_<site>
                             , (A0)(S0)(A1)(site)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -109,7 +119,10 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        magma_cpotrf(a1,n,(cuFloatComplex*)a0.raw(),lda,&that);
+        char c = std::toupper(a1);
+        magma_uplo_t uplo = c == 'L' ? MagmaLower : c == 'U' ? MagmaUpper : (magma_uplo_t)0;
+
+        magma_cpotrf(uplo,n,(cuFloatComplex*)a0.data(),lda,&that);
 
         return that;
      }

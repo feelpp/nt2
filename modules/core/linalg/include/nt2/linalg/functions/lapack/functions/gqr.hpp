@@ -23,7 +23,7 @@
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, double_<A1>, S1 >))
@@ -53,7 +53,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               ((container_< nt2::tag::table_, double_<A1>, S1 >))
@@ -71,7 +71,7 @@ namespace nt2 { namespace ext
         nt2_la_int  wn = a2.main_size();
         nt2_la_int  k  = a1.leading_size();
 
-        NT2_F77NAME(dorgqr) (&m, &n, &k, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(dorgqr) (&m, &n, &k, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -79,7 +79,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, single_<A1>, S1 >))
@@ -109,7 +109,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               ((container_< nt2::tag::table_, single_<A1>, S1 >))
@@ -128,7 +128,7 @@ namespace nt2 { namespace ext
         nt2_la_int  k  = a1.leading_size();
 
 
-        NT2_F77NAME(sorgqr) (&m, &n, &k, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(sorgqr) (&m, &n, &k, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -138,7 +138,7 @@ namespace nt2 { namespace ext
 //---------------------------------------Complex-----------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >))
@@ -168,7 +168,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<double_<A1> >, S1 >))
@@ -186,7 +186,7 @@ namespace nt2 { namespace ext
         nt2_la_int  wn = a2.main_size();
         nt2_la_int  k  = a1.leading_size();
 
-        NT2_F77NAME(zungqr) (&m, &n, &k, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(zungqr) (&m, &n, &k, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;
@@ -194,7 +194,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<single_<A1> >, S1 >))
@@ -224,7 +224,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gqr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gqr_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               ((container_< nt2::tag::table_, complex_<single_<A1> >, S1 >))
@@ -243,7 +243,7 @@ namespace nt2 { namespace ext
         nt2_la_int  k  = a1.leading_size();
 
 
-        NT2_F77NAME(cungqr) (&m, &n, &k, a0.raw(), &ld, a1.raw(), a2.main()
+        NT2_F77NAME(cungqr) (&m, &n, &k, a0.data(), &ld, a1.data(), a2.main()
                             , &wn, &that
                             );
         return that;

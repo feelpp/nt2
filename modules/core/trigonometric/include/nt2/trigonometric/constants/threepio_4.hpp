@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_THREEPIO_4_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_THREEPIO_4_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -29,6 +30,16 @@ namespace nt2
                                 , 2, 0x4016cbe4
                                 , 0x4002d97c7f3321d2ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Threepio_4, Site> dispatching_Threepio_4(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Threepio_4, Site>();
+   }
+   template<class... Args>
+   struct impl_Threepio_4;
   }
   /*!
     Constant threepio_4 : \f$3\pi/4\f$.

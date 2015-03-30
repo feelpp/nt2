@@ -1,6 +1,6 @@
 //==============================================================================
-//         Copyright 2003 & onward LASMEA UMR 6602 CNRS/Univ. Clermont II
-//         Copyright 2009 & onward LRI    UMR 8623 CNRS/Univ Paris Sud XI
+//         Copyright 2009 -2015 LRI    UMR 8623 CNRS/Univ Paris Sud XI
+//         Copyright 2012 -2015 NumScale SAS
 //
 //          Distributed under the Boost Software License, Version 1.0.
 //                 See accompanying file LICENSE.txt or copy at
@@ -10,7 +10,7 @@
 #define NT2_CORE_FUNCTIONS_ALONG_HPP_INCLUDED
 
 #include <nt2/include/functor.hpp>
-
+#include <nt2/core/container/dsl/details/resize.hpp>
 
 namespace nt2
 {
@@ -28,7 +28,20 @@ namespace nt2
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<along_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_along_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::along_, Site> dispatching_along_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::along_, Site>();
+   }
+   template<class... Args>
+   struct impl_along_;
   }
   /*!
     Applies an index \c ind on \c expr along the \c i-th dimension
@@ -66,6 +79,18 @@ namespace nt2
   NT2_FUNCTION_IMPLEMENTATION_SELF(nt2::tag::along_  , along, 2)
   /// @overload
   NT2_FUNCTION_IMPLEMENTATION_SELF(nt2::tag::along_  , along, 3)
+
+  namespace ext
+  {
+    //============================================================================
+    // resize function expression - do nothing
+    //============================================================================
+    template<class Domain, int N, class Expr>
+    struct resize<nt2::tag::along_, Domain, N, Expr>
+    {
+      template<class Sz> BOOST_FORCEINLINE void operator()(Expr&, Sz const&) {}
+    };
+}
 }
 
 #endif

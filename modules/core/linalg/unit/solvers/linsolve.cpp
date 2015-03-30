@@ -46,7 +46,7 @@ typedef nt2::table<T,nt2::rectangular_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,2,2,2,5,7);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -88,7 +88,7 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                     );
 t_t b = nt2::cons<cT>(nt2::of_size(3,1)
                     ,cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 
 T rcond,rcond1;
@@ -127,7 +127,7 @@ typedef nt2::table<T,nt2::rectangular_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,2,2,2,5,7);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -171,7 +171,7 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                     );
 t_t b = nt2::cons<cT>(nt2::of_size(3,1)
                     ,cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1;
 
@@ -207,7 +207,7 @@ typedef nt2::table<T,nt2::rectangular_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,2,2,2,5,7);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -215,8 +215,8 @@ char norm = '1';
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -250,14 +250,14 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                     );
 t_t b = nt2::cons<cT>(nt2::of_size(3,1)
                     ,cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1;
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -293,14 +293,14 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                     );
 t_t b = nt2::cons<cT>(nt2::of_size(3,1)
                     ,cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,fast_);
-nt2::mlinsolve(a+a,b,x1 );
+x = nt2::linsolve(a+a,b+b,fast_);
+nt2::mlinsolve(a+a,b+b,x1 );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -329,14 +329,14 @@ typedef nt2::table<T,nt2::symmetric_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,1,1,1,1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,fast_);
-nt2::mlinsolve(a+a,b,x1 );
+x = nt2::linsolve(a+a,b+b,fast_);
+nt2::mlinsolve(a+a,b+b,x1 );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -364,15 +364,15 @@ typedef nt2::table<T,nt2::symmetric_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,1,1,1,1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a,b,precise_);
-nt2::plinsolve(a,b,nt2::tie(x1));
+x = nt2::linsolve(a,b+b,precise_);
+nt2::plinsolve(a,b+b,nt2::tie(x1));
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -413,8 +413,8 @@ char norm = '1';
 
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a,b,precise_);
-nt2::plinsolve(a,b,nt2::tie(x1) );
+x = nt2::linsolve(a,b+b,precise_);
+nt2::plinsolve(a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -444,7 +444,7 @@ typedef nt2::table<T,nt2::symmetric_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,1,1,1,1,1,1,1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -452,8 +452,8 @@ char norm = '1';
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -489,7 +489,7 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                     );
 t_t b = nt2::cons<cT>(nt2::of_size(3,1)
                     ,cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -497,8 +497,8 @@ char norm = '1';
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -533,15 +533,15 @@ typedef nt2::table<T,nt2::positive_definite_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,-1,0,-1,2,-1,0,-1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,fast_);
-nt2::mlinsolve(a+a,b,x1 );
+x = nt2::linsolve(a+a,b+b,fast_);
+nt2::mlinsolve(a+a,b+b,x1 );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -572,15 +572,14 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                      ,cT(-1,0),cT(2,0),cT(-1,0)
                      ,cT(0,0),cT(-1,0),cT(2,0));
 t_t b = nt2::cons<cT>(nt2::of_size(3,1),cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
-
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,fast_);
-nt2::mlinsolve(a+a,b,x1 );
+x = nt2::linsolve(a+a,b+b,fast_);
+nt2::mlinsolve(a+a,b+b,x1 );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -608,15 +607,15 @@ typedef nt2::table<T,nt2::positive_definite_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,-1,0,-1,2,-1,0,-1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,precise_);
-nt2::plinsolve(a+a,b, nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,precise_);
+nt2::plinsolve(a+a,b+b, nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -649,15 +648,15 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                      ,cT(-1,0),cT(2,0),cT(-1,0)
                      ,cT(0,0),cT(-1,0),cT(2,0));
 t_t b = nt2::cons<cT>(nt2::of_size(3,1),cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
 
 
 // X = linsolve(A,B)
-x = nt2::linsolve(a+a,b,precise_);
-nt2::plinsolve(a+a,b, nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,precise_);
+nt2::plinsolve(a+a,b+b, nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -685,7 +684,7 @@ typedef nt2::table<T,nt2::positive_definite_>    t_t;
 
 t_t a = nt2::cons<T>(nt2::of_size(3,3),2,-1,0,-1,2,-1,0,-1,2);
 t_t b = nt2::cons<T>(nt2::of_size(3,1),1,2,5);
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<T>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -693,8 +692,8 @@ char norm = '1';
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -729,7 +728,7 @@ t_t a = nt2::cons<cT>(nt2::of_size(3,3)
                      ,cT(-1,0),cT(2,0),cT(-1,0)
                      ,cT(0,0),cT(-1,0),cT(2,0));
 t_t b = nt2::cons<cT>(nt2::of_size(3,1),cT(1,0),cT(2,0),cT(5,0));
-t_t x = nt2::ones(nt2::of_size(3,1),nt2::meta::as_<cT>());
+t_t x ;
 t_t x1(b);
 T rcond,rcond1,anorm;
 char norm = '1';
@@ -737,8 +736,8 @@ char norm = '1';
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a+a,b,classic_);
-nt2::clinsolve(a+a,b,nt2::tie(x1) );
+x = nt2::linsolve(a+a,b+b,classic_);
+nt2::clinsolve(a+a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
@@ -768,20 +767,20 @@ using nt2::precise_;
 nt2::table<T, nt2::band_diagonal_<2,2> >  a = nt2::rand(7, 7, nt2::meta::as_<T>());
 nt2::table<T> b = nt2::rand(7, 1, nt2::meta::as_<T>());
 
-nt2::table<T> x = nt2::ones(nt2::of_size(7,1),nt2::meta::as_<T>());
+nt2::table<T> x ;
 nt2::table<T> x1(b);
 T rcond;
 
 // X = linsolve(A,B)
 
-x = nt2::linsolve(a,b,classic_);
-nt2::clinsolve(a,b,nt2::tie(x1) );
+x = nt2::linsolve(a,b+b,classic_);
+nt2::clinsolve(a,b+b,nt2::tie(x1) );
 
 NT2_TEST_ULP_EQUAL( x , x1 , T(10));
 
 // [X,R] = linsolve(A,B)
 
-nt2::tie(x,rcond) = nt2::linsolve(a,b);
+nt2::tie(x,rcond) = nt2::linsolve(a,b+b);
 
 NT2_TEST_ULP_EQUAL(x, x1, T(10) );
 
@@ -802,7 +801,7 @@ nt2::table<cT, nt2::band_diagonal_<2,2> >  a = nt2::ones(7, 7, nt2::meta::as_<cT
                                              + T(10)*nt2::eye(7, 7, nt2::meta::as_<cT>());
 nt2::table<cT> b = nt2::ones(7, 1, nt2::meta::as_<cT>());
 
-nt2::table<cT> x = nt2::ones(nt2::of_size(7,1),nt2::meta::as_<cT>());
+nt2::table<cT> x ;
 nt2::table<cT> x1(b);
 T rcond;
 

@@ -23,14 +23,14 @@
 #include <nt2/core/container/table/table.hpp>
 #include <nt2/core/container/dsl/as_terminal.hpp>
 #include <nt2/core/container/colon/colon.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 #include <nt2/linalg/details/utility/lapack_verify.hpp>
 #include <nt2/linalg/options.hpp>
 #include <nt2/sdk/meta/as_real.hpp>
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::svd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( svd_, tag::cpu_
                             , (A0)
                             , (scalar_<unspecified_<A0> >)
                             )
@@ -42,7 +42,7 @@ namespace nt2 { namespace ext
       return nt2::abs(a0);
     }
   };
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::svd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( svd_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_<unspecified_<A0> >)
                               (unspecified_<A1>)
@@ -59,7 +59,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //SVD
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::svd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( svd_, tag::cpu_
                             , (A0)(N0)(A1)(N1)
                             , ((node_<A0, nt2::tag::svd_
                                     , N0, nt2::container::domain

@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_20_PI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_20_PI_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 63, 0x427b53d1       //20\pi
                                 , 0x404f6a7a2955385ell  //20\pi
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::_20_pi, Site> dispatching__20_pi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::_20_pi, Site>();
+   }
+   template<class... Args>
+   struct impl__20_pi;
   }
   /*!
     Constant \f$20\pi\f$.

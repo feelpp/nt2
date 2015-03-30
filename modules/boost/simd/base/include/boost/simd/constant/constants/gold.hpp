@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0x3FCF1BBD,0x3FF9E3779B97F4A8ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Gold, Site> dispatching_Gold(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Gold, Site>();
+   }
+   template<class... Args>
+   struct impl_Gold;
+  }
   /*!
     Generates the golden ratio that is \f$\phi = \frac{1+\sqrt5}{2}\f$
 

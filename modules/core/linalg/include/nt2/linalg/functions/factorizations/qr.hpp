@@ -20,7 +20,6 @@
 #include <nt2/include/functions/gqr.hpp>
 #include <nt2/include/functions/min.hpp>
 #include <nt2/include/functions/mqr.hpp>
-#include <nt2/include/functions/value.hpp>
 #include <nt2/include/functions/tie.hpp>
 #include <nt2/include/functions/triu.hpp>
 #include <nt2/include/functions/width.hpp>
@@ -28,7 +27,7 @@
 #include <nt2/linalg/details/utility/lapack_verify.hpp>
 #include <nt2/sdk/meta/as_integer.hpp>
 #include <nt2/core/container/dsl/as_terminal.hpp>
-#include <nt2/core/container/dsl/assign_swap.hpp>
+#include <nt2/core/utility/assign_swap.hpp>
 #include <nt2/core/container/colon/colon.hpp>
 #include <nt2/linalg/options.hpp>
 
@@ -37,7 +36,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //QR Scalar
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::qr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( qr_, tag::cpu_
                             , (A0)
                             , (scalar_<unspecified_<A0> >)
                             )
@@ -50,7 +49,7 @@ namespace nt2 { namespace ext
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::qr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( qr_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_<unspecified_<A0> >)
                               (unspecified_<A1>)
@@ -69,7 +68,7 @@ namespace nt2 { namespace ext
   //============================================================================
   //[Q,R] = QR(A)
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::qr_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( qr_, tag::cpu_
                             , (A0)(N0)(A1)(N1)
                             , ((node_<A0, nt2::tag::qr_
                                     , N0, nt2::container::domain

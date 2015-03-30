@@ -45,7 +45,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // LINSOLVE classic
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::clinsolve_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( clinsolve_, tag::cpu_
                             , (A0)(A1)(A2)(N2)
                             , ((ast_<A0, nt2::container::domain>))   // A
                               ((ast_<A1, nt2::container::domain>))   // B
@@ -91,6 +91,8 @@ namespace nt2 { namespace ext
         nt2::gelsy( boost::proto::value(entry) ,boost::proto::value(piv)
                 , boost::proto::value(b) );
       }
+
+      assign_swap (boost::proto::child_c<0>(a2), b);
     }
 
     //==========================================================================
@@ -104,6 +106,7 @@ namespace nt2 { namespace ext
       matrix_type entry(a0);
 
       nt2::posv(boost::proto::value(entry), boost::proto::value(b));
+      assign_swap (boost::proto::child_c<0>(a2), b);
     }
 
     //==========================================================================
@@ -115,9 +118,11 @@ namespace nt2 { namespace ext
     {
       NT2_AS_TERMINAL_INOUT(desired_semantic,b,a1,boost::proto::child_c<0>(a2) );
       matrix_type entry(a0);
-
+      piv.resize(nt2::of_size(a0.leading_size(),1));
       nt2::sysv( boost::proto::value(entry),boost::proto::value(piv)
               , boost::proto::value(b));
+      assign_swap (boost::proto::child_c<0>(a2), b);
+
     }
 
     //==========================================================================
@@ -133,6 +138,8 @@ namespace nt2 { namespace ext
 
       nt2::gbsv( boost::proto::value(entry),boost::proto::value(piv)
               , boost::proto::value(b));
+      assign_swap (boost::proto::child_c<0>(a2), b);
+
     }
 
     //==========================================================================
@@ -186,6 +193,7 @@ namespace nt2 { namespace ext
                 , boost::proto::value(b), rank);
         boost::proto::child_c<1>(a2) = static_cast<type_t>(rank);
       }
+      assign_swap (boost::proto::child_c<0>(a2), b);
     }
 
     //==========================================================================
@@ -209,6 +217,7 @@ namespace nt2 { namespace ext
               , boost::proto::value(b));
       boost::proto::child_c<1>(a2) = nt2::sycon( boost::proto::value(entry)
                                                , boost::proto::value(piv) ,anorm);
+      assign_swap (boost::proto::child_c<0>(a2), b);
     }
 
     //==========================================================================
@@ -226,6 +235,7 @@ namespace nt2 { namespace ext
       type_t anorm = nt2::lange(boost::proto::value(entry) ,norm, h_());
       nt2::posv(boost::proto::value(entry), boost::proto::value(b));
       boost::proto::child_c<1>(a2) = nt2::pocon(boost::proto::value(entry),anorm);
+      assign_swap (boost::proto::child_c<0>(a2), b);
     }
 
     //==========================================================================
@@ -246,6 +256,8 @@ namespace nt2 { namespace ext
               , boost::proto::value(b));
       boost::proto::child_c<1>(a2) = nt2::gbcon( boost::proto::value(entry)
                                                , boost::proto::value(piv),anorm);
+
+      assign_swap (boost::proto::child_c<0>(a2), b);
 
     }
 

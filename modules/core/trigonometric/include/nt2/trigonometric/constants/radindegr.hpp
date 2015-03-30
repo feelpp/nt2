@@ -9,9 +9,9 @@
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_RADINDEGR_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_RADINDEGR_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 namespace nt2
 {
   namespace tag
@@ -28,6 +28,16 @@ namespace nt2
                                 , 0, 0xb53387c1
                                 , 0xbce1e7ab456405f8ull
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Radindegr, Site> dispatching_Radindegr(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Radindegr, Site>();
+   }
+   template<class... Args>
+   struct impl_Radindegr;
   }
   /*!
     Constant Radian in Degree residue can help to obtain better conversion

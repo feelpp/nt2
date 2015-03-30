@@ -18,7 +18,7 @@
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -32,7 +32,7 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        NT2_F77NAME(dpotrf) (&a1,&n,a0.raw(),&lda,&that);
+        NT2_F77NAME(dpotrf) (&a1,&n,a0.data(),&lda,&that);
 
         return that;
      }
@@ -40,7 +40,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -54,14 +54,14 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        NT2_F77NAME(spotrf) (&a1,&n,a0.raw(),&lda,&that);
+        NT2_F77NAME(spotrf) (&a1,&n,a0.data(),&lda,&that);
 
         return that;
      }
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -75,7 +75,7 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        NT2_F77NAME(zpotrf) (&a1,&n,a0.raw(),&lda,&that);
+        NT2_F77NAME(zpotrf) (&a1,&n,a0.data(),&lda,&that);
 
         return that;
      }
@@ -83,7 +83,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::potrf_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( potrf_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)
@@ -97,7 +97,7 @@ namespace nt2 { namespace ext
         nt2_la_int n   = nt2::width(a0);
         nt2_la_int lda = a0.leading_size();
 
-        NT2_F77NAME(cpotrf) (&a1,&n,a0.raw(),&lda,&that);
+        NT2_F77NAME(cpotrf) (&a1,&n,a0.data(),&lda,&that);
 
         return that;
      }

@@ -8,9 +8,8 @@
 //==============================================================================
 #ifndef BOOST_SIMD_OPERATOR_FUNCTIONS_IS_NOT_EQUAL_HPP_INCLUDED
 #define BOOST_SIMD_OPERATOR_FUNCTIONS_IS_NOT_EQUAL_HPP_INCLUDED
-#include <boost/simd/include/functor.hpp>
-#include <boost/dispatch/include/functor.hpp>
 
+#include <boost/simd/include/functor.hpp>
 
 namespace boost { namespace simd
 {
@@ -28,7 +27,20 @@ namespace boost { namespace simd
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<is_not_equal_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_is_not_equal_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::is_not_equal_, Site> dispatching_is_not_equal_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::is_not_equal_, Site>();
+   }
+   template<class... Args>
+   struct impl_is_not_equal_;
   }
   /*!
     Returns True if a0 and a1 are not equal else False.
@@ -64,20 +76,6 @@ namespace boost { namespace simd
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::is_not_equal_, ne           , 2 )
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::is_not_equal_, is_neq       , 2 )
 } }
-
-namespace boost { namespace dispatch { namespace meta
-{
-  template<>
-  struct hierarchy_of<boost::proto::tag::not_equal_to>
-  {
-    typedef boost::simd::tag::is_not_equal_ type;
-  };
-  template<>
-  struct proto_tag<boost::simd::tag::is_not_equal_>
-  {
-    typedef boost::proto::tag::not_equal_to type;
-  };
-} } }
 
 #include <boost/simd/operator/specific/common.hpp>
 

@@ -20,7 +20,7 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION( boost::simd::tag::ffs_, tag::cpu_, (A0)
+  BOOST_DISPATCH_IMPLEMENT         ( ffs_, tag::cpu_, (A0)
                             , (scalar_< type64_<A0> >)
                             )
   {
@@ -33,7 +33,7 @@ namespace boost { namespace simd { namespace ext
       return __builtin_ffsll(t1);
     #elif defined BOOST_MSVC && defined _WIN64
       unsigned long index;
-      if(_BitScanForward64(&index, uint64_t(a0)))
+      if(_BitScanForward64(&index, uint64_t(t1)))
         return index+1;
       return 0;
     #elif defined BOOST_MSVC
@@ -69,7 +69,7 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION( boost::simd::tag::ffs_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT         ( ffs_, tag::cpu_
                             , (A0)
                             , (scalar_< type32_<A0> >)
                             )
@@ -104,7 +104,7 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION( boost::simd::tag::ffs_, tag::cpu_ , (A0)
+  BOOST_DISPATCH_IMPLEMENT         ( ffs_, tag::cpu_ , (A0)
                             , (scalar_< arithmetic_<A0> >)
                             )
   {

@@ -31,6 +31,16 @@ namespace boost { namespace simd
                                 )
 
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Smallestposval, Site> dispatching_Smallestposval(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Smallestposval, Site>();
+   }
+   template<class... Args>
+   struct impl_Smallestposval;
+  }
   /*!
     Generates the least non zero, non denormal, positive value.
 

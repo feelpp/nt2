@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_PIO_4_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_PIO_4_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3f490fdb
                                 , 0x3fe921fb54442d18ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Pio_4, Site> dispatching_Pio_4(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Pio_4, Site>();
+   }
+   template<class... Args>
+   struct impl_Pio_4;
   }
   /*!
     Constant \f$\frac\pi{4}\f$.

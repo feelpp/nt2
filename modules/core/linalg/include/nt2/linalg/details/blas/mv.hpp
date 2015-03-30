@@ -18,12 +18,12 @@ namespace nt2 { namespace details
 {
 #define NT2_MV(T, PX)                                                   \
 inline void gemv( const char *ta                                        \
-                , const long int *m, const long int *n                  \
+                , const nt2_la_int *m, const nt2_la_int *n              \
                 , const T *al                                           \
-                , const T *a, const long int *lda                       \
-                , const T *x, const long int *incx                      \
+                , const T *a, const nt2_la_int *lda                     \
+                , const T *x, const nt2_la_int *incx                    \
                 , const T *be                                           \
-                , T *y      , const long int *incy                      \
+                , T *y      , const nt2_la_int *incy                    \
                 )                                                       \
 {                                                                       \
   NT2_F77NAME(BOOST_PP_CAT(PX,gemv))(ta,m,n,al,a,lda,x,incx,be,y,incy); \
@@ -42,13 +42,13 @@ inline void gemv( const char *ta                                        \
 
 #define NT2_MV(T, PX)                                                         \
 inline void gbmv( const char *ta                                              \
-                , const long int *m, const long int *n                        \
-                , const long int *kl, const long int *ku                      \
+                , const nt2_la_int *m, const nt2_la_int *n                    \
+                , const nt2_la_int *kl, const nt2_la_int *ku                  \
                 , const T *al                                                 \
-                , const T *a, const long int *lda                             \
-                , const T *x, const long int *incx                            \
+                , const T *a, const nt2_la_int *lda                           \
+                , const T *x, const nt2_la_int *incx                          \
                 , const T *be                                                 \
-                , T *y      , const long int *incy                            \
+                , T *y      , const nt2_la_int *incy                          \
                 )                                                             \
 {                                                                             \
   NT2_F77NAME(BOOST_PP_CAT(PX,gbmv))(ta,m,n,kl,ku,al,a,lda,x,incx,be,y,incy); \
@@ -66,15 +66,15 @@ inline void gbmv( const char *ta                                              \
 #undef NT2_MV
 
 #define NT2_MV(T, P, Q)                                                             \
-inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n                 \
+inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const nt2_la_int *n               \
                               , const T *al                                         \
-                              , const T *a, const long int *lda                     \
-                              , const T *x, const long int *incx                    \
+                              , const T *a, const nt2_la_int *lda                   \
+                              , const T *x, const nt2_la_int *incx                  \
                               , const T *be                                         \
-                              , T *y      , const long int *incy                    \
+                              , T *y      , const nt2_la_int *incy                  \
                               )                                                     \
 {                                                                                   \
-  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(ta,n,al,a,lda,x,incx,be,y,incy);  \
+  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(uplo,n,al,a,lda,x,incx,be,y,incy);  \
 }                                                                                   \
 /**/
 
@@ -84,8 +84,6 @@ inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n             
   // _SYMV ( UPLO, N, ALPHA, A, LDA, X, INCX, BETA,  Y, INCY )
   NT2_MV(std::complex<double>, z, he)
   NT2_MV(std::complex<float>, c, he)
-  NT2_MV(std::complex<double>, z, sy)
-  NT2_MV(std::complex<float>, c, sy)
   NT2_MV(double, d, sy)
   NT2_MV(float,  s, sy)
 
@@ -93,15 +91,15 @@ inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n             
 
 #define NT2_MV(T, P, Q)                                                               \
 inline void BOOST_PP_CAT(Q,mv)( const char *uplo                                      \
-                              , const long int *n, const long int *k                  \
+                              , const nt2_la_int *n, const nt2_la_int *k              \
                               , const T *al                                           \
-                              , const T *a, const long int *lda                       \
-                              , const T *x, const long int *incx                      \
+                              , const T *a, const nt2_la_int *lda                     \
+                              , const T *x, const nt2_la_int *incx                    \
                               , const T *be                                           \
-                              , T *y      , const long int *incy                      \
+                              , T *y      , const nt2_la_int *incy                    \
                               )                                                       \
 {                                                                                     \
-  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(ta,n,k,al,a,lda,x,incx,be,y,incy);  \
+  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(uplo,n,k,al,a,lda,x,incx,be,y,incy); \
 }                                                                                     \
 /**/
 
@@ -109,22 +107,20 @@ inline void BOOST_PP_CAT(Q,mv)( const char *uplo                                
   // _SBMV ( UPLO, N, K, ALPHA, A, LDA, X, INCX, BETA,  Y, INCY )
   NT2_MV(std::complex<double>, z, hb)
   NT2_MV(std::complex<float>, c, hb)
-  NT2_MV(std::complex<double>, z, sb)
-  NT2_MV(std::complex<float>, c, sb)
   NT2_MV(double, d, sb)
   NT2_MV(float,  s, sb)
 
 #undef NT2_MV
 
 #define NT2_MV(T, P, Q)                                                         \
-inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n             \
+inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const nt2_la_int *n           \
                               , const T *al , const T *ap                       \
-                              , const T *x  , const long int *incx              \
+                              , const T *x  , const nt2_la_int *incx            \
                               , const T *be                                     \
-                              , T *y        , const long int *incy              \
+                              , T *y        , const nt2_la_int *incy            \
                               )                                                 \
 {                                                                               \
-  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(ta,n,al,ap,x,incx,be,y,incy); \
+  NT2_F77NAME(BOOST_PP_CAT(P,BOOST_PP_CAT(Q,mv)))(uplo,n,al,ap,x,incx,be,y,incy); \
 }                                                                               \
 /**/
 
@@ -132,8 +128,6 @@ inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n             
   // _SPMV ( UPLO N, ALPHA, AP, X, INCX, BETA,  Y, INCY )
   NT2_MV(std::complex<double> , z, hp )
   NT2_MV(std::complex<float>  , c, hp )
-  NT2_MV(std::complex<double> , z, sp )
-  NT2_MV(std::complex<float>  , c, sp )
   NT2_MV(double, d, sp)
   NT2_MV(float,  s, sp)
 
@@ -141,9 +135,9 @@ inline void BOOST_PP_CAT(Q,mv)( const char *uplo, const long int *n             
 
 #define NT2_MV(T, P)                                                    \
 inline void tpmv( const char *uplo, const char *trans, const char *diag \
-                , const long int *n                                     \
+                , const nt2_la_int *n                                   \
                 , const T *ap                                           \
-                , T *x, const long int *incx                            \
+                , T *x, const nt2_la_int *incx                          \
                 )                                                       \
 {                                                                       \
   NT2_F77NAME(BOOST_PP_CAT(P,tpmv))(uplo,trans,diag,n,ap,x,incx);       \
@@ -160,9 +154,9 @@ inline void tpmv( const char *uplo, const char *trans, const char *diag \
 
 #define NT2_MV(T, P)                                                    \
 inline void trmv( const char *uplo, const char *trans, const char *diag \
-                , const long int *n                                     \
-                , const T *a, const long int *lda                       \
-                , T *x      , const long int *incx                      \
+                , const nt2_la_int *n                                   \
+                , const T *a, const nt2_la_int *lda                     \
+                , T *x      , const nt2_la_int *incx                    \
                 )                                                       \
 {                                                                       \
   NT2_F77NAME(BOOST_PP_CAT(P,trmv))(uplo,trans,diag,n,a,lda,x,incx);    \
@@ -178,9 +172,9 @@ inline void trmv( const char *uplo, const char *trans, const char *diag \
 
 #define NT2_MV(T, P)                                                    \
 inline void tbmv( const char *uplo, const char *trans, const char *diag \
-                , const long int *n,  const long int *k                 \
-                , const T *a, const long int *lda                       \
-                , T *x      , const long int *incx                      \
+                , const nt2_la_int *n,  const nt2_la_int *k             \
+                , const T *a, const nt2_la_int *lda                     \
+                , T *x      , const nt2_la_int *incx                    \
                 )                                                       \
 {                                                                       \
   NT2_F77NAME(BOOST_PP_CAT(P,tbmv))(uplo,trans,diag,n,k, a,lda,x,incx); \

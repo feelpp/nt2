@@ -21,7 +21,7 @@
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //s
@@ -59,7 +59,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)(A6)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >)) //s
@@ -80,9 +80,10 @@ namespace nt2 { namespace ext
         nt2_la_int  ld = a0.leading_size();
         nt2_la_int ldu = u.leading_size() > 1 ? u.leading_size() : 1 ;
         nt2_la_int ldvt= vt.leading_size() > 1 ? vt.leading_size() : 1 ;
+
         nt2_la_int wn = w.main_size();
-        NT2_F77NAME(dgesvd) ( &jobu,&jobvt,&m, &n, a0.raw(), &ld, s.raw(), u.raw(), &ldu
-                            , vt.raw(), &ldvt, w.main()
+        NT2_F77NAME(dgesvd) ( &jobu,&jobvt,&m, &n, a0.data(), &ld, s.data(), u.data(), &ldu
+                            , vt.data(), &ldvt, w.main()
                             , &wn, &that
                             );
         return that;
@@ -91,7 +92,7 @@ namespace nt2 { namespace ext
 
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //s
@@ -128,7 +129,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)(A6)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >)) //s
@@ -151,8 +152,8 @@ namespace nt2 { namespace ext
         nt2_la_int ldvt= vt.leading_size() > 1 ? vt.leading_size() : 1 ;
         nt2_la_int  wn = w.main_size();
 
-        NT2_F77NAME(sgesvd) ( &jobu,&jobvt,&m, &n, a0.raw(), &ld, s.raw(), u.raw(), &ldu
-                            , vt.raw(), &ldvt, w.main()
+        NT2_F77NAME(sgesvd) ( &jobu,&jobvt,&m, &n, a0.data(), &ld, s.data(), u.data(), &ldu
+                            , vt.data(), &ldvt, w.main()
                             , &wn, &that
                             );
         return that;
@@ -162,7 +163,7 @@ namespace nt2 { namespace ext
 //---------------------------------------------Complex------------------------------------------------//
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))            //s
@@ -200,7 +201,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)(A6)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))            //s
@@ -223,16 +224,18 @@ namespace nt2 { namespace ext
         nt2_la_int ldvt= vt.leading_size() > 1 ? vt.leading_size() : 1 ;
         nt2_la_int  wn = w.main_size();
 
-        NT2_F77NAME(cgesvd) ( &jobu,&jobvt,&m, &n, a0.raw(), &ld, s.raw(), u.raw(), &ldu
-                            , vt.raw(), &ldvt, w.main()
+        NT2_F77NAME(cgesvd) ( &jobu,&jobvt,&m, &n, a0.data()
+                            , &ld, s.data(), u.data(), &ldu
+                            , vt.data(), &ldvt, w.main()
                             , &wn, w.reals(), &that
                             );
+
         return that;
      }
   };
 
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))            //s
@@ -269,7 +272,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY - Workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::gesvd_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( gesvd_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(A4)(A5)(A6)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >)) //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))            //s
@@ -292,8 +295,9 @@ namespace nt2 { namespace ext
         nt2_la_int ldvt= vt.leading_size() > 1 ? vt.leading_size() : 1 ;
         nt2_la_int wn = w.main_size();
 
-        NT2_F77NAME(zgesvd) ( &jobu,&jobvt,&m, &n, a0.raw(), &ld, s.raw(), u.raw(), &ldu
-                            , vt.raw(), &ldvt, w.main()
+        NT2_F77NAME(zgesvd) ( &jobu,&jobvt,&m, &n, a0.data(), &ld
+                            , s.data(), u.data(), &ldu
+                            , vt.data(), &ldvt, w.main()
                             , &wn, w.reals(), &that
                             );
         return that;

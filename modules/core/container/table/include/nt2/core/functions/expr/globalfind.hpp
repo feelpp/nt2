@@ -14,11 +14,12 @@
 #include <nt2/include/functions/run.hpp>
 #include <nt2/include/functions/numel.hpp>
 #include <nt2/sdk/memory/container_shared_ref.hpp>
+#include <nt2/core/container/dsl/domain.hpp>
 
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::globalfind_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( globalfind_, tag::cpu_
                             , (A0)
                             , (unspecified_<A0>)
                             )
@@ -34,7 +35,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::globalfind_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( globalfind_, tag::cpu_
                             , (A0)(A1)
                             , (unspecified_<A0>)
                               (target_< scalar_< integer_<A1> > >)
@@ -48,12 +49,14 @@ namespace nt2 { namespace ext
 
     result_type operator()(A0 const& a0, A1 const&) const
     {
+      typename meta::as_elementwise<A0 const>::type a00 = meta::as_elementwise<A0 const>::call(a0);
+
       result_type ret = result::make();
 
-      std::size_t m = nt2::numel(a0);
+      std::size_t m = nt2::numel(a00);
       for(std::size_t i=0; i!=m; ++i)
       {
-        stype value = nt2::run(a0, i, meta::as_<stype>());
+        stype value = nt2::run(a00, i, meta::as_<stype>());
         if(value)
           boost::proto::value(ret).push_back(index_type(i+1));
       }

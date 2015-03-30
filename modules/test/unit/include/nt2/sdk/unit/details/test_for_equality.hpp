@@ -11,20 +11,20 @@
 #define NT2_SDK_UNIT_DETAILS_TEST_FOR_EQUALITY_HPP_INCLUDED
 
 #include <nt2/sdk/unit/details/is_sequence.hpp>
-#include <nt2/include/functions/value.hpp>
 #include <boost/dispatch/attributes.hpp>
 #include <boost/fusion/include/is_sequence.hpp>
 #include <boost/fusion/include/size.hpp>
 #include <boost/fusion/include/at.hpp>
 #include <boost/detail/workaround.hpp>
 #include <algorithm>
+#include <iterator>
 
 namespace nt2 { namespace details
 {
   /// Check if a==b or if a and b are NaNs
   /// This function is meant to be called on scalar values only
   template<class A, class B>
-  BOOST_DISPATCH_NOINLINE bool equaln(A const& va, B const& vb)
+  BOOST_NOINLINE bool equaln(A const& va, B const& vb)
   {
     return (va==vb) || ( (va!=va) && (vb!=vb) );
   }
@@ -55,7 +55,7 @@ namespace nt2 { namespace details
     BOOST_FORCEINLINE bool
     eval(A const& a, B const& b,boost::mpl::false_ const&) const
     {
-      return equaln(nt2::value(a),nt2::value(b));
+      return equaln(a,b);
     }
 
     /// A and B are Fusion Sequence, call equaln on every elements

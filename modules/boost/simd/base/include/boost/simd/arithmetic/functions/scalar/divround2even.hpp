@@ -23,7 +23,7 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::divround2even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( divround2even_, tag::cpu_
                                     , (A0)
                                     , (scalar_< int64_<A0> >)
                                       (scalar_< int64_<A0> >)
@@ -45,14 +45,14 @@ namespace boost { namespace simd { namespace ext
           if ((rx2 == aa1) && is_even(q)) --q;
           ++q;
         }
-        return copysign(result_type(q), a0*a1);
+        return copysign(result_type(q), a0^a1);
       }
       else
         return ((a0>0) ? Valmax<result_type>() : Valmin<result_type>());
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::divround2even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( divround2even_, tag::cpu_
                                     , (A0)
                                     , (scalar_< signed_<A0> >)
                                       (scalar_< signed_<A0> >)
@@ -70,7 +70,7 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::divround2even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( divround2even_, tag::cpu_
                                     , (A0)
                                     , (scalar_< unsigned_<A0> >)
                                       (scalar_< unsigned_<A0> >)
@@ -100,7 +100,7 @@ namespace boost { namespace simd { namespace ext
   #pragma warning(disable: 4723) // potential divide by 0
 #endif
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::divround2even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( divround2even_, tag::cpu_
                                     , (A0)
                                     , (scalar_< floating_<A0> > )
                                       (scalar_< floating_<A0> > )

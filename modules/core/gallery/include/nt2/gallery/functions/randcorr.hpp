@@ -59,14 +59,37 @@ namespace nt2 { namespace tag
      * \brief Define the tag randcorr_ of functor randcorr
      *        in namespace nt2::tag for toolbox algebra
      **/
-    struct randcorr0_ : boost::dispatch::tag::formal_
+    struct randcorr0_ : ext::abstract_<randcorr0_>
     {
-      typedef boost::dispatch::tag::formal_ parent;
+      typedef ext::abstract_<randcorr0_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_randcorr0_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
      struct randcorr_ : ext::unspecified_<randcorr_>
     {
       typedef ext::unspecified_<randcorr_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_randcorr_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::randcorr0_, Site> dispatching_randcorr0_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::randcorr0_, Site>();
+    }
+    template<class... Args>
+    struct impl_randcorr0_;
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::randcorr_, Site> dispatching_randcorr_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::randcorr_, Site>();
+    }
+    template<class... Args>
+    struct impl_randcorr_;
   }
 
   NT2_FUNCTION_IMPLEMENTATION(tag::randcorr_, randcorr, 3)

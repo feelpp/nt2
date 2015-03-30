@@ -17,9 +17,11 @@
 #include <boost/simd/sdk/meta/as_arithmetic.hpp>
 #include <boost/simd/sdk/meta/cardinal_of.hpp>
 
+#include <boost/simd/swar/functions/details/builtin_shuffle.hpp>
+
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::interleave_even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( interleave_even_, tag::cpu_
                                     , (A0)(A1)(X)
                                     , ((simd_< unspecified_<A0>, X>))
                                       ((simd_< unspecified_<A1>, X>))
@@ -40,7 +42,7 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION_IF( boost::simd::tag::interleave_even_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_IF         ( interleave_even_, tag::cpu_
                                       , (A0)(X)
                                       , ( boost::simd::meta::is_bitwise_logical<A0> )
                                       , ((simd_< logical_<A0>, X>))
@@ -57,6 +59,13 @@ namespace boost { namespace simd { namespace ext
       );
     }
   };
+
+  #define M_IEVEN(z,n,t) (n%2 ? (t+n-1) : n)
+  BOOST_SIMD_DEFINE_SHUFFLE2(  interleave_even_, M_IEVEN, type32_ )
+  BOOST_SIMD_DEFINE_SHUFFLE2(  interleave_even_, M_IEVEN, type16_ )
+  BOOST_SIMD_DEFINE_SHUFFLE2(  interleave_even_, M_IEVEN, type8_  )
+  #undef M_IEVEN
+
 } } }
 
 #endif

@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_SQRTPIO_2_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_SQRTPIO_2_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3f62dfc5
                                 , 0x3fec5bf891b4ef6bll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Sqrtpio_2, Site> dispatching_Sqrtpio_2(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Sqrtpio_2, Site>();
+   }
+   template<class... Args>
+   struct impl_Sqrtpio_2;
   }
   /*!
     Constant Sqrtpio_2 : \f$\frac{\sqrt2}{\pi}\f$.

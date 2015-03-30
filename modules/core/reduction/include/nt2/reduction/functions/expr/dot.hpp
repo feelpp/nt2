@@ -11,35 +11,35 @@
 #define NT2_REDUCTION_FUNCTIONS_EXPR_DOT_HPP_INCLUDED
 
 #include <nt2/reduction/functions/dot.hpp>
-#include <nt2/core/container/dsl.hpp>
+#include <nt2/core/container/dsl/forward.hpp>
 #include <nt2/include/functions/sum.hpp>
 #include <nt2/include/functions/conj.hpp>
 #include <nt2/include/functions/multiplies.hpp>
 
-namespace nt2 { namespace ext
+namespace boost { namespace simd { namespace ext
 {
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::dot_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( dot_, tag::cpu_
                             , (A0)(A1)
                             , ((ast_<A0, nt2::container::domain>))((ast_<A1, nt2::container::domain>))
                             )
   {
     BOOST_DISPATCH_RETURNS(2, (A0 const& a0, A1 const& a1),
-      nt2::sum(nt2::multiplies(a0, conj(a1)))
+      nt2::sum(nt2::multiplies(a0, nt2::conj(a1)))
     )
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::dot_, tag::cpu_,
+  BOOST_DISPATCH_IMPLEMENT  ( dot_, tag::cpu_,
                               (A0)(A1)(A2),
                               ((ast_<A0, nt2::container::domain>))((ast_<A1, nt2::container::domain>))
                               (scalar_<integer_<A2> > )
                             )
   {
     BOOST_DISPATCH_RETURNS(3, (A0 const& a0, A1 const& a1, A2 const& a2),
-      nt2::sum(nt2::multiplies(a0, conj(a1)), a2)
+      nt2::sum(nt2::multiplies(a0, nt2::conj(a1)), a2)
     )
   };
-} }
+} } }
 
 #endif

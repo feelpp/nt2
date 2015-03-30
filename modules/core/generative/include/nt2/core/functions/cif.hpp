@@ -36,6 +36,16 @@ namespace nt2
                                 , 1, 0x3f800000UL, 0x3ff0000000000000ULL
                                 )
   }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::cif_, Site> dispatching_cif_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::cif_, Site>();
+    }
+    template<class... Args>
+    struct impl_cif_;
+  }
 
   #if defined(DOXYGEN_ONLY)
   /*!

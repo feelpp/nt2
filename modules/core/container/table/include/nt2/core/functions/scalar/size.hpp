@@ -17,7 +17,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::size_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( size_, tag::cpu_
                             , (A0)
                             , (scalar_< unspecified_<A0> >)
                             )
@@ -30,12 +30,12 @@ namespace nt2 { namespace ext
     BOOST_FORCEINLINE result_type operator()(const A0&) const
     {
       result_type that;
-      that.raw()[0] = that.raw()[1] = std::size_t(1);
+      that.data()[0] = that.data()[1] = std::size_t(1);
       return that;
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::size_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( size_, tag::cpu_
                             , (A0)(A1)
                             , (scalar_< unspecified_<A0> >)
                               (scalar_< unspecified_<A1> >)

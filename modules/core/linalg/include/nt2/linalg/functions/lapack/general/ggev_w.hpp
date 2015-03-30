@@ -22,7 +22,7 @@ namespace nt2 { namespace ext
 {
 //---------------------------------------------Real-double------------------------------------------------//
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >))             //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))             //b
@@ -62,7 +62,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------Real-float------------------------------------------------//
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >))             //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))             //b
@@ -102,7 +102,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------complex-double------------------------------------------------//
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >))  //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> >, S1 >))  //b
@@ -143,7 +143,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------complex-float------------------------------------------------//
   /// INTERNAL ONLY - Compute the workspace
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >))  //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> >, S1 >))  //b
@@ -185,7 +185,7 @@ namespace nt2 { namespace ext
   ////////////////////////////////////////////////////workspace is ready//////////////////////////////////
   //---------------------------------------------Real-double------------------------------------------------//
   /// INTERNAL ONLY - workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(WK)
                             , ((container_<nt2::tag::table_,  double_<A0>, S0 >))             //a
                               ((container_<nt2::tag::table_,  double_<A1>, S1 >))             //b
@@ -215,10 +215,10 @@ namespace nt2 { namespace ext
       wk.resize_main(wn);
       NT2_F77NAME(dggev) ( &jobvl, &jobvr
                          , &n
-                         , a.raw(), &lda
-                         , b.raw(), &ldb
-                         , alphar.raw(), alphai.raw()
-                         , beta.raw()
+                         , a.data(), &lda
+                         , b.data(), &ldb
+                         , alphar.data(), alphai.data()
+                         , beta.data()
                          , 0/*vl*/, &ldvl
                          , 0/*vr*/, &ldvr
                          , wk.main(), &wn
@@ -231,7 +231,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------Real-float------------------------------------------------//
   /// INTERNAL ONLY - workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(WK)
                             , ((container_<nt2::tag::table_,  single_<A0>, S0 >))             //a
                               ((container_<nt2::tag::table_,  single_<A1>, S1 >))             //b
@@ -261,10 +261,10 @@ namespace nt2 { namespace ext
       wk.resize_main(wn);
       NT2_F77NAME(sggev) ( &jobvl, &jobvr
                          , &n
-                         , a.raw(), &lda
-                         , b.raw(), &ldb
-                         , alphar.raw(), alphai.raw()
-                         , beta.raw()
+                         , a.data(), &lda
+                         , b.data(), &ldb
+                         , alphar.data(), alphai.data()
+                         , beta.data()
                          , 0/*vl*/, &ldvl
                          , 0/*vr*/, &ldvr
                          , wk.main(), &wn
@@ -276,7 +276,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------complex-double------------------------------------------------//
   /// INTERNAL ONLY - workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(WK)
                             , ((container_<nt2::tag::table_,  complex_<double_<A0> >, S0 >))  //a
                               ((container_<nt2::tag::table_,  complex_<double_<A1> >, S1 >))  //b
@@ -304,10 +304,10 @@ namespace nt2 { namespace ext
       nt2_la_int ldvr = 1;
       NT2_F77NAME(zggev) ( &jobvl, &jobvr
                          , &n
-                         , a.raw(), &lda
-                         , b.raw(), &ldb
-                         , alpha.raw()
-                         , beta.raw()
+                         , a.data(), &lda
+                         , b.data(), &ldb
+                         , alpha.data()
+                         , beta.data()
                          , 0/*vl*/, &ldvl
                          , 0/*vr*/, &ldvr
                          , wk.main(), &wn
@@ -319,7 +319,7 @@ namespace nt2 { namespace ext
 
   //---------------------------------------------complex-float------------------------------------------------//
   /// INTERNAL ONLY - workspace is ready
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::ggev_w_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( ggev_w_, tag::cpu_
                             , (A0)(S0)(A1)(S1)(A2)(S2)(A3)(S3)(WK)
                             , ((container_<nt2::tag::table_,  complex_<single_<A0> >, S0 >))  //a
                               ((container_<nt2::tag::table_,  complex_<single_<A1> >, S1 >))  //b
@@ -347,10 +347,10 @@ namespace nt2 { namespace ext
       nt2_la_int ldvr = 1;
       NT2_F77NAME(cggev) ( &jobvl, &jobvr
                          , &n
-                         , a.raw(), &lda
-                         , b.raw(), &ldb
-                         , alpha.raw()
-                         , beta.raw()
+                         , a.data(), &lda
+                         , b.data(), &ldb
+                         , alpha.data()
+                         , beta.data()
                          , 0/*vl*/, &ldvl
                          , 0/*vr*/, &ldvr
                          , wk.main(), &wn

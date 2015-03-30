@@ -21,6 +21,7 @@ namespace nt2
   namespace meta
   {
     using boost::dispatch::meta::hierarchy_of;
+    using boost::dispatch::meta::hierarchy_of_t;
   }
 
 namespace ext
@@ -30,6 +31,7 @@ namespace ext
   //============================================================================
   using boost::dispatch::meta::generic_;
   using boost::dispatch::meta::scalar_;
+  using boost::dispatch::meta::unknown_;
   using boost::dispatch::meta::unspecified_;
   using boost::dispatch::meta::fundamental_;
   using boost::dispatch::meta::bool_;

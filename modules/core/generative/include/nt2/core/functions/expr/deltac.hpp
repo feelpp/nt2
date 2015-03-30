@@ -15,7 +15,7 @@
 
 namespace nt2 { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::deltac_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( deltac_, tag::cpu_
                             , (A0)(A1)(AST)(T)
                             , (scalar_< integer_<A0> >)
                               (scalar_< integer_<A1> >)
@@ -23,12 +23,11 @@ namespace nt2 { namespace ext
                               ((target_<scalar_<unspecified_<T> > > ))
                             )
   {
-    typedef typename nt2::meta::call<tag::as_size_(AST const&)>::type T1;
-    typedef typename nt2::meta::call<tag::deltac_(A0 const&, A1 const&, T1, T)>::type result_type;
-    BOOST_FORCEINLINE result_type operator()( const A0& i, const A1& j, const AST& siz, T const& )
-    {
-      return nt2::deltac(i, j, nt2::as_size(siz), T());
-    }
+    BOOST_DISPATCH_RETURNS_ARGS ( 4
+                                , ( A0 i, A1 j, const AST& s, T const& t)
+                                , ( A0 i, A1 j, const AST& s, T const&  )
+                                , (nt2::deltac(i, j, nt2::as_size(s), T()))
+                                )
   };
 } }
 

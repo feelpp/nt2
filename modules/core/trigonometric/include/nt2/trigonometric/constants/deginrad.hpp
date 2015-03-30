@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_DEGINRAD_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_DEGINRAD_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3c8efa35
                                 , 0x3f91df46a2529d39ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Deginrad, Site> dispatching_Deginrad(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Deginrad, Site>();
+   }
+   template<class... Args>
+   struct impl_Deginrad;
   }
   /*!
     Constant radian in Degree multiplier, \f$\frac{180}\pi\f$.

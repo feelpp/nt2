@@ -21,6 +21,16 @@ namespace nt2
                                 , 0x4034000000000000ULL //20
                                 )
   }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Digammalargelim, Site> dispatching_Digammalargelim(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Digammalargelim, Site>();
+    }
+    template<class... Args>
+    struct impl_Digammalargelim;
+  }
 
   BOOST_SIMD_CONSTANT_IMPLEMENTATION(tag::Digammalargelim, Digammalargelim);
 }

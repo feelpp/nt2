@@ -32,7 +32,7 @@
 
 namespace boost { namespace simd { namespace ext
 {
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)(X)
                                     , ((simd_<uint_<A0>,X>))
                                     )
@@ -44,26 +44,20 @@ namespace boost { namespace simd { namespace ext
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)(X)
                                     , ((simd_<int_<A0>,X>))
                                     )
   {
     typedef A0 result_type;
 
-    BOOST_FORCEINLINE
-    #ifdef BOOST_PROTO_STRICT_RESULT_OF
-    result_type
-    #else
-    A0 const&
-    #endif
-    operator()(A0 const& a0) const
+    BOOST_FORCEINLINE result_type operator()(A0 const& a0) const
     {
       return a0;
     }
   };
 
-  BOOST_SIMD_FUNCTOR_IMPLEMENTATION ( boost::simd::tag::toints_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT          ( toints_, tag::cpu_
                                     , (A0)(X)
                                     , ((simd_<floating_<A0>,X>))
                                     )
@@ -72,8 +66,8 @@ namespace boost { namespace simd { namespace ext
     BOOST_FORCEINLINE BOOST_SIMD_FUNCTOR_CALL(1)
     {
       typedef typename meta::scalar_of<result_type>::type sr_t;
-      static const A0 Vax = splat<A0>(boost::simd::Valmax<sr_t>());
-      static const A0 Vix = splat<A0>(boost::simd::Valmin<sr_t>());
+      const A0 Vax = splat<A0>(boost::simd::Valmax<sr_t>());
+      const A0 Vix = splat<A0>(boost::simd::Valmin<sr_t>());
     #ifndef BOOST_SIMD_NO_NANS
       A0 aa0 = if_zero_else(is_nan(a0), a0);
       return if_else(boost::simd::le(aa0, Vix), Valmin<result_type>(),

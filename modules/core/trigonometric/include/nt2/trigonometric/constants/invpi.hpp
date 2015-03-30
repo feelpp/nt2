@@ -8,9 +8,10 @@
 //==============================================================================
 #ifndef NT2_TRIGONOMETRIC_CONSTANTS_INVPI_HPP_INCLUDED
 #define NT2_TRIGONOMETRIC_CONSTANTS_INVPI_HPP_INCLUDED
+
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
-
 
 namespace nt2
 {
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0x3ea2f983
                                 , 0x3fd45f306dc9c883ll
                                 )
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Invpi, Site> dispatching_Invpi(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Invpi, Site>();
+   }
+   template<class... Args>
+   struct impl_Invpi;
   }
   /*!
     Constant\f$\frac1\pi\f$.

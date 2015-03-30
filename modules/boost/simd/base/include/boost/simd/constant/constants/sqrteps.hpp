@@ -30,6 +30,16 @@ namespace boost { namespace simd
                                 , 0x39B504F3, 0x3E50000000000000ULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Sqrteps, Site> dispatching_Sqrteps(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Sqrteps, Site>();
+   }
+   template<class... Args>
+   struct impl_Sqrteps;
+  }
   /*!
     Generate square root of constant Eps
     square root of constant Eps

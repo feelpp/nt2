@@ -9,7 +9,6 @@
 #ifndef NT2_STATISTICS_FUNCTIONS_NORMINV_HPP_INCLUDED
 #define NT2_STATISTICS_FUNCTIONS_NORMINV_HPP_INCLUDED
 
-#include <nt2/options.hpp>
 #include <nt2/include/functor.hpp>
 #include <nt2/sdk/meta/size_as.hpp>
 #include <nt2/sdk/meta/value_as.hpp>
@@ -33,15 +32,38 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::tieable_<norminv_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_norminv_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
     struct norminv0_ : ext::elementwise_<norminv0_>
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<norminv0_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_norminv0_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::norminv_, Site> dispatching_norminv_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::norminv_, Site>();
+   }
+   template<class... Args>
+   struct impl_norminv_;
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::norminv0_, Site> dispatching_norminv0_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::norminv0_, Site>();
+   }
+   template<class... Args>
+   struct impl_norminv0_;
+  }
   /*!
-    normal inverse cumulative distribution
+    normal inverse cumulative distribution of mean m and standard deviation s
 
     @par Semantic:
 
@@ -69,7 +91,7 @@ namespace nt2 { namespace tag
   /// @overload
   NT2_FUNCTION_IMPLEMENTATION(tag::norminv0_, norminv, 1)
   /*!
-    normal inverse cumulative distribution
+    normal inverse cumulative distribution of mean m and standard deviation s
 
     @par Semantic:
 
@@ -127,6 +149,11 @@ namespace nt2 { namespace ext
         : meta::size_as<Expr,0>
   {};
 
+  /// INTERNAL ONLY
+  template<class Domain, int N, class Expr>
+  struct  value_type<tag::norminv_,Domain,N,Expr>
+        : meta::value_as<Expr,0>
+  {};
 } }
 
 #endif

@@ -9,6 +9,7 @@
 #ifndef NT2_EXPONENTIAL_CONSTANTS_MLOG10TWO2NMB_HPP_INCLUDED
 #define NT2_EXPONENTIAL_CONSTANTS_MLOG10TWO2NMB_HPP_INCLUDED
 
+#include <nt2/include/functor.hpp>
 #include <boost/simd/constant/hierarchy.hpp>
 #include <boost/simd/constant/register.hpp>
 
@@ -28,6 +29,16 @@ namespace nt2
                                 , 0, 0xc0dd8edeUL
                                 , 0xc02fe8bffd88220cULL
                                 )
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::Mlog10two2nmb, Site> dispatching_Mlog10two2nmb(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::Mlog10two2nmb, Site>();
+    }
+    template<class... Args>
+    struct impl_Mlog10two2nmb;
   }
  /*!
     Generates constant Mlog10two2nmb.

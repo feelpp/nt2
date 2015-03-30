@@ -49,7 +49,7 @@ extern "C"
 namespace nt2 { namespace ext
 {
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::langb_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( langb_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, double_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)             //  norm
@@ -70,11 +70,11 @@ namespace nt2 { namespace ext
      if(a1 =='I')
      {
         nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(n,1));
-        norm = NT2_F77NAME(dlangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, work.raw());
+        norm = NT2_F77NAME(dlangb)( &a1, &n, &kl, &ku, a0.data(), &ld, work.data());
       }
       else
       {
-        norm = NT2_F77NAME(dlangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, 0);
+        norm = NT2_F77NAME(dlangb)( &a1, &n, &kl, &ku, a0.data(), &ld, 0);
       }
 
       return norm;
@@ -82,7 +82,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::langb_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( langb_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, single_<A0>, S0 >))
                               (scalar_< ints8_<A1> >)             //  norm
@@ -103,11 +103,11 @@ namespace nt2 { namespace ext
      if(a1 =='I')
      {
         nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(n,1));
-        norm = NT2_F77NAME(slangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, work.raw());
+        norm = NT2_F77NAME(slangb)( &a1, &n, &kl, &ku, a0.data(), &ld, work.data());
       }
       else
       {
-        norm = NT2_F77NAME(slangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, 0);
+        norm = NT2_F77NAME(slangb)( &a1, &n, &kl, &ku, a0.data(), &ld, 0);
       }
 
       return norm;
@@ -115,7 +115,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::langb_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( langb_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<single_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)             //  norm
@@ -137,11 +137,11 @@ namespace nt2 { namespace ext
      if(a1 =='I')
      {
         nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(n,1));
-        norm = NT2_F77NAME(clangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, work.raw());
+        norm = NT2_F77NAME(clangb)( &a1, &n, &kl, &ku, a0.data(), &ld, work.data());
       }
       else
       {
-        norm = NT2_F77NAME(clangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, 0);
+        norm = NT2_F77NAME(clangb)( &a1, &n, &kl, &ku, a0.data(), &ld, 0);
       }
 
       return norm;
@@ -149,7 +149,7 @@ namespace nt2 { namespace ext
   };
 
   /// INTERNAL ONLY
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::langb_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( langb_, tag::cpu_
                             , (A0)(S0)(A1)
                             , ((container_< nt2::tag::table_, complex_<double_<A0> >, S0 >))
                               (scalar_< ints8_<A1> >)             //  norm
@@ -171,11 +171,11 @@ namespace nt2 { namespace ext
      if(a1 =='I')
      {
         nt2::memory::container<tag::table_, result_type, nt2::_2D> work(nt2::of_size(n,1));
-        norm = NT2_F77NAME(zlangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, work.raw());
+        norm = NT2_F77NAME(zlangb)( &a1, &n, &kl, &ku, a0.data(), &ld, work.data());
       }
       else
       {
-        norm = NT2_F77NAME(zlangb)( &a1, &n, &kl, &ku, a0.raw(), &ld, 0);
+        norm = NT2_F77NAME(zlangb)( &a1, &n, &kl, &ku, a0.data(), &ld, 0);
       }
 
       return norm;

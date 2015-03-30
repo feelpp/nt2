@@ -8,10 +8,8 @@
 //==============================================================================
 #ifndef BOOST_SIMD_OPERATOR_FUNCTIONS_IF_ELSE_HPP_INCLUDED
 #define BOOST_SIMD_OPERATOR_FUNCTIONS_IF_ELSE_HPP_INCLUDED
-#include <boost/simd/include/functor.hpp>
-#include <boost/dispatch/include/functor.hpp>
-#include <boost/proto/tags.hpp>
 
+#include <boost/simd/include/functor.hpp>
 
 namespace boost { namespace simd
 {
@@ -29,8 +27,21 @@ namespace boost { namespace simd
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<if_else_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_if_else_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
     typedef if_else_ select_;
+  }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::if_else_, Site> dispatching_if_else_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::if_else_, Site>();
+   }
+   template<class... Args>
+   struct impl_if_else_;
   }
   /*!
     return the elementwise selected element from the second and third operand
@@ -72,20 +83,6 @@ namespace boost { namespace simd
   BOOST_DISPATCH_FUNCTION_IMPLEMENTATION(tag::if_else_          , sel             , 3 )
 
 } }
-
-namespace boost { namespace dispatch { namespace meta
-{
-  template<>
-  struct hierarchy_of<boost::proto::tag::if_else_>
-  {
-    typedef boost::simd::tag::if_else_ type;
-  };
-  template<>
-  struct proto_tag<boost::simd::tag::if_else_>
-  {
-    typedef boost::proto::tag::if_else_ type;
-  };
-} } }
 
 #include <boost/simd/operator/specific/common.hpp>
 

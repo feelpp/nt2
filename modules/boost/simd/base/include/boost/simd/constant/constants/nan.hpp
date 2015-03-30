@@ -31,6 +31,16 @@ namespace boost { namespace simd
                                 , 0xFFFFFFFF, 0xFFFFFFFFFFFFFFFFULL
                                 )
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::Nan, Site> dispatching_Nan(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::Nan, Site>();
+   }
+   template<class... Args>
+   struct impl_Nan;
+  }
   /*!
     Generates IEEE Nan (not a number) for floating point types.
 

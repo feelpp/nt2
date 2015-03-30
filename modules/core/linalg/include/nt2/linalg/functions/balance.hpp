@@ -9,7 +9,7 @@
 #ifndef NT2_LINALG_FUNCTIONS_BALANCE_HPP_INCLUDED
 #define NT2_LINALG_FUNCTIONS_BALANCE_HPP_INCLUDED
 
-#include <nt2/options.hpp>
+#include <nt2/linalg/options.hpp>
 #include <nt2/include/functor.hpp>
 #include <nt2/sdk/meta/size_as.hpp>
 #include <nt2/sdk/meta/value_as.hpp>
@@ -22,18 +22,23 @@ namespace nt2
 {
   namespace tag
   {
-    namespace factorization
-    {
-      struct balance_ : ext::unspecified_<factorization::balance_>
-      {
-        typedef ext::unspecified_<factorization::balance_> parent;
-      };
-    }
-
     struct balance_ :  ext::tieable_<balance_>
     {
       typedef ext::tieable_<balance_>  parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_balance_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
+  }
+  namespace ext
+  {
+    template<class Site>
+    BOOST_FORCEINLINE generic_dispatcher<tag::balance_, Site> dispatching_balance_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+    {
+      return generic_dispatcher<tag::balance_, Site>();
+    }
+    template<class... Args>
+    struct impl_balance_;
   }
 
   /**

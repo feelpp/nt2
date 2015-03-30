@@ -25,10 +25,23 @@ namespace nt2 { namespace tag
     {
       /// @brief Parent hierarchy
       typedef ext::elementwise_<normpdf_> parent;
+      template<class... Args>
+      static BOOST_FORCEINLINE BOOST_AUTO_DECLTYPE dispatch(Args&&... args)
+      BOOST_AUTO_DECLTYPE_BODY( dispatching_normpdf_( ext::adl_helper(), static_cast<Args&&>(args)... ) )
     };
   }
+  namespace ext
+  {
+   template<class Site>
+   BOOST_FORCEINLINE generic_dispatcher<tag::normpdf_, Site> dispatching_normpdf_(adl_helper, boost::dispatch::meta::unknown_<Site>, ...)
+   {
+     return generic_dispatcher<tag::normpdf_, Site>();
+   }
+   template<class... Args>
+   struct impl_normpdf_;
+  }
   /*!
-    normal distribution
+    normal distribution density of mean m and standard deviation s
 
     @par Semantic:
 
@@ -41,7 +54,7 @@ namespace nt2 { namespace tag
     is similar to:
 
     @code
-    auto r = exp(sqr((a0-m)/s)/2)*Invsqrt_2pi;
+    auto r = exp(sqr((a0-m)/s)/2)*Invsqrt_2pi/s;
     @endcode
 
     @see @funcref{exp}, @funcref{sqr}, @funcref{Invsqrt_2pi},

@@ -26,9 +26,9 @@ namespace nt2 { namespace ext
   //============================================================================
   // Non-assign table expressions are reduced to assign expressions
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION_IF( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_IF  ( run_, tag::cpu_
                             , (A0)(S0)(K0)(T)(N)
-                            , (mpl::not_< is_same<T, boost::simd::tag::assign_> >)
+                            , (boost::mpl::not_< boost::is_same<T, nt2::tag::assign_> >)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T
                                      , N
@@ -41,7 +41,7 @@ namespace nt2 { namespace ext
     BOOST_FORCEINLINE result_type operator()(A0& a0) const
     {
       result_type tmp;
-      run_assign(tmp, a0);
+      nt2::run_assign(tmp, a0);
       return tmp;
     }
   };
@@ -49,7 +49,7 @@ namespace nt2 { namespace ext
   //============================================================================
   // Running a table terminal does nothing and returns it
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_, tag::cpu_
                             , (A0)(S0)(K0)(T)
                             , ((expr_< container_<K0,unspecified_<A0>,S0>
                                      , T
@@ -78,11 +78,11 @@ namespace nt2 { namespace ext
   //============================================================================
   // Non-assign scalar expressions are evaluated directly
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION_IF( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT_IF  ( run_, tag::cpu_
                             , (A0)(T)(N)
-                            , (mpl::and_< is_same<typename A0::proto_domain, nt2::container::domain>
-                                        , mpl::not_< is_same<T, boost::simd::tag::assign_> >
-                                        >)
+                            , (boost::mpl::and_< boost::is_same<typename A0::proto_domain, nt2::container::domain>
+                                               , boost::mpl::not_< boost::is_same<T, nt2::tag::assign_> >
+                                               >)
                             , ((expr_< scalar_< unspecified_<A0> >
                                      , T
                                      , N
@@ -115,10 +115,10 @@ namespace nt2 { namespace ext
   //============================================================================
   // Assign expressions call run_assign
   //============================================================================
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::run_, tag::cpu_
+  BOOST_DISPATCH_IMPLEMENT  ( run_, tag::cpu_
                             , (A0)
                             , ((node_< A0
-                                     , boost::simd::tag::assign_
+                                     , nt2::tag::assign_
                                      , boost::mpl::long_<2>
                                      , nt2::container::domain
                                      >

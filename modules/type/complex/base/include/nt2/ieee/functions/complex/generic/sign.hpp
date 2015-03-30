@@ -33,18 +33,18 @@
 #include <nt2/sdk/meta/as_logical.hpp>
 #include <boost/simd/sdk/config.hpp>
 
-namespace nt2 { namespace ext
+namespace boost { namespace simd { namespace ext
 {
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sign_, tag::cpu_, (A0)
+  BOOST_DISPATCH_IMPLEMENT  ( sign_, tag::cpu_, (A0)
                             , (generic_< complex_< floating_<A0> > >)
                             )
   {
     typedef A0 result_type;
     NT2_FUNCTOR_CALL(1)
     {
-      typedef typename meta::as_real<A0>::type real_t;
+      typedef typename nt2::meta::as_real<A0>::type real_t;
       typedef typename meta::as_logical<real_t>::type logi_t;
-      typedef typename meta::as_integer<real_t>::type int_t;
+      typedef typename boost::dispatch::meta::as_integer<real_t>::type int_t;
       real_t r = nt2::real(a0);
       real_t i = nt2::imag(a0);
       int_t  e = -nt2::max(nt2::exponent(r), nt2::exponent(i));
@@ -62,7 +62,7 @@ namespace nt2 { namespace ext
                           nt2::if_else(nt2::logical_andnot(nt2::is_finite(i),nt2::is_nan(r)),
                                        result_type(sr),
                                        nt2::if_else(nt2::logical_andnot(nt2::is_finite(r),nt2::is_nan(i)),
-                                                    mul_i(si),
+                                                    nt2::mul_i(si),
                                                     z
                                                    )
                                       ),
@@ -71,14 +71,14 @@ namespace nt2 { namespace ext
        }
        z =  nt2::if_else(nt2::is_real(a0),
                          result_type(nt2::real(z)),
-                         nt2::if_else(nt2::is_imag(a0), mul_i(nt2::imag(z)), z)
+                         nt2::if_else(nt2::is_imag(a0), nt2::mul_i(nt2::imag(z)), z)
                         );
 #endif
        return nt2::if_else(nt2::is_eqz(mod), a0, z);
     }
   };
 
-  NT2_FUNCTOR_IMPLEMENTATION( nt2::tag::sign_, tag::cpu_, (A0)
+  BOOST_DISPATCH_IMPLEMENT  ( sign_, tag::cpu_, (A0)
                             , (generic_< dry_< arithmetic_<A0> > >)
                             )
   {
@@ -89,6 +89,6 @@ namespace nt2 { namespace ext
     }
   };
 
-} }
+} } }
 
 #endif
